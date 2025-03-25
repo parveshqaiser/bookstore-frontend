@@ -1,0 +1,290 @@
+
+
+import React, { useEffect, useState } from 'react';
+import useAddBook from '../shared/useAddBook';
+import { categoryList } from '../utils/constants';
+import { RxCross1 } from "react-icons/rx";
+import axios from 'axios';
+import { BASE_URL } from '../utils/api';
+
+const AddEditBookModal = ({selectedBook, isEdit}) => {
+
+    let {formValues, setFormValues} = useAddBook();
+
+    useEffect(()=>{
+        setFormValues({
+            title : {
+                value : selectedBook?.title,
+                error : ""
+            },
+            author : {
+                value : selectedBook?.author,
+                error : "",
+            },
+            category : {
+                value : selectedBook?.category,
+                error : "",
+            },
+            description : {
+                value : selectedBook?.description,
+                error : ""
+            },
+            publisher : {
+                value : selectedBook?.publisher,
+                error : "",
+            },
+            language : {
+                value : selectedBook?.language,
+                error : "",
+            },
+            pages : {
+                value : selectedBook?.pages,
+                error : ""
+            },
+            quantity : {
+                value : selectedBook?.quantity,
+                error : "",
+            },
+            newPrice : {
+                value : selectedBook?.newPrice,
+                error : "",
+            },
+            oldPrice : {
+                value : selectedBook?.oldPrice,
+                error : "",
+            },
+            coverPic : ""
+        })
+    },[])
+
+    const handleChange = (e)=>{
+        let {name, value} = e.target;
+
+        let newValues = {...formValues};
+
+        if(name == "title" || name == "author" || "description" || "publisher" || "language")
+        {
+            newValues[name]={
+                value : value.charAt(0).toUpperCase() + value.slice(1),
+                error : !value ? "required*" : ''
+            }
+        }
+
+        if(name == "pages" || name == "quantity" || name == "newPrice" || name == "oldPrice")
+        {
+            newValues[name]={
+                value : parseInt(value) || "",
+                error : !value ? "required*" : ''
+            }
+        }
+        setFormValues(newValues);
+    }
+
+    const handleCLick = async ()=>{
+
+        let formData = new FormData();
+
+        formData.append("title", formValues.title.value);
+        formData.append("author", formValues.author.value);
+        formData.append("category", formValues.category.value);
+        formData.append("description", formValues.description.value);
+        formData.append("publisher", formValues.publisher.value);
+        formData.append("language", formValues.language.value);
+        formData.append("pages", formValues.pages.value);
+        formData.append("quantity", formValues.quantity.value);
+        formData.append("newPrice", formValues.newPrice.value);
+        formData.append("oldPrice", formValues.oldPrice.value);
+
+        if(formValues.coverPic){
+            formData.append("coverPic", formValues.coverPic || "");
+        }
+
+        try {
+            let res = await axios.post(`${BASE_URL}/addBook`,formData, {withCredentials:true});
+
+            console.log(res.data);
+        } catch (error) {
+            console.log("error ", error);
+        }
+
+    }   
+
+    return (
+    <>
+        <div className='grid md:grid-cols-3 gap-4 mb-3'>
+            <div className=''>
+                <label htmlFor="title">Title</label>
+                <div>
+                    <input 
+                        type="text"
+                        name='title'
+                        onChange={handleChange}
+                        value={formValues.title.value}
+                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                    />
+                </div>
+                {!formValues.title.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.title?.error}</span>
+                )}
+            </div>
+
+            <div>
+                <label htmlFor="title">Author</label>
+                <div>
+                    <input 
+                        type="text"
+                        name='author'
+                        onChange={handleChange}
+                        value={formValues.author.value}
+                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                    />
+                </div>
+                {!formValues.author.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.author?.error}</span>
+                )}
+            </div>    
+
+                <div>
+                <label htmlFor="title">Category</label>
+                <select name='category' className='block p-2 w-full border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent' onChange={handleChange}>
+                    <option value="">Select A Genre</option>
+                    {categoryList.map((list, idx)=>(
+                        <option className='p-1' value={list} key={idx}>{list}</option>
+                    ))}
+                </select>
+                {!formValues.category.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.category?.error}</span>
+                )}                   
+            </div>           
+        </div>
+
+        <div className='grid md:grid-cols-1 mb-2'>
+            <label htmlFor="">Description</label>
+            <div>
+                <textarea
+                    rows={2}
+                    name='description'
+                    onChange={handleChange}
+                    value={formValues.description.value} 
+                    className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                />
+            </div>
+        </div>
+
+        <div className='grid md:grid-cols-3 gap-4 mb-3'>
+            <div>
+                <label htmlFor="publisher">Publisher</label>
+                <div>
+                    <input 
+                        type="text"
+                        name='publisher'
+                        onChange={handleChange}
+                        value={formValues.publisher.value}
+                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                    />
+                </div>
+            </div>
+
+            <div>
+                <label htmlFor="title">Language</label>
+                <div>
+                    <input 
+                        type="text"
+                        name='language'
+                        onChange={handleChange}
+                        value={formValues.language.value}
+                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                    />
+                </div>
+            </div>    
+
+                <div>
+                <label htmlFor="title">Pages</label>
+                <div>
+                    <input 
+                        type="text"
+                        name='pages'
+                        onChange={handleChange}
+                        value={formValues.pages.value}
+                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                    />
+                </div>
+            </div>           
+        </div>
+
+        <div className='grid md:grid-cols-3 gap-4 mb-3'>
+            <div>
+                <label htmlFor="title">Quantity</label>
+                <div>
+                    <input 
+                        type="text"
+                        name='quantity'
+                        onChange={handleChange}
+                        value={formValues.quantity.value}
+                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                    />
+                </div>
+            </div>
+
+            <div>
+                <label htmlFor="title">New Price ($)</label>
+                <div>
+                    <input 
+                        type="text"
+                        name='newPrice'
+                        onChange={handleChange}
+                        value={formValues.newPrice.value}
+                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                    />
+                </div>
+            </div>    
+
+                <div>
+                <label htmlFor="title">Old Price ($)</label>
+                <div>
+                    <input 
+                        type="text"
+                        name='oldPrice'
+                        onChange={handleChange}
+                        value={formValues.oldPrice.value}
+                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                    />
+                </div>
+            </div>           
+        </div>
+
+        <div className='my-4'>
+        {
+            !formValues?.coverPic && (
+            <>
+                <label htmlFor="coverPic" className="p-2 border border-gray-800 cursor-pointer rounded-lg">
+                    Upload Book Cover
+                </label>
+                <input 
+                    type="file" 
+                    id="coverPic" 
+                    accept="image/png, image/jpeg" 
+                    className="hidden" 
+                    onChange={(e)=> setFormValues({...formValues, coverPic : e.target.files[0] || ""})}
+                />
+            </>
+            )
+        }
+        <span className=''>{formValues?.coverPic?.name || ""}</span>  
+        {formValues.coverPic && <span title='Remove Pic' onClick={()=> setFormValues({...formValues, coverPic : ""})} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
+           
+        </div>
+
+        <div className='text-center'>
+            <button 
+                onClick={handleCLick}
+                className='px-4 py-2 text-violet-400 border border-purple-500 hover:border-purple-700 hover:text-violet-700 rounded-lg cursor-pointer w-1/4'
+            >
+                Submit
+            </button>
+        </div>
+    </>
+  )
+}
+
+export default AddEditBookModal
