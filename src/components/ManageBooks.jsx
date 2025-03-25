@@ -60,9 +60,6 @@ const ManageBooks = () => {
                     className="w-full px-2 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent"
                 />
             </div>
-
-            <div className="text-gray-600 text-lg">Total Book Count : {allBooks?.length || 0}</div>
-
             <button 
                 onClick={()=> setVisible(true)}
                 className="w-full md:w-auto flex items-center justify-center border border-green-600 p-2 rounded-md cursor-pointer hover:text-green-600 transition"
@@ -72,6 +69,7 @@ const ManageBooks = () => {
             </button>
         </main>
 
+        <span className="text-gray-600 text-lg mx-5 bg-purple-300 p-2 rounded-lg my-1">Total Available Books : {allBooks?.length || 0}</span>
         <div className="mx-5">
             <DataTable 
                 className="table-auto"  
@@ -115,7 +113,7 @@ const ManageBooks = () => {
             onHide={() => {setVisible(false), setIsEdit(false),setSelectedBook(null)}}
         
         >
-            <AddEditBookModal selectedBook={selectedBook} isEdit={isEdit} />
+            <AddEditBookModal selectedBook={selectedBook} isEdit={isEdit} setVisible={setVisible} />
         </Dialog>
 
     </>

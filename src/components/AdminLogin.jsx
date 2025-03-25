@@ -4,6 +4,7 @@ import logo from "../assets/logo.png";
 import { BASE_URL } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const AdminLogin = () => {
 
@@ -14,11 +15,10 @@ const AdminLogin = () => {
 
     const handleSubmit = async()=>{
 
-        let allValuesPresent = Object.values(inputValues).every(val => val.trim() !=="");
+        let allValuesPresent = Object.values(inputValues).every(val => val.trim() =="");
 
-        if(!allValuesPresent){
-            // toast.error("All Inputs are required",{position:"top-center", duration:2000})
-            alert("ALl values are required");
+        if(allValuesPresent){
+            toast.error("All Inputs are required",{position:"top-center", duration:2000})
             return;
         }
 
@@ -27,7 +27,7 @@ const AdminLogin = () => {
             let res = await axios.post(`${BASE_URL}/admin/login`, inputValues, {withCredentials:true});
             if(res.data.success)
             {
-                // toast.success(res.data.message, {duration:2000,position:"top-center"});
+                toast.success(res.data.message, {duration:2000,position:"top-center"});
                 setTimeout(() => {
                     navigate("/admin/dashboard");
                     setIsDisable(false)
@@ -35,7 +35,7 @@ const AdminLogin = () => {
             }
         } catch (error) {
             console.log("error ", error.message);
-            // toast.error(error?.response?.data?.message || error?.message, {duration:2000})
+            toast.error(error?.response?.data?.message || error?.message, {duration:2000})
             setIsDisable(false)
         }
     }
@@ -43,6 +43,7 @@ const AdminLogin = () => {
 
     return (
     <div className='flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-300 to-purple-600'>
+        <Toaster />
         <div className='w-96 p-4 rounded-lg shadow-2xl'>
             <img src={logo} className='w-12 h-12 mx-auto'/>
             <h2 className='font-mono my-2 text-center text-white font-bold text-lg'>Admin Login</h2>

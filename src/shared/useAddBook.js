@@ -45,7 +45,6 @@ const useAddBook = () => {
             value : "",
             error : "",
         },
-        coverPic : ""
     });
 
     return {formValues ,setFormValues}

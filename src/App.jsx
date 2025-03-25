@@ -6,7 +6,7 @@ import AdminDashboard from './components/AdminDashboard';
 import ManageBooks from './components/ManageBooks';
 import TestComponent from './components/TestComponent';
 
-
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -40,6 +40,7 @@ function App() {
     return(
         
         <RouterProvider router={appRoutes}>
+            <Toaster />
 			<Outlet />
         </RouterProvider>
     )

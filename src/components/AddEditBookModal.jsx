@@ -1,15 +1,17 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import useAddBook from '../shared/useAddBook';
 import { categoryList } from '../utils/constants';
-import { RxCross1 } from "react-icons/rx";
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
+import toast, { Toaster } from 'react-hot-toast';
 
-const AddEditBookModal = ({selectedBook, isEdit}) => {
+const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
 
     let {formValues, setFormValues} = useAddBook();
+    const [file, setFile] = useState(null);
+    const [isDisable, setIsDisable] = useState(false);
 
     useEffect(()=>{
         setFormValues({
@@ -52,10 +54,10 @@ const AddEditBookModal = ({selectedBook, isEdit}) => {
             oldPrice : {
                 value : selectedBook?.oldPrice,
                 error : "",
-            },
-            coverPic : ""
+            }
         })
-    },[])
+    },[]);
+
 
     const handleChange = (e)=>{
         let {name, value} = e.target;
@@ -84,6 +86,16 @@ const AddEditBookModal = ({selectedBook, isEdit}) => {
 
         let formData = new FormData();
 
+        let isAllValuesExist = Object.values(formValues).every(val => 
+            typeof val.value === "string" ? val.value.trim() !== "" : val.value !== undefined && val.value !== null
+        );
+
+        if(!isAllValuesExist)
+        {
+            toast.error("All Fields are required", {duration : 2500});
+            return;
+        }
+
         formData.append("title", formValues.title.value);
         formData.append("author", formValues.author.value);
         formData.append("category", formValues.category.value);
@@ -96,21 +108,28 @@ const AddEditBookModal = ({selectedBook, isEdit}) => {
         formData.append("oldPrice", formValues.oldPrice.value);
 
         if(formValues.coverPic){
-            formData.append("coverPic", formValues.coverPic || "");
+            formData.append("coverPic", file || "");
         }
 
         try {
+            setIsDisable(true);
             let res = await axios.post(`${BASE_URL}/addBook`,formData, {withCredentials:true});
-
-            console.log(res.data);
+            if(res.data.success)
+            {
+                setIsDisable(false);
+                setVisible(false);
+                toast.success(`${res.data.message}`, {position: "top-center", duration : 2500})
+            }
         } catch (error) {
             console.log("error ", error);
+            toast.error(`${error?.message}`, {position: "top-center", duration : 2500})
+            setIsDisable(false);
         }
-
     }   
 
     return (
     <>
+    <Toaster />
         <div className='grid md:grid-cols-3 gap-4 mb-3'>
             <div className=''>
                 <label htmlFor="title">Title</label>
@@ -255,7 +274,7 @@ const AddEditBookModal = ({selectedBook, isEdit}) => {
 
         <div className='my-4'>
         {
-            !formValues?.coverPic && (
+            !file && (
             <>
                 <label htmlFor="coverPic" className="p-2 border border-gray-800 cursor-pointer rounded-lg">
                     Upload Book Cover
@@ -265,18 +284,19 @@ const AddEditBookModal = ({selectedBook, isEdit}) => {
                     id="coverPic" 
                     accept="image/png, image/jpeg" 
                     className="hidden" 
-                    onChange={(e)=> setFormValues({...formValues, coverPic : e.target.files[0] || ""})}
+                    onChange={(e)=> setFile(e.target.files[0] || "")}
                 />
             </>
             )
         }
-        <span className=''>{formValues?.coverPic?.name || ""}</span>  
-        {formValues.coverPic && <span title='Remove Pic' onClick={()=> setFormValues({...formValues, coverPic : ""})} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
+        <span className=''>{file?.name || ""}</span>  
+        {file && <span title='Remove Pic' onClick={()=> setFile(null)} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
            
         </div>
 
         <div className='text-center'>
             <button 
+                disabled={isDisable}
                 onClick={handleCLick}
                 className='px-4 py-2 text-violet-400 border border-purple-500 hover:border-purple-700 hover:text-violet-700 rounded-lg cursor-pointer w-1/4'
             >
