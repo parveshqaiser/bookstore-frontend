@@ -100,7 +100,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             return;
         }
 
-        if(!file?.name)
+        if(!isEdit && !file?.name)
         {
             toast.error("Please Upload Book Cover", {duration : 2500});
             return;
@@ -351,7 +351,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
         {
             !file && (
             <>
-                <label htmlFor="coverPic" className="p-2 border border-gray-800 cursor-pointer rounded-lg">
+                <label htmlFor="coverPic" className="p-2 border border-gray-800 cursor-pointer rounded-lg md:w-auto w-full">
                     Upload Book Cover
                 </label>
                 <input 
@@ -372,7 +372,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             <button 
                 disabled={isDisable}
                 onClick={handleCLick}
-                className='px-4 py-2 text-violet-400 border border-purple-500 hover:border-purple-700 hover:text-violet-700 rounded-lg cursor-pointer w-1/4'
+                className='px-4 py-2 text-violet-400 border border-purple-500 hover:border-purple-700 hover:text-violet-700 rounded-lg cursor-pointer md:w-1/4'
             >
                 {isDisable? "Submitting .Please wait.." : "Submit"}
             </button>

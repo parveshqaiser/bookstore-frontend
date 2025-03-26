@@ -75,60 +75,61 @@ const ManageBooks = () => {
     <>
         <AdminNavbar /> 
         <Toaster />
-        <main className="mx-5 my-6 flex flex-col md:flex-row md:justify-between gap-2 items-center">
-            <div className="w-full md:w-1/4">
-                <input 
-                    type="text"
-                    onChange={handleSearch}
-                    placeholder="Filter Books By Title, Author, Publisher"
-                    className="w-full px-2 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent"
-                />
+        <main className="mx-auto px-2 max-w-[1240px]">
+            <div className="my-6 flex flex-col md:flex-row md:justify-between gap-2 items-center">
+                <div className="w-full md:w-1/3 lg:w-1/4">
+                    <input 
+                        type="text"
+                        onChange={handleSearch}
+                        placeholder="Filter Books By Title, Author, Publisher"
+                        className="w-full px-2 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent"
+                    />
+                </div>
+                <button 
+                    onClick={()=> setVisible(true)}
+                    className="w-full md:w-auto flex items-center justify-center border border-green-600 p-2 rounded-md cursor-pointer hover:text-green-600 transition"
+                >
+                    <FaPlus size={16} className="mr-1"/> 
+                    <span>Add New Book</span>
+                </button>
             </div>
-            <button 
-                onClick={()=> setVisible(true)}
-                className="w-full md:w-auto flex items-center justify-center border border-green-600 p-2 rounded-md cursor-pointer hover:text-green-600 transition"
-            >
-                <FaPlus size={16} className="mr-1"/> 
-                <span>Add New Book</span>
-            </button>
+            <div className="">
+                <DataTable 
+                    className="table-auto"  
+                    value={tableData} 
+                    paginator rows={5} 
+                    rowsPerPageOptions={[5, 10, 25, 50]} 
+                    tableStyle={{ minWidth: '50rem' }}
+                    tableClassName="custom-table"
+                    paginatorClassName="custom-pagination"
+                    emptyMessage={
+                        <p className="text-red-500 text-md text-center">
+                            No Book found. Add a new Book !
+                        </p>
+                    }
+                >
+                    <Column field="title" header="Title" style={{width:"25vw"}}></Column>
+                    <Column field="author" header="Author"></Column>               
+                    <Column field="publisher" header="Publisher"></Column> 
+                    <Column field="newPrice" header="Price ($)"></Column>
+                    <Column field="quantity" header="Qty"></Column>
+                    <Column header="Action" className="" body={(rowData)=>(
+                        <div className="flex gap-2 justify-center">
+                            <button className="p-2" title="View More" onClick={()=> {setShow(true), setSelectedBook(rowData)}}>
+                                <HiDotsHorizontal className="text-xl text-gray-700 cursor-pointer" />
+                            </button>  
+                            <button className="p-2" title="Edit" onClick={()=>{setSelectedBook(rowData), setVisible(true), setIsEdit(true)}}>
+                                <IoPencil className="text-xl text-green-700 cursor-pointer" />
+                            </button>                          
+                            <button className="p-2" title="Delete" onClick={()=>handleDeleteBook(rowData?._id)}>
+                                <MdDelete className="text-xl text-red-700  cursor-pointer animate-bounce"/>
+                            </button>
+                        </div>
+                    )}/>                   
+                </DataTable>
+            </div>
         </main>
-
-        <span className="text-gray-600 text-lg mx-5 bg-purple-300 p-2 rounded-lg my-1">Total Available Books : {allBooks?.length || 0}</span>
-        <div className="mx-5">
-            <DataTable 
-                className="table-auto"  
-                value={tableData} 
-                paginator rows={5} 
-                rowsPerPageOptions={[5, 10, 25, 50]} 
-                tableStyle={{ minWidth: '50rem' }}
-                tableClassName="custom-table"
-                paginatorClassName="custom-pagination"
-                emptyMessage={
-                    <p className="text-red-500 text-md text-center">
-                        No Book found. Add a new Book !
-                    </p>
-                }
-            >
-                <Column field="title" header="Title" style={{width:"25vw"}}></Column>
-                <Column field="author" header="Author"></Column>               
-                <Column field="publisher" header="Publisher"></Column> 
-                <Column field="newPrice" header="Price ($)"></Column>
-                <Column field="quantity" header="Qty"></Column>
-                <Column header="Action" className="" body={(rowData)=>(
-                    <div className="flex gap-2 justify-center">
-                        <button className="p-2" title="View More" onClick={()=> {setShow(true), setSelectedBook(rowData)}}>
-                            <HiDotsHorizontal className="text-xl text-gray-700 cursor-pointer" />
-                        </button>  
-                        <button className="p-2" title="Edit" onClick={()=>{setSelectedBook(rowData), setVisible(true), setIsEdit(true)}}>
-                            <IoPencil className="text-xl text-green-700 cursor-pointer" />
-                        </button>                          
-                        <button className="p-2" title="Delete" onClick={()=>handleDeleteBook(rowData?._id)}>
-                            <MdDelete className="text-xl text-red-700  cursor-pointer animate-bounce"/>
-                        </button>
-                    </div>
-                )}/>                   
-            </DataTable>
-        </div>
+      
 
         <Dialog 
             header={isEdit ? "Update Book" :"Add New Book"} 
