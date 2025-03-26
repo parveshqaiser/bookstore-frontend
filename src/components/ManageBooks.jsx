@@ -16,16 +16,25 @@ import axios from "axios";
 import { BASE_URL } from "../utils/api";
 import toast, { Toaster } from "react-hot-toast";
 import { getAllBooksList } from "../redux/bookSlice";
+import { useNavigate } from "react-router-dom";
 
 const ManageBooks = () => {
 
     let dispatch = useDispatch();
+    let navigate = useNavigate();
 
     useEffect(()=>{
         dispatch(getAllBooksList());
     },[dispatch]);
 
-    let {allBooks,isLoading} = useSelector((store) => store?.book);
+    let {allBooks,isLoading , error} = useSelector((store) => store?.book);
+
+    useEffect(() => {
+        if (error?.error === 401) {
+            navigate("/");
+        }
+    },[error, navigate]);
+
 
     const [visible , setVisible] = useState(false);  // add, update book
     const [searchText, setSearchText] = useState("");

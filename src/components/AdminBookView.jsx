@@ -6,11 +6,11 @@ const AdminBookView = ({selectedBook}) => {
 
     return (
         <div className="p-2 bg-white rounded-lg shadow-lg h-auto w-full flex flex-col md:flex-col lg:flex-row max-w-screen-lg mx-auto">
-            <div className="lg:w-1/3 w-full flex justify-center lg:justify-start p-2">
+            <div className="lg:w-1/3 w-full flex justify-center lg:justify-start">
                 <img 
                     src={selectedBook?.coverPic} 
                     alt='Book Cover Pic'
-                    className="w-48 h-60 md:w-48 md:h-60 md:object-center lg:w-full lg:h-full rounded-lg shadow-md"
+                    className="w-48 h-60 md:w-48 md:h-60 md:object-center lg:w-full lg:h-96 rounded-lg shadow-md"
                 />
             </div>
     

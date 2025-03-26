@@ -9,9 +9,10 @@ export const getAllBooksList = createAsyncThunk(
             let res = await axios.get(BASE_URL + "/getAllBooks",{withCredentials: true});
             return res?.data?.data;
         } catch (error) {
-            return rejectWithValue(
-                error.response?.data?.message || "Get All Books Failed"
-            );
+            return rejectWithValue({
+                message : error.response?.data?.message || "Get All Books Failed",
+                error : error?.response?.status
+            });
         }
     }
 );
@@ -21,16 +22,24 @@ let bookSlice = createSlice({
     initialState : {
         isLoading : false,
         allBooks : [],
+        error : null,
     },
     reducers : {},
     extraReducers : (builder)=>{
         builder.addCase(getAllBooksList.pending, (state, action)=>{
             state.isLoading = true;
+            state.error = null;
         });
 
         builder.addCase(getAllBooksList.fulfilled, (state, action)=>{
             state.isLoading = false;
-            state.allBooks = action.payload
+            state.allBooks = action.payload;
+            state.error = null;
+        });
+
+        builder.addCase(getAllBooksList.rejected, (state, action)=>{
+            state.isLoading = false;
+            state.error = action.payload; // return an object {error : 401, message : "Unauthorized user"}
         });
     }
 });
