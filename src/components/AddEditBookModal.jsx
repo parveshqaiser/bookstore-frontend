@@ -6,12 +6,16 @@ import { categoryList } from '../utils/constants';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { getAllBooksList } from '../redux/bookSlice';
 
-const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
+const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
     let {formValues, setFormValues} = useAddBook();
     const [file, setFile] = useState(null);
     const [isDisable, setIsDisable] = useState(false);
+
+    let dispatch = useDispatch();
 
     useEffect(()=>{
         setFormValues({
@@ -68,7 +72,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
         {
             newValues[name]={
                 value : value.charAt(0).toUpperCase() + value.slice(1),
-                error : !value ? "required*" : ''
+                error : !value ? "Required*" : ''
             }
         }
 
@@ -76,7 +80,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
         {
             newValues[name]={
                 value : parseInt(value) || "",
-                error : !value ? "required*" : ''
+                error : !value ? "Required*" : ''
             }
         }
         setFormValues(newValues);
@@ -96,6 +100,12 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
             return;
         }
 
+        if(!file?.name)
+        {
+            toast.error("Please Upload Book Cover", {duration : 2500});
+            return;
+        }
+
         formData.append("title", formValues.title.value);
         formData.append("author", formValues.author.value);
         formData.append("category", formValues.category.value);
@@ -107,23 +117,62 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
         formData.append("newPrice", formValues.newPrice.value);
         formData.append("oldPrice", formValues.oldPrice.value);
 
-        if(formValues.coverPic){
+        if(file?.name){
             formData.append("coverPic", file || "");
         }
 
-        try {
-            setIsDisable(true);
-            let res = await axios.post(`${BASE_URL}/addBook`,formData, {withCredentials:true});
-            if(res.data.success)
-            {
+        if(isEdit == false)
+        {
+            try {
+                setIsDisable(true);
+                let res = await axios.post(`${BASE_URL}/addBook`,formData, {withCredentials:true});
+                if(res.data.success)
+                {
+                    toast.success(`${res.data.message}`, {position: "top-center", duration : 2500});
+                    setTimeout(()=>{
+                        dispatch(getAllBooksList());
+                        setIsDisable(false);
+                        setVisible(false);
+                    },2500)
+                }
+            } catch (error) {
+                toast.error(`${error?.message}`, {position: "top-center", duration : 2500})
                 setIsDisable(false);
-                setVisible(false);
-                toast.success(`${res.data.message}`, {position: "top-center", duration : 2500})
             }
-        } catch (error) {
-            console.log("error ", error);
-            toast.error(`${error?.message}`, {position: "top-center", duration : 2500})
-            setIsDisable(false);
+        }
+
+        if (isEdit)
+        {
+            let data = {
+                title : formValues.title.value,
+                author : formValues.author.value,
+                category : formValues.category.value,
+                description : formValues.description.value,
+                publisher : formValues.publisher.value,
+                language  : formValues.language.value,
+                pages : formValues.pages.value,
+                quantity: formValues.quantity.value,
+                newPrice : formValues.newPrice.value,
+                oldPrice : formValues.oldPrice.value
+            };
+
+            try {
+                setIsDisable(true);
+                let res = await axios.put(`${BASE_URL}/updateBook/${selectedBook?._id}`,data, {withCredentials:true});
+                if(res.data.success)
+                {
+                    toast.success(`${res.data.message}`, {position: "top-center", duration : 2500});
+                    setTimeout(()=>{
+                        dispatch(getAllBooksList());
+                        setIsDisable(false);
+                        setIsEdit(false);
+                        setVisible(false);
+                    },2500)
+                }
+            } catch (error) {
+                toast.error(`${error?.message}`, {position: "top-center", duration : 2500})
+                setIsDisable(false);
+            }
         }
     }   
 
@@ -131,7 +180,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
     <>
     <Toaster />
         <div className='grid md:grid-cols-3 gap-4 mb-3'>
-            <div className=''>
+            <div>
                 <label htmlFor="title">Title</label>
                 <div>
                     <input 
@@ -163,9 +212,14 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                 )}
             </div>    
 
-                <div>
+            <div>
                 <label htmlFor="title">Category</label>
-                <select name='category' className='block p-2 w-full border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent' onChange={handleChange}>
+                <select 
+                    name='category' 
+                    className='block p-2 w-full border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent' 
+                    onChange={handleChange}
+                    value={formValues.category.value}
+                >
                     <option value="">Select A Genre</option>
                     {categoryList.map((list, idx)=>(
                         <option className='p-1' value={list} key={idx}>{list}</option>
@@ -188,6 +242,9 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                     className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
                 />
             </div>
+            {!formValues.description.value && (
+                <span className='text-red-500 text-sm'>{formValues?.description?.error}</span>
+            )}   
         </div>
 
         <div className='grid md:grid-cols-3 gap-4 mb-3'>
@@ -202,6 +259,9 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                         className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
                     />
                 </div>
+                {!formValues.publisher.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.publisher?.error}</span>
+                )}  
             </div>
 
             <div>
@@ -215,9 +275,12 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                         className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
                     />
                 </div>
+                {!formValues.language.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.language?.error}</span>
+                )}  
             </div>    
 
-                <div>
+            <div>
                 <label htmlFor="title">Pages</label>
                 <div>
                     <input 
@@ -228,6 +291,9 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                         className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
                     />
                 </div>
+                {!formValues.pages.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.pages?.error}</span>
+                )}  
             </div>           
         </div>
 
@@ -243,6 +309,9 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                         className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
                     />
                 </div>
+                {!formValues.quantity.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.quantity?.error}</span>
+                )}  
             </div>
 
             <div>
@@ -256,6 +325,9 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                         className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
                     />
                 </div>
+                {!formValues.newPrice.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.newPrice?.error}</span>
+                )}  
             </div>    
 
                 <div>
@@ -269,6 +341,9 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                         className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
                     />
                 </div>
+                {!formValues.oldPrice.value && (
+                    <span className='text-red-500 text-sm'>{formValues?.oldPrice?.error}</span>
+                )}  
             </div>           
         </div>
 
@@ -289,9 +364,8 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
             </>
             )
         }
-        <span className=''>{file?.name || ""}</span>  
-        {file && <span title='Remove Pic' onClick={()=> setFile(null)} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
-           
+            <span className=''>{file?.name || ""}</span>  
+            {file && <span title='Remove Pic' onClick={()=> setFile(null)} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
         </div>
 
         <div className='text-center'>
@@ -300,7 +374,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible}) => {
                 onClick={handleCLick}
                 className='px-4 py-2 text-violet-400 border border-purple-500 hover:border-purple-700 hover:text-violet-700 rounded-lg cursor-pointer w-1/4'
             >
-                Submit
+                {isDisable? "Submitting .Please wait.." : "Submit"}
             </button>
         </div>
     </>

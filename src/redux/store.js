@@ -6,7 +6,7 @@ import bookSlice from "../redux/bookSlice.js";
 let reduxStore = configureStore({
     reducer : {
         user : userSlice,
-        book :bookSlice
+        book : bookSlice
     }
 });
 

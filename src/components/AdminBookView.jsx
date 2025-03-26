@@ -11,17 +11,18 @@ const AdminBookView = ({selectedBook}) => {
                 <img 
                     src={selectedBook?.coverPic} 
                     alt='Book Cover Pic'
-                    className="w-48 h-64 object-cover rounded-lg shadow-md"
+                    className="object-cover rounded-lg shadow-md"
                 />
             </div>
 
-          
             <div className="md:w-2/3 w-full md:pl-6 space-y-2 mt-4 md:mt-0 text-left md:text-left">
                 <h2 className="text-xl font-semibold text-gray-800">{selectedBook?.title}</h2>
                 <p className="text-lg text-gray-600 italic">by {selectedBook?.author}</p>
-                <p className="text-md text-gray-500">Publisher: {selectedBook?.publisher}</p>
-                <p className="text-md text-gray-500">Pages: {selectedBook?.pages}</p>
-                <p className="text-md text-gray-500">Available Quantity: {selectedBook?.quantity}</p>
+                <p className="text-md text-gray-500">Publisher : {selectedBook?.publisher}</p>
+                <p className="text-md text-gray-500">Pages : {selectedBook?.pages}</p>
+                <p className="text-md text-gray-500">Available Quantity : {selectedBook?.quantity}</p>
+                <p className="text-md text-gray-500">Available In Languages : {selectedBook?.language}</p>
+                <p className="text-md text-gray-500">Category / Genre : {selectedBook?.category}</p>
                 
                 <div className="flex items-center space-x-2">
                     <span className="text-lg font-semibold text-green-600">${selectedBook?.newPrice}</span>
@@ -30,7 +31,7 @@ const AdminBookView = ({selectedBook}) => {
                     )}
                 </div>
 
-                <p className="text-md text-gray-700 leading-relaxed">Description :{selectedBook?.description}</p>
+                <p className="text-md text-gray-700 leading-relaxed">{selectedBook?.description}</p>
             </div>
         </div>
     );

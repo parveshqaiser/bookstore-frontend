@@ -8,16 +8,24 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import AddEditBookModal from "./AddEditBookModal";
-import useGetAllBooks from "../shared/useGetAllBooks";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import bookLoading from "../assets/bookLoading.gif";
 import { Dialog } from 'primereact/dialog';
 import AdminBookView from "./AdminBookView";
+import axios from "axios";
+import { BASE_URL } from "../utils/api";
+import toast, { Toaster } from "react-hot-toast";
+import { getAllBooksList } from "../redux/bookSlice";
 
 const ManageBooks = () => {
-    
-    let {isLoading} = useGetAllBooks();
-    let allBooks = useSelector((store) => store?.book?.allBooks);
+
+    let dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getAllBooksList());
+    },[dispatch]);
+
+    let {allBooks,isLoading} = useSelector((store) => store?.book);
 
     const [visible , setVisible] = useState(false);  // add, update book
     const [searchText, setSearchText] = useState("");
@@ -49,10 +57,24 @@ const ManageBooks = () => {
         );
     }
 
+    const handleDeleteBook = async(id)=>{
+        try {
+            let res = await axios.delete(BASE_URL + `/deleteBook/${id}`, {withCredentials:true});
+            if(res.data.success)
+            {
+                dispatch(getAllBooksList());
+                toast.success(`${res.data?.message}`, {position: "top-center", duration : 2500})
+            }
+        } catch (error) {
+            console.log("error ", error);
+            toast.error(`${error?.message}`, {position: "top-center", duration : 2500})
+        }       
+    }
+
     return (
     <>
         <AdminNavbar /> 
-
+        <Toaster />
         <main className="mx-5 my-6 flex flex-col md:flex-row md:justify-between gap-2 items-center">
             <div className="w-full md:w-1/4">
                 <input 
@@ -87,20 +109,20 @@ const ManageBooks = () => {
                     </p>
                 }
             >
-                <Column field="title" header="Title"></Column>
+                <Column field="title" header="Title" style={{width:"25vw"}}></Column>
                 <Column field="author" header="Author"></Column>               
                 <Column field="publisher" header="Publisher"></Column> 
                 <Column field="newPrice" header="Price ($)"></Column>
                 <Column field="quantity" header="Qty"></Column>
                 <Column header="Action" className="" body={(rowData)=>(
-                    <div className="flex gap-4 justify-center">
+                    <div className="flex gap-2 justify-center">
                         <button className="p-2" title="View More" onClick={()=> {setShow(true), setSelectedBook(rowData)}}>
                             <HiDotsHorizontal className="text-xl text-gray-700 cursor-pointer" />
                         </button>  
                         <button className="p-2" title="Edit" onClick={()=>{setSelectedBook(rowData), setVisible(true), setIsEdit(true)}}>
                             <IoPencil className="text-xl text-green-700 cursor-pointer" />
                         </button>                          
-                        <button className="p-2" title="Delete">
+                        <button className="p-2" title="Delete" onClick={()=>handleDeleteBook(rowData?._id)}>
                             <MdDelete className="text-xl text-red-700  cursor-pointer animate-bounce"/>
                         </button>
                     </div>
@@ -115,7 +137,12 @@ const ManageBooks = () => {
             onHide={() => {setVisible(false), setIsEdit(false),setSelectedBook(null)}}
         
         >
-            <AddEditBookModal selectedBook={selectedBook} isEdit={isEdit} setVisible={setVisible} />
+            <AddEditBookModal 
+                selectedBook={selectedBook} 
+                isEdit={isEdit} 
+                setIsEdit={setIsEdit} 
+                setVisible={setVisible} 
+            />
         </Dialog>
 
         <Dialog
