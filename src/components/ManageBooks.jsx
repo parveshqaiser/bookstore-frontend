@@ -12,16 +12,18 @@ import useGetAllBooks from "../shared/useGetAllBooks";
 import { useSelector } from "react-redux";
 import bookLoading from "../assets/bookLoading.gif";
 import { Dialog } from 'primereact/dialog';
+import AdminBookView from "./AdminBookView";
 
 const ManageBooks = () => {
     
     let {isLoading} = useGetAllBooks();
     let allBooks = useSelector((store) => store?.book?.allBooks);
 
-    const [visible , setVisible] = useState(false);
+    const [visible , setVisible] = useState(false);  // add, update book
     const [searchText, setSearchText] = useState("");
     const [selectedBook, setSelectedBook] = useState(null);
     const [isEdit, setIsEdit] = useState(false);
+    const [show, setShow] = useState(false); // book view modal
 
     const tableData = useMemo(() => {
         if (!searchText?.trim()) return allBooks;
@@ -92,7 +94,7 @@ const ManageBooks = () => {
                 <Column field="quantity" header="Qty"></Column>
                 <Column header="Action" className="" body={(rowData)=>(
                     <div className="flex gap-4 justify-center">
-                        <button className="p-2" title="View More">
+                        <button className="p-2" title="View More" onClick={()=> {setShow(true), setSelectedBook(rowData)}}>
                             <HiDotsHorizontal className="text-xl text-gray-700 cursor-pointer" />
                         </button>  
                         <button className="p-2" title="Edit" onClick={()=>{setSelectedBook(rowData), setVisible(true), setIsEdit(true)}}>
@@ -114,6 +116,15 @@ const ManageBooks = () => {
         
         >
             <AddEditBookModal selectedBook={selectedBook} isEdit={isEdit} setVisible={setVisible} />
+        </Dialog>
+
+        <Dialog
+            header="Book View" 
+            visible={show}
+            style={{width:"70vw"}}
+            onHide={() => {setShow(false),setSelectedBook(null)}}
+        >
+            <AdminBookView selectedBook={selectedBook}/>
         </Dialog>
 
     </>
