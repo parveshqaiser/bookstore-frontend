@@ -5,11 +5,14 @@ import { BASE_URL } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { FaEyeSlash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 const AdminLogin = () => {
 
     const [inputValues, setInputValues] = useState({username : "", password:""});
     const [isDisable , setIsDisable] = useState(false);
+    const [toggleIcons , setToggleIcons] = useState(false);
 
     const navigate = useNavigate();
 
@@ -56,16 +59,29 @@ const AdminLogin = () => {
                     className="py-2 px-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-blue-50/60 text-gray-600"
                 />
             </div>
+
             <div className='mb-4'>
-                <input 
-                    type='text'  
-                    onChange={(e)=>setInputValues({...inputValues, password : e.target.value.trim() || ''})}
-                    value={inputValues.password}
-                    name='password'
-                    placeholder='Password'
-                    className="py-2 px-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-blue-50/60 text-gray-600"
-                />
+                <div className="flex items-center relative">
+                    <input
+                        type={toggleIcons ? "text" : "password"}
+                        onChange={(e) =>
+                            setInputValues({ ...inputValues, password: e.target.value.trim() || "" })
+                        }
+                        value={inputValues.password}
+                        name="password"
+                        placeholder="Password"
+                        className="py-2 px-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-blue-50/60 text-gray-600"
+                    />
+                    <button
+                        type="button"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+                        onClick={() => setToggleIcons(!toggleIcons)}
+                    >
+                        {toggleIcons ? <FaEye size={18} /> : <FaEyeSlash size={18} />}
+                    </button>
+                </div>             
             </div>
+
             <div>
                 <button 
                     disabled={isDisable}
