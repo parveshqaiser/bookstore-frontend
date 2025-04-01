@@ -235,7 +235,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             <label htmlFor="">Description</label>
             <div>
                 <textarea
-                    rows={2}
+                    rows={isEdit ? 3 : 2}
                     name='description'
                     onChange={handleChange}
                     value={formValues.description.value} 
@@ -347,32 +347,35 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>           
         </div>
 
-        <div className='my-4'>
-        {
-            !file && (
-            <>
-                <label htmlFor="coverPic" className="p-2 border border-gray-800 cursor-pointer rounded-lg md:w-auto w-full">
-                    Upload Book Cover
-                </label>
-                <input 
-                    type="file" 
-                    id="coverPic" 
-                    accept="image/png, image/jpeg" 
-                    className="hidden" 
-                    onChange={(e)=> setFile(e.target.files[0] || "")}
-                />
-            </>
-            )
-        }
-            <span className=''>{file?.name || ""}</span>  
-            {file && <span title='Remove Pic' onClick={()=> setFile(null)} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
-        </div>
+        {!isEdit && (
+            <div className='my-4'>
+            {
+                !file && (
+                <>
+                    <label htmlFor="coverPic" className="p-2 border border-gray-800 cursor-pointer rounded-lg md:w-auto w-full">
+                        Upload Book Cover
+                    </label>
+                    <input 
+                        type="file" 
+                        id="coverPic" 
+                        accept="image/png, image/jpeg" 
+                        className="hidden" 
+                        onChange={(e)=> setFile(e.target.files[0] || "")}
+                    />
+                </>
+                )
+            }
+                <span className=''>{file?.name || ""}</span>  
+                {file && <span title='Remove Pic' onClick={()=> setFile(null)} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
+            </div>
+        )}
+                
 
         <div className='text-center'>
             <button 
                 disabled={isDisable}
                 onClick={handleCLick}
-                className='px-4 py-2 text-violet-400 border border-purple-500 hover:border-purple-700 hover:text-violet-700 rounded-lg cursor-pointer md:w-1/4'
+                className='px-4 py-2 border border-purple-800 hover:text-purple-700 rounded-md cursor-pointer md:w-1/4'
             >
                 {isDisable? "Submitting .Please wait.." : "Submit"}
             </button>

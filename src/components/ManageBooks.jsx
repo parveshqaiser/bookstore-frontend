@@ -16,7 +16,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/api";
 import toast, { Toaster } from "react-hot-toast";
 import { getAllBooksList } from "../redux/bookSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ManageBooks = () => {
 
@@ -84,8 +84,11 @@ const ManageBooks = () => {
     <>
         <AdminNavbar /> 
         <Toaster />
-        <main className="mx-auto px-2 max-w-[1240px]">
-            <div className="my-6 flex flex-col md:flex-row md:justify-between gap-2 items-center">
+        <main className="mx-auto p-4 max-w-[1240px]">
+            <Link to="/admin/dashboard">
+                <button className='px-2 py-2 border text-sm border-blue-600 text-violet-600 rounded-md cursor-pointer'>⬅️ Go Back</button>
+            </Link> 
+            <div className="my-3 flex flex-col md:flex-row md:justify-between gap-2 items-center">
                 <div className="w-full md:w-1/3 lg:w-1/4">
                     <input 
                         type="text"
@@ -96,7 +99,7 @@ const ManageBooks = () => {
                 </div>
                 <button 
                     onClick={()=> setVisible(true)}
-                    className="w-full md:w-auto flex items-center justify-center border border-green-600 p-2 rounded-md cursor-pointer hover:text-green-600 transition"
+                    className="w-full md:w-auto p-2 flex items-center justify-center border border-purple-800 rounded-md hover:text-purple-700  bg-gray-50 cursor-pointer"
                 >
                     <FaPlus size={16} className="mr-1"/> 
                     <span>Add New Book</span>

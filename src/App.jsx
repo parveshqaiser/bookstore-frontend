@@ -7,6 +7,8 @@ import ManageBooks from './components/ManageBooks';
 import TestComponent from './components/TestComponent';
 
 import { Toaster } from 'react-hot-toast';
+import ManageOrders from './components/ManageOrders';
+import AdminDeliveredOrders from './components/AdminDeliveredOrders';
 
 function App() {
 
@@ -26,6 +28,14 @@ function App() {
 		{
             path : "/admin/manage/books",
             element : <ManageBooks />
+        },
+        {
+            path : "/admin/manage/orders",
+            element : <ManageOrders />
+        },
+        {
+            path : "/admin/manage/orders/delivered",
+            element : <AdminDeliveredOrders />
         },
 		{
             path : "/admin/test",

@@ -34,7 +34,6 @@ const AdminLogin = () => {
                 }, 1500);                
             }
         } catch (error) {
-            console.log("error ", error.message);
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
             setIsDisable(false)
         }

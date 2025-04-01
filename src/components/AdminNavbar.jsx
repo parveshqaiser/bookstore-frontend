@@ -5,7 +5,7 @@ import avatar from "../assets/avatar.png";
 import { FiLogOut } from "react-icons/fi";
 import axios from 'axios';
 import { BASE_URL } from '../utils/api.js';
-// import toast from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const AdminNavbar = () => {
@@ -16,16 +16,15 @@ const AdminNavbar = () => {
     {
         try {
             let res = await axios.post(BASE_URL + "/admin/logout", {}, {withCredentials:true});
-
             if(res.data.success);
             {
-                toast.success("Log out success",{duration: 1500,position: 'top-center'});
+                toast.success("Log out success",{duration: 2000,position: 'top-center'});
                 setTimeout(()=>{
                     navigate("/");
-                },1800); 
+                },2000); 
             }    
         } catch (error) {
-            toast.error(error.message,{duration: 1200,position: 'top-center'});
+            toast.error(error?.response?.data?.message || error?.message, {duration:2000})
             console.log("** ", error);
         }
     }
