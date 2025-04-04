@@ -47,7 +47,7 @@ const ManageOrders = () => {
         <>
         <Toaster />
         <AdminNavbar />
-        <main className="max-w-5xl mx-auto p-4">
+        <main className="max-w-6xl mx-auto p-4">
             <div className='flex sm:flex-row flex-col sm:gap-0 gap-2 justify-between'>
                 <Link to="/admin/dashboard">
                     <button className='px-2 py-2 border text-sm border-blue-600 text-violet-600 rounded-md cursor-pointer'>⬅️ Go Back</button>
