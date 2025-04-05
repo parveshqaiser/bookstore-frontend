@@ -17,12 +17,30 @@ export const getAllBooksList = createAsyncThunk(
     }
 );
 
+export const getSingleBook = createAsyncThunk(
+    "singleBook/get",
+    async (id, { rejectWithValue }) => {
+        try {
+            let res = await axios.get(BASE_URL + `/getBookById/${id}`,{withCredentials: true});
+            return res?.data?.data;
+        } catch (error) {
+            return rejectWithValue({
+                message : error.response?.data?.message || "Get Single Books Failed",
+                error : error?.response?.status
+            });
+        }
+    }
+);
+
 let bookSlice = createSlice({
     name : "book",
     initialState : {
         isLoading : false,
         allBooks : [],
         error : null,
+        isBookLoading : false,
+        singleBook : null,
+        errorBook : null,      
     },
     reducers : {},
     extraReducers : (builder)=>{
@@ -40,6 +58,22 @@ let bookSlice = createSlice({
         builder.addCase(getAllBooksList.rejected, (state, action)=>{
             state.isLoading = false;
             state.error = action.payload; // return an object {error : 401, message : "Unauthorized user"}
+        });
+
+        builder.addCase(getSingleBook.pending, (state, action)=>{
+            state.isBookLoading = true;
+            state.error = null;
+        });
+
+        builder.addCase(getSingleBook.fulfilled, (state, action)=>{
+            state.isBookLoading = false;
+            state.singleBook = action.payload;
+        });
+
+        
+        builder.addCase(getSingleBook.rejected, (state, action)=>{
+            state.isBookLoading = false;
+            state.error = action.payload; 
         });
     }
 });
