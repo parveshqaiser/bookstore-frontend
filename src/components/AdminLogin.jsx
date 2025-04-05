@@ -18,9 +18,9 @@ const AdminLogin = () => {
 
     const handleSubmit = async()=>{
 
-        let allValuesPresent = Object.values(inputValues).every(val => val.trim() =="");
+        let isSomeFieldEmpty = Object.values(inputValues).some(val => val.trim() =="");
 
-        if(allValuesPresent){
+        if(isSomeFieldEmpty){
             toast.error("All Inputs are required",{position:"top-center", duration:2000})
             return;
         }

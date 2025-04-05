@@ -9,6 +9,11 @@ import TestComponent from './components/TestComponent';
 import { Toaster } from 'react-hot-toast';
 import ManageOrders from './components/ManageOrders';
 import AdminDeliveredOrders from './components/AdminDeliveredOrders';
+import HomePage from './components/HomePage';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import OtpVerification from './components/OtpVerification';
+import SingleBookView from './components/SingleBookView';
 
 function App() {
 
@@ -40,6 +45,22 @@ function App() {
 		{
             path : "/admin/test",
             element : <TestComponent />
+        },
+        {
+            path : "/home",
+            element : <HomePage />
+        },
+        {
+            path : "/user/signin",
+            element : <SignIn />
+        },
+        {
+            path : "/user/otp/verify",
+            element : <OtpVerification />
+        },
+        {
+            path : "/book/view/:id",
+            element : <SingleBookView />
         },
         {
             path : "*",
