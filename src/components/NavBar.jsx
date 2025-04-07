@@ -63,8 +63,10 @@ const NavBar = ({user}) => {
     
             <div className="flex justify-between items-center gap-x-4">
                 <span className='text-[14px]'>{user?.name || ""}</span>
-                <aside className='flex gap-x-1'>                   
-                    <FaCartPlus size={24} />
+                <aside className='flex gap-x-1'>
+                    <Link to="/cart/items">                   
+                        <FaCartPlus size={24} />
+                    </Link>
                     <span>{cartItems && cartItems.length || 0}</span>
                 </aside>
                 <aside  className='relative cursor-pointer' onClick={()=>setToggle(!toggle)}>

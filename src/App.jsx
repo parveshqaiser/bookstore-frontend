@@ -14,6 +14,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import OtpVerification from './components/OtpVerification';
 import SingleBookView from './components/SingleBookView';
+import CartItems from './components/CartItems';
 
 function App() {
 
@@ -61,6 +62,10 @@ function App() {
         {
             path : "/book/view/:id",
             element : <SingleBookView />
+        },
+        {
+            path : "/cart/items",
+            element : <CartItems />
         },
         {
             path : "*",

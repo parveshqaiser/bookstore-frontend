@@ -5,7 +5,7 @@ import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
 
 const Footer = () => {
     return (
-        <>
+    <>
         <div className="container flex flex-col md:flex-row justify-between items-center gap-2">
             <div className="md:w-1/2 w-full">
                 <img src={footerLogo} alt="Logo" className="mb-3 w-16" />
@@ -53,7 +53,7 @@ const Footer = () => {
                 </a>
             </div>
         </div>
-            </>
+    </>
     )
 }
 
