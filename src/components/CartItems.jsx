@@ -1,30 +1,15 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import {res} from "../utils/constants";
 import NavBar from './NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { FaArrowRightLong } from "react-icons/fa6";
-
 import logo from "../assets/empty-cart.webp";
-import { clearCart } from '../redux/cartSlice';
+import { clearCart, decreaseQuantity, increaseQuantity, removeFromCart } from '../redux/cartSlice';
+import { FaBookOpen } from 'react-icons/fa';
 
-let item = [{
-    id : '67e3d0984982f3f73cc87619',
-    title: 'Half Girlfriend',
-    author: 'Chetan Bhagat',
-    description: 'Half Girlfriend is an Indian English coming of age, young adult romance novel by Indian author Chetan Bhagat. The novel, set in rural Bihar, New Delhi, Patna.',
-    category: 'Romance',
-    publisher: 'Oswald',
-    language: 'English',
-    quantity: 13,
-    isAvailable: true,
-    pages: 230,
-    newPrice: 12,
-    oldPrice: 20,
-    coverPic: 'https://res.cloudinary.com/dp0v0zb7z/image/upload/v1742983319/isvjavq4kbivlnooillb.jpg',
-  }];
 
 const CartItems = () => {
     let user = useSelector(store => store?.user?.user);
@@ -32,13 +17,30 @@ const CartItems = () => {
 
     let dispatch = useDispatch();
 
-    console.log("cart ", cart);
+    const [quantity , setQuantity] = useState(1);
 
     function handleClearCart()
     {
         dispatch(clearCart());
     }
 
+    function handleRemoveItems(id)
+    {
+        dispatch(removeFromCart(id))
+    }
+
+    function handleDecrease(id)
+    {
+        dispatch(decreaseQuantity(id))
+    }
+
+    function handleIncrease(id)
+    {
+        dispatch(increaseQuantity(id))
+       
+    }
+
+    console.log(cart);
 
     return (
     <>
@@ -69,7 +71,7 @@ const CartItems = () => {
                
         ) : cart.map((book, index) =>(
             <>
-            <section className="flex flex-col md:flex-row justify-between p-4 border-b-gray-600 rounded-md shadow-sm bg-white">
+            <section key={book?._id} className="flex flex-col md:flex-row justify-between p-4 border-b-gray-600 rounded-md shadow-sm bg-white">
                 <aside className="flex gap-4 w-full md:w-3/4">
                     <img src={book?.coverPic} alt="Book" className="w-20 h-auto object-cover rounded-md shadow-md" />
                     <div className="flex flex-col justify-between w-full">
@@ -79,14 +81,26 @@ const CartItems = () => {
                             By <span className="font-medium">{book?.author}</span>
                         </p>
                         </div>
-                        <p className="text-sm text-gray-600">Qty: <span className="font-semibold">2</span></p>
+                        <p className="text-sm text-gray-600">
+                            Qty : &nbsp; 
+                            <button 
+                                disabled={book?.qty ==1}
+                                onClick={()=>handleDecrease(book?._id)} 
+                                className='px-3 py-1 border border-red-600 text-red-600 rounded-md'> - 
+                            </button> 
+                            <span className="font-semibold mx-3">{book?.qty}</span> 
+                            <button 
+                                disabled={book?.qty ==3}
+                                onClick={()=>handleIncrease(book?._id)} 
+                                className='px-3 py-1 border border-green-700 text-green-800 rounded-md'> + </button>
+                        </p>
                     </div>
                 </aside>
 
                 <aside className='flex md:flex-col flex-row justify-between items-end p-2'>
                     <p className='text-base text-gray-600 font-normal'>${book?.newPrice}</p>      
                     <div>
-                        <MdDelete size={24} className='text-red-600 cursor-pointer animate-bounce' />
+                        <MdDelete  onClick={()=> handleRemoveItems(book?._id)} size={24} className='text-red-600 cursor-pointer animate-bounce' />
                     </div>
                 </aside>
             </section>
@@ -97,14 +111,14 @@ const CartItems = () => {
         <>
             <section className="flex flex-col md:flex-row justify-between md:items-center p-4 rounded-lg shadow-sm bg-white">
                 <div>
-                    <p className="text-base text-gray-700">Total Items: <span className="font-semibold">2</span></p>
+                    <p className="text-base text-gray-700">Total Items: <span className="font-semibold">{cart.reduce((sum,book)=> sum + book?.qty,0)}</span></p>
                     <p className="text-sm text-gray-500">Shipping and Taxes calculated at checkout</p>
                 </div>
-                <p className="text-base font-semibold text-gray-600">Gross Total: $100</p>
+                <p className="text-base font-semibold text-gray-600">Gross Total: $ {cart.reduce((sum, book)=> sum + book?.newPrice,0)}</p>
             </section>
 
             <section className='text-center space-y-2'>
-                <Link className='bg-purple-500 w-full block px-4 py-2 text-white rounded-md' to='/book/order/view'>Checkout</Link>
+                <Link className='bg-purple-500 w-full block px-4 py-2 text-white rounded-md' to='/cart/checkout'>Checkout</Link>
                 <p className='inline-block text-sm'>
                     <Link to="/home" className='text-gray-600 hover:text-gray-800 transition' >
                         Or Continue Shopping <FaArrowRightLong className='inline ml-2' />

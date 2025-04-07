@@ -65,7 +65,7 @@ const NavBar = ({user}) => {
                 <span className='text-[14px]'>{user?.name || ""}</span>
                 <aside className='flex gap-x-1'>
                     <Link to="/cart/items">                   
-                        <FaCartPlus size={24} />
+                        <FaCartPlus size={24} className='hover:text-purple-700' title='Cart' />
                     </Link>
                     <span>{cartItems && cartItems.length || 0}</span>
                 </aside>

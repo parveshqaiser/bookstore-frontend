@@ -37,16 +37,24 @@ export const getAllDeliveredOrders = createAsyncThunk(
 )
 
 let orderSlice = createSlice({
-    name : "orders",
+    name : "order",
     initialState : {
         isLoading : false,
         allPendingOrders : [],
         error : null,
         allDeliveredOrders : [],
         isLoadingDelivered : false,
-        deliveredError : null
+        deliveredError : null,
+        storeOrderDetails : null,
     },
-    reducers : {},
+    reducers : {
+        addOrderDetails : (state, action)=>{
+            state.storeOrderDetails = action.payload;
+        },
+        removeOrderDetails : (state)=>{
+            state.storeOrderDetails = null;
+        }
+    },
     extraReducers : (builder)=>{
         builder.addCase(getAllPendingOrders.pending, (state, action)=>{
             state.isLoading = true;
@@ -84,3 +92,5 @@ let orderSlice = createSlice({
 });
 
 export default orderSlice.reducer;
+
+export const {addOrderDetails, removeOrderDetails} = orderSlice.actions;

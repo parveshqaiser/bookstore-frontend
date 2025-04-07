@@ -41,8 +41,8 @@ const NewArrivals = ({allBooks, isLoading}) => {
                     <h2 className="text-base font-semibold text-gray-800 mb-2">{book.title}</h2>
                     <p className="text-sm text-gray-600 mb-2">{book?.description.length > 70 ? `${book.description.slice(0, 70)}...` : book?.description}</p>
                     <p className="text-md font-medium text-purple-500 mb-2">
-                        <span className="text-green-600 font-semibold mr-2">$ 23</span>
-                        <span className="text-gray-500 line-through text-sm">$ 30</span>                           
+                        <span className="text-green-600 font-semibold mr-2">$ {book?.newPrice}</span>
+                        <span className="text-gray-500 line-through text-sm">$ {book?.oldPrice}</span>                                                   
                     </p>
                     <button className="border border-purple-500 text-purple-700 px-4 py-1 rounded-md hover:cursor-pointer transition">
                         Add To Cart

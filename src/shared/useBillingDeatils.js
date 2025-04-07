@@ -2,52 +2,38 @@
 
 import React, { useState } from 'react'
 
-const useAddBook = () => {
-  
+export const useBillingDetails = ()=>{
+
     const [formValues , setFormValues] = useState({
-        title : {
+        name : {
             value : "",
             error : ""
         },
-        author : {
+        email : {
             value : "",
             error : "",
         },
-        category : {
+        number : {
             value : "",
             error : "",
         },
-        description : {
-            value : "",
-            error : ""
-        },
-        publisher : {
+        doorNo : {
             value : "",
             error : "",
         },
-        language : {
+        state : {
             value : "",
             error : "",
         },
-        pages : {
-            value : "",
-            error : ""
-        },
-        quantity : {
+        city : {
             value : "",
             error : "",
         },
-        newPrice : {
-            value : "",
-            error : "",
-        },
-        oldPrice : {
+        pinCode : {
             value : "",
             error : "",
         },
     });
 
-    return {formValues ,setFormValues}
-}
-
-export default useAddBook;
+    return {formValues ,setFormValues};
+};

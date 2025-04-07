@@ -1,6 +1,6 @@
 
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSingleBook } from '../redux/bookSlice';
 import { useParams } from 'react-router-dom';
@@ -14,6 +14,8 @@ const SingleBookView = () => {
     let book = useSelector(store => store?.book?.singleBook);
     let user = useSelector(store => store?.user?.user);
 
+    let [quantity , setQuantity] = useState(1);
+
     let dispatch = useDispatch();
     
     useEffect(()=>{
@@ -22,7 +24,12 @@ const SingleBookView = () => {
 
     function handleAddToCart()
     {
-        dispatch(addToCart(book));
+        let addBook = {
+            ...book,
+            perUnit : book?.newPrice,
+            qty : quantity || 1
+        };
+        dispatch(addToCart(addBook));
     }
 
 
@@ -72,7 +79,10 @@ const SingleBookView = () => {
 
                 <div className="space-y-3 mt-2 md:mt-0 md:space-x-0 space-x-2">
                     <label className="block text-sm font-medium text-gray-700">Quantity:</label>
-                    <select className="w-48  focus:outline-none p-2 border border-gray-400 rounded-md">
+                    <select 
+                        className="w-48  focus:outline-none p-2 border border-gray-400 rounded-md" 
+                        onChange={(e)=> setQuantity(e.target.value)}
+                    >
                         {[1, 2, 3, 4, 5].map(qty => (
                             <option key={qty} value={qty}>{qty}</option>
                         ))}

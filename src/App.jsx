@@ -11,10 +11,12 @@ import ManageOrders from './components/ManageOrders';
 import AdminDeliveredOrders from './components/AdminDeliveredOrders';
 import HomePage from './components/HomePage';
 import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
 import OtpVerification from './components/OtpVerification';
 import SingleBookView from './components/SingleBookView';
 import CartItems from './components/CartItems';
+import CheckoutPage from './components/CheckoutPage';
+import UserProfile from './components/UserProfile';
+import OrderPlacedPage from './components/OrderPlacedPage';
 
 function App() {
 
@@ -66,6 +68,18 @@ function App() {
         {
             path : "/cart/items",
             element : <CartItems />
+        },
+        {
+            path : "/cart/checkout",
+            element : < CheckoutPage/>
+        },
+        {
+            path : "/order/details",
+            element : <OrderPlacedPage/>
+        },
+        {
+            path : "/user/profile",
+            element : <UserProfile/>
         },
         {
             path : "*",

@@ -3,16 +3,29 @@ import React, { useEffect, useState } from 'react';
 import { res } from '../utils/constants';
 import {Link } from "react-router-dom";
 import { categoryList } from '../utils/constants';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/cartSlice';
 
 const TopSellers = ({allBooks, isLoading}) => {
 
     const [tableData, setTableData] = useState(allBooks);
+    let dispatch = useDispatch();
 
     function handleChange(e)
     {
         let cat = e.target.value;
         const filteredBooks = cat == "Choose a Genre" ? allBooks : allBooks.filter(val => val.category.toLowerCase() == cat.toLowerCase());
         setTableData(filteredBooks);
+    }
+
+    function handleAddToCart(book)
+    {
+        let addBook = {
+            ...book,
+            perUnit : book?.newPrice,
+            qty :1,
+        };
+        dispatch(addToCart(addBook))
     }
 
     if(isLoading)
@@ -53,10 +66,12 @@ const TopSellers = ({allBooks, isLoading}) => {
                         <h2 className="text-base font-semibold text-gray-800 mb-2">{book.title}</h2>
                         <p className="text-sm text-gray-600 mb-2">{book?.description.length > 70 ? `${book.description.slice(0, 70)}...` : book?.description}</p>
                         <p className="text-md font-medium text-purple-500 mb-2">
-                            <span className="text-green-600 font-semibold mr-2">$ 23</span>
-                            <span className="text-gray-500 line-through text-sm">$ 30</span>                           
+                            <span className="text-green-600 font-semibold mr-2">$ {book?.newPrice}</span>
+                            <span className="text-gray-500 line-through text-sm">$ {book?.oldPrice}</span>                           
                         </p>
-                        <button className="border border-purple-500 text-purple-700 px-4 py-1 rounded-md hover:cursor-pointer transition">
+                        <button
+                            onClick={()=>handleAddToCart(book)}
+                            className="border border-purple-500 text-purple-700 px-4 py-1 rounded-md hover:cursor-pointer transition">
                             Add To Cart
                         </button>
                     </div>

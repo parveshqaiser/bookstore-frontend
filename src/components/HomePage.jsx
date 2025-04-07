@@ -12,7 +12,6 @@ const HomePage = () => {
 
     let user = useSelector(store => store?.user?.user);
     let {allBooks,isLoading} = useSelector(store => store?.book);
-    console.log("allBooks", allBooks, isLoading);
 
     return (
         <>

@@ -14,14 +14,29 @@ const cartSlice = createSlice({
                 state.cartItems.push(action.payload);
             }           
         },
-        removeFromCart : (state,id)=>{
-            state.cartItems = state.cartItems.filter(item => item?._id !==id);
+        removeFromCart : (state,action)=>{
+            state.cartItems = state.cartItems.filter(item => item?._id !== action.payload);
         },
         clearCart : (state)=>{
             state.cartItems =[]
         },
+        increaseQuantity : (state, action)=>{
+            const book = state.cartItems.find((b) => b._id === action.payload);
+            // console.log(book.perUnit, "****************")
+            if (book) {
+                book.qty += 1;
+                book.newPrice = book.perUnit * book.qty;
+            }
+        },
+        decreaseQuantity : (state, action)=>{
+            const book = state.cartItems.find((b) => b._id === action.payload);
+            if (book && book.qty > 1) {
+                book.qty -= 1;
+                book.newPrice = book.perUnit * book.qty;
+            }
+        }
     },
 });
 
-export const {addToCart, removeFromCart, clearCart} = cartSlice.actions;
+export const {addToCart, removeFromCart, clearCart , increaseQuantity , decreaseQuantity} = cartSlice.actions;
 export default cartSlice.reducer;
