@@ -16,13 +16,6 @@ const CartItems = () => {
 
     let dispatch = useDispatch();
 
-    const [quantity , setQuantity] = useState(1);
-
-    function handleClearCart()
-    {
-        dispatch(clearCart());
-    }
-
     function handleRemoveItems(id)
     {
         dispatch(removeFromCart(id))
@@ -47,7 +40,7 @@ const CartItems = () => {
             <section className="flex flex-col md:flex-row justify-between items-center gap-4">
                 <h1 className="text-xl font-bold text-gray-700">🛒 My Shopping Cart</h1>
                 <button 
-                    onClick={handleClearCart}
+                    onClick={()=>dispatch(clearCart())}
                     className="px-4 py-2 text-sm rounded-md border border-red-500 text-red-600 hover:bg-red-100 cursor-pointer hover:border-red-700 transition-all">
                     Clear Cart
                 </button>
@@ -88,7 +81,8 @@ const CartItems = () => {
                             <button 
                                 disabled={book?.qty ==3}
                                 onClick={()=>handleIncrease(book?._id)} 
-                                className='px-3 py-1 border border-green-700 text-green-800 rounded-md'> + </button>
+                                className='px-3 py-1 border border-green-700 text-green-800 rounded-md'> + 
+                            </button>
                         </p>
                     </div>
                 </aside>

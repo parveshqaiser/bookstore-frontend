@@ -34,18 +34,57 @@ export const getAllDeliveredOrders = createAsyncThunk(
             });
         }
     }
-)
+);
+
+export const getAllUserPendingOrders = createAsyncThunk(
+    "allUserPendingOrders/get", async(_,{rejectWithValue})=>{
+        try {
+            let res = await axios.get(BASE_URL + "/user/orders/pending",{withCredentials: true});
+            return res?.data?.data;
+        } catch (error) {
+            return rejectWithValue({
+                message : error.response?.data?.message || "Get All User Pending Orders failed",
+                error : error?.response?.status
+            });
+        }
+    }
+);
+
+export const getAllUserDeliveredOrders = createAsyncThunk(
+    "allUserDeliveredOrders/get", async(_,{rejectWithValue})=>{
+        try {
+            let res = await axios.get(BASE_URL + "/user/orders/delivered",{withCredentials: true});
+            return res?.data?.data;
+        } catch (error) {
+            return rejectWithValue({
+                message : error.response?.data?.message || "Get All User Delivered Orders failed",
+                error : error?.response?.status
+            });
+        }
+    }
+);
 
 let orderSlice = createSlice({
     name : "order",
     initialState : {
-        isLoading : false,
+        // for admin
+        isLoading : false, 
         allPendingOrders : [],
         error : null,
+
         allDeliveredOrders : [],
         isLoadingDelivered : false,
         deliveredError : null,
-        storeOrderDetails : null,
+
+        storeOrderDetails : null, // for user as soon as he place order
+        // for users
+        isUserPendingOrderLoading : false,
+        userPendingOrder :[],
+        pendingOrderError : null,
+
+        isUserDeliveredOrderLoading : false,
+        userDeliveredOrder :[],
+        deliveredOrderError : null,
     },
     reducers : {
         addOrderDetails : (state, action)=>{
@@ -87,6 +126,40 @@ let orderSlice = createSlice({
         builder.addCase(getAllDeliveredOrders.rejected, (state, action)=>{
             state.isLoadingDelivered = false;
             state.deliveredError = action.payload;
+        });
+
+        // for user pending orders
+        builder.addCase(getAllUserPendingOrders.pending, (state, action)=>{
+            state.isUserPendingOrderLoading = true;
+            state.pendingOrderError = null;
+        });
+
+        builder.addCase(getAllUserPendingOrders.fulfilled, (state, action)=>{
+            state.isUserPendingOrderLoading = false;
+            state.userPendingOrder = action.payload;
+            state.pendingOrderError = null;
+        });
+
+        builder.addCase(getAllUserPendingOrders.rejected, (state, action)=>{
+            state.isUserPendingOrderLoading = false;
+            state.pendingOrderError = action.payload;
+        });
+
+        // for user delivered orders
+        builder.addCase(getAllUserDeliveredOrders.pending, (state, action)=>{
+            state.isUserDeliveredOrderLoading = true;
+            state.deliveredOrderError = null;
+        });
+
+        builder.addCase(getAllUserDeliveredOrders.fulfilled, (state, action)=>{
+            state.isUserDeliveredOrderLoading = false;
+            state.userDeliveredOrder = action.payload;
+            state.deliveredOrderError = null;
+        });
+
+        builder.addCase(getAllUserDeliveredOrders.rejected, (state, action)=>{
+            state.isUserDeliveredOrderLoading = false;
+            state.deliveredOrderError = action.payload;
         });
     }
 });

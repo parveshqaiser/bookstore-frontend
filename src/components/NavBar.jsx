@@ -44,7 +44,9 @@ const NavBar = ({user}) => {
         <header className="max-w-6xl mx-auto flex md:flex-row items-center justify-between fixed top-0 left-0 right-0 bg-white shadow-md p-3">      
         <Toaster />     
             <div className="flex items-center gap-3">
+                <Link to="/home">
                 <HiMiniBars4 size={26} className="text-purple-500 cursor-pointer hover:text-purple-600 transition duration-200" />
+                </Link>
                 <div className="">
                     <input
                         type="text"

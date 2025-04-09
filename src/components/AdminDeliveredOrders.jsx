@@ -52,7 +52,7 @@ const AdminDeliveredOrders = () => {
        <>
         <AdminNavbar />
         <main className="max-w-6xl mx-auto p-4">
-            <Link to="/admin/dashboard">
+            <Link to="/admin/manage/orders">
                 <button className='px-2 py-2 border text-sm border-blue-600 text-violet-600 rounded-md cursor-pointer'>⬅️ Go Back</button>
             </Link> 
 
@@ -65,11 +65,14 @@ const AdminDeliveredOrders = () => {
                 />
             </div>
 
-            {tableData?.length ==0 ?<p className='text-center text-purple-600 bg-gray-100 p-2 rounded-md'>No Such Delivered Orders Found</p> : tableData?.map((order) => (
+            {tableData?.length ==0 ?
+            <p className='text-center text-purple-600 bg-gray-100 p-2 rounded-md'>No Such Delivered Orders Found</p> 
+            : tableData?.map((order, index) => (
             <div 
                 key={order._id}
-                className="bg-white p-5 rounded-lg shadow-md my-3 border border-gray-200"
+                className="bg-white p-5 rounded-lg shadow-md my-6 border border-gray-200"
             >
+                <p># {index+1}</p>
                 <p className=''>  Order No : {order?._id}</p>
                 <div className="flex justify-between items-center mb-3">
                     <span className="text-sm text-green-800"> Order Date : {order.createdAt.split("T")[0]}</span>

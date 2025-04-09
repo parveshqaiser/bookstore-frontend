@@ -28,7 +28,8 @@ const SingleBookView = () => {
         let addBook = {
             ...book,
             perUnit : book?.newPrice,
-            qty : quantity || 1
+            newPrice : book?.newPrice * quantity,
+            qty : parseInt(quantity) || 1,
         };
         dispatch(addToCart(addBook));
         toast.success(`${book?.title} added to cart`)
@@ -85,7 +86,7 @@ const SingleBookView = () => {
                         className="w-48  focus:outline-none p-2 border border-gray-400 rounded-md" 
                         onChange={(e)=> setQuantity(e.target.value)}
                     >
-                        {[1, 2, 3, 4, 5].map(qty => (
+                        {[1, 2, 3].map(qty => (
                             <option key={qty} value={qty}>{qty}</option>
                         ))}
                     </select>

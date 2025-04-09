@@ -46,7 +46,7 @@ const CheckoutPage = () => {
         setFormValues(newValues)
     }
 
-    const handleSubmit = async()=>{
+    const handlePlaceOrder = async()=>{
 
         let product = cart && cart.map(book=>{
             return{
@@ -73,29 +73,30 @@ const CheckoutPage = () => {
             products : product
         };
 
-        try {
-            let res = await axios.post(BASE_URL + "/order/book", data, {withCredentials:true});
-            console.log("res.data.data", res.data.data);
+        console.log(data);
+
+        // try {
+        //     let res = await axios.post(BASE_URL + "/order/book", data, {withCredentials:true});
+        //     console.log("res.data.data", res.data.data);
             
-            if(res.data.success)
-            {
-                toast.success(res.data.message, {duration:2000});
-                dispatch(addOrderDetails(res.data.data));
-                dispatch(clearCart());
-                setTimeout(()=>{
-                    navigate("/order/details")                    
-                },2000)
+        //     if(res.data.success)
+        //     {
+        //         toast.success(res.data.message, {duration:2000});
+        //         dispatch(addOrderDetails(res.data.data));
+        //         dispatch(clearCart());
+        //         setTimeout(()=>{
+        //             navigate("/order/details")                    
+        //         },2000)
                 
-            }
-        } catch (error) {
-            toast.error(error?.response?.data?.message || error?.message, {duration:2000})
-        }
+        //     }
+        // } catch (error) {
+        //     toast.error(error?.response?.data?.message || error?.message, {duration:2000})
+        // }
     }
 
     return (
         <>
             <NavBar user={user} />
-            <Toaster />
             <main className="max-w-5xl mx-auto px-4 py-8 my-20 space-y-8 bg-white rounded-lg shadow-sm">
                 <section className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <p className="text-lg text-gray-700 font-medium">🧾 Total Items: <span className="font-semibold">{cart.reduce((sum,book)=> sum + book?.qty,0)}</span></p>
@@ -198,7 +199,7 @@ const CheckoutPage = () => {
                 
                     <div className="flex justify-end">
                         <button
-                            onClick={handleSubmit}
+                            onClick={handlePlaceOrder}
                             disabled={!isCheck}
                             className={`px-4 py-2 border border-purple-600 text-violet-500 rounded-md transition text-sm font-medium ${isCheck? "cursor-pointer" : "cursor-not-allowed"}`}>
                         🛍️ Place Order
