@@ -80,6 +80,26 @@ const ManageBooks = () => {
         }       
     }
 
+    const quantityTemplate = (rowData) => {
+        let color ;
+       if(rowData.quantity > 3 && rowData.quantity <7)
+       {
+            color = "bg-yellow-200"
+       }else if(rowData.quantity <3){
+            color = "bg-red-300"
+       }else {
+        color = ""
+       }
+
+        return (
+            <span
+                className={` px-3 py-2 rounded-md ${color}`}
+            >
+                {rowData?.quantity}
+            </span>
+        );
+    };
+
     return (
     <>
         <AdminNavbar /> 
@@ -125,7 +145,7 @@ const ManageBooks = () => {
                     <Column field="publisher" header="Publisher"></Column>
                     <Column field="category" header="Genre"></Column>  
                     <Column field="newPrice" header="Price ($)"></Column>
-                    <Column field="quantity" header="Qty"></Column>
+                    <Column field="quantity" header="Qty" body={quantityTemplate}></Column>
                     <Column header="Action" className="" body={(rowData)=>(
                         <div className="flex gap-2 justify-center">
                             <button className="p-2" title="View More" onClick={()=> {setShow(true), setSelectedBook(rowData)}}>

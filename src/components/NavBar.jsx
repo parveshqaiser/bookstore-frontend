@@ -17,14 +17,7 @@ import { logoutUser } from '../redux/userSlice';
 
 const NavBar = ({user}) => {
 
-    let links = [
-        {name : "Admin login", href : "/"},
-        {name : "User Login", href : "/user/signin"},
-        {name : "User Profile", href : "/user/profile"},
-        {name : "Checkout", href : ""},
-        {name : "Logout", href : ""}
-    ];
-    const [toggle, setToggle] = useState(false);
+    let [toggle, setToggle] = useState(false);
     let navigate = useNavigate();
     let dispatch = useDispatch();
 
@@ -83,12 +76,12 @@ const NavBar = ({user}) => {
                             <li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' to="/user/profile">User Profile</Link>
                             </li>
-                            <li className='hover:bg-gray-200 p-2 text-sm'>
-                                <Link className='block' to="/user/profile">Checkout</Link>
-                            </li>
-                            <li className='hover:bg-gray-200 p-2 text-sm'>
+                            {cartItems && cartItems.length >0 &&(<li className='hover:bg-gray-200 p-2 text-sm'>
+                                <Link className='block' to="/cart/checkout">Checkout</Link>
+                            </li>)}
+                            {user && (<li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' onClick={handleLogout}>Logout</Link>
-                            </li>                        
+                            </li>)}                   
                         </ul>
                     </div>)}                    
                 </aside>

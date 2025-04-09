@@ -8,7 +8,7 @@ export const getAllPendingOrders = createAsyncThunk(
     "allPendingOrders/get",
     async (_, { rejectWithValue }) => {
         try {
-            let res = await axios.get(BASE_URL + "/received/orders/user",{withCredentials: true});
+            let res = await axios.get(BASE_URL + "/admin/orders/pending",{withCredentials: true});
             return res?.data?.data;
         } catch (error) {
             console.log("err ", error);
@@ -24,7 +24,7 @@ export const getAllDeliveredOrders = createAsyncThunk(
     "allDeliveredOrders/get",
     async(_, {rejectWithValue})=>{
         try {
-            let res = await axios.get(BASE_URL + "/received/orders/delivered",{withCredentials: true});
+            let res = await axios.get(BASE_URL + "/admin/orders/delivered",{withCredentials: true});
             return res?.data?.data;
         } catch (error) {
             console.log("err ", error);

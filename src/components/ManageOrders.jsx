@@ -23,7 +23,7 @@ const ManageOrders = () => {
     const handlePlaceItems = async (id)=>{
 
         try {
-            let res = await axios.post(BASE_URL + `/update/order/status/${id}`, {orderStatus : "Delivered"}, {withCredentials:true});
+            let res = await axios.post(BASE_URL + `/admin/update/order/status/${id}`, {orderStatus : "Delivered"}, {withCredentials:true});
             if(res.data.success)
             {
                 toast.success(`${res.data.message}`,{duration:2500})

@@ -5,6 +5,7 @@ import {Link } from "react-router-dom";
 import { categoryList } from '../utils/constants';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cartSlice';
+import toast from 'react-hot-toast';
 
 const TopSellers = ({allBooks, isLoading}) => {
 
@@ -25,7 +26,8 @@ const TopSellers = ({allBooks, isLoading}) => {
             perUnit : book?.newPrice,
             qty :1,
         };
-        dispatch(addToCart(addBook))
+        dispatch(addToCart(addBook));
+        toast.success(`${book?.title} added to cart`)
     }
 
     if(isLoading)

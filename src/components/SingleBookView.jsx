@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import { addToCart } from '../redux/cartSlice';
+import toast from 'react-hot-toast';
 
 const SingleBookView = () => {
 
@@ -30,6 +31,7 @@ const SingleBookView = () => {
             qty : quantity || 1
         };
         dispatch(addToCart(addBook));
+        toast.success(`${book?.title} added to cart`)
     }
 
 

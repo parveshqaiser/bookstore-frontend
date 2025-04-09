@@ -17,6 +17,9 @@ import CartItems from './components/CartItems';
 import CheckoutPage from './components/CheckoutPage';
 import UserProfile from './components/UserProfile';
 import OrderPlacedPage from './components/OrderPlacedPage';
+import UserOrders from './components/UserOrders';
+import UserAddress from './components/UserAddress';
+import ChangePassword from './components/ChangePassword';
 
 function App() {
 
@@ -79,7 +82,21 @@ function App() {
         },
         {
             path : "/user/profile",
-            element : <UserProfile/>
+            element : <UserProfile/>,
+            children : [
+                {
+                    path : "orders",
+                    element : <UserOrders />
+                }, 
+                {
+                    path : "address",
+                    element : <UserAddress />
+                },
+                {
+                    path : "change-password",
+                    element : <ChangePassword />
+                }
+            ]
         },
         {
             path : "*",

@@ -73,18 +73,17 @@ const CheckoutPage = () => {
             products : product
         };
 
-        console.log(data , product);
-
         try {
             let res = await axios.post(BASE_URL + "/order/book", data, {withCredentials:true});
+            console.log("res.data.data", res.data.data);
+            
             if(res.data.success)
             {
                 toast.success(res.data.message, {duration:2000});
                 dispatch(addOrderDetails(res.data.data));
                 dispatch(clearCart());
                 setTimeout(()=>{
-                    navigate("/order/details")
-                    
+                    navigate("/order/details")                    
                 },2000)
                 
             }

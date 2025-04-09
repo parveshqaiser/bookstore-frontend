@@ -10,18 +10,22 @@ const OrderPlacedPage = () => {
     let {storeOrderDetails} = useSelector(store => store?.order);
 
     let dispatch = useDispatch();
-    console.log(storeOrderDetails);
+    // console.log(storeOrderDetails);
 
-    useEffect(()=>{
-       return(()=>{
-        dispatch(removeOrderDetails());
-    })
-    },[])
+    useEffect(() => {
+        console.log("use effect renderd");
+        return () => {
+            console.log("clean up done");
+            dispatch(removeOrderDetails());
+        };
+    }, []);
+
+    console.log("body rendered");
 
     return (
     <main className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold text-green-600 mb-4">✅ Your Order Has Been Successfully Placed!</h1>
-
+        <p className="text-base text-gray-500 mt-4">Ordered on: {new Date(`${storeOrderDetails?.createdAt}`).toLocaleString()}</p>
         <div className="space-y-2">
             <p><span className="font-semibold">Order ID:</span> {storeOrderDetails?._id}</p>
             <p><span className="font-semibold">Order Status:</span> Pending</p>
@@ -46,7 +50,7 @@ const OrderPlacedPage = () => {
             <h2 className="font-semibold mb-2">Shipping Address:</h2>
             <p>{storeOrderDetails?.address?.doorNo} , {storeOrderDetails?.address?.city} , {storeOrderDetails?.address?.state}, {storeOrderDetails?.address?.pinCode} </p>
         </div>
-        <p className="text-sm text-gray-500 mt-4">Ordered on: {new Date(`${storeOrderDetails?.createdAt}`).toLocaleString()}</p>
+       
         <div className="my-2 bg-green-100 text-green-800 px-4 py-2 rounded-md shadow-sm">
             📦 Estimated delivery by <span className="font-medium">4 to 6 days</span>.
         </div>
