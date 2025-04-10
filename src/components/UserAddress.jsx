@@ -3,12 +3,11 @@
 import React from 'react'
 
 const UserAddress = () => {
-  return (
-    <div>
-      UserAddress
-      UserAddress
-    </div>
-  )
+	return (
+		<div>
+			UserAddress
+		</div>
+	)
 }
 
-export default UserAddress
+export default UserAddress;

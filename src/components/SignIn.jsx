@@ -12,11 +12,13 @@ import { useDispatch } from 'react-redux';
 import validator from "validator";
 import { addTempUserData, getUserDetails } from '../redux/userSlice';
 import { getAllBooksList } from '../redux/bookSlice';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const SignIn = () => {
 
     const [toggleIcons , setToggleIcons] = useState(false);
     const [inputValues, setInputValues] = useState({name : "", email:"",  password:""});
+    const [isDisabled, setIsDisabled] = useState(false);
 
     let navigate = useNavigate();
     let dispatch = useDispatch();
@@ -59,20 +61,24 @@ const SignIn = () => {
         if(newUser)
         {
             try {
+                setIsDisabled(true);
                 let res = await axios.post(BASE_URL + "/register/user",registerData, {withCredentials: true});
                 if(res?.data?.success)
                 {
                     dispatch(addTempUserData(res.data.data))
                     toast.success(res.data.message, {duration:2000});
                     setTimeout(()=>{
+                        setIsDisabled(false);
                         navigate("/user/otp/verify")
                     },1800)
                 }
             } catch (error) {
+                setIsDisabled(false);
                 toast.error(error?.response?.data?.message || error?.message, {duration:2000})
             }
         }else{
             try {
+                setIsDisabled(true);
                 let res = await axios.post(BASE_URL + "/user/login",loginData, {withCredentials: true});
                 if(res?.data?.success)
                 {
@@ -80,10 +86,12 @@ const SignIn = () => {
                     dispatch(getAllBooksList());
                     toast.success(res.data.message, {duration:2000});
                     setTimeout(()=>{
+                        setIsDisabled(false);
                         navigate("/home")
                     },1800)
                 }
             } catch (error) {
+                setIsDisabled(false);
                 toast.error(error?.response?.data?.message || error?.message, {duration:2000})
             }
         }  
@@ -91,7 +99,7 @@ const SignIn = () => {
 
     return (
         <div className='max-w-6xl md:mx-auto my-10 mx-4 shadow-sm pb-4'>
-             <Toaster />
+            <Toaster />
             <img src={logo1} alt='Book logo' className='w-40 mx-auto rounded-full'/>
             <h2 className='text-center font-mono text-xl text-purple-700 my-1'>The Book Story Shop</h2>
             <div className='w-80 mx-auto my-2'> 
@@ -139,11 +147,25 @@ const SignIn = () => {
                         {toggleIcons ? <FaEye size={18} /> : <FaEyeSlash size={18} />}
                     </button>
                 </div>
+
                 <div className='mb-2'>
+                {isDisabled ?  
+                    <div className="text-center">
+                        <ProgressSpinner 
+                            style={{width: '50px', height: '50px'}} 
+                            strokeWidth="8" fill="var(--surface-ground)" 
+                            animationDuration=".5s" 
+                        /> 
+                    <p className="text-gray-600 text-sm">Please Wait...</p>
+                </div> :
                     <button 
                         onClick={handleClick}
-                        className='px-4 py-2 rounded-md border border-purple-600 text-violet-900 w-full hover:ring-1 cursor-pointer'>Submit</button>
+                        className='px-4 py-2 rounded-md border border-purple-600 text-violet-900 w-full hover:ring-1 cursor-pointer'
+                    >
+                        Submit
+                    </button>}
                 </div>
+
                 <p className='text-center'>
                     <span className='text-sm'>{!newUser ?"Don't have an Account ?" : "Existing User ?" } &nbsp;</span>
                     <Link onClick={()=>{setNewUser(!newUser), setInputValues({name :"", email:"", password :""})}} className='text-blue-400 underline'>{!newUser ? "Sign Up Here" : "Sign In"}</Link>

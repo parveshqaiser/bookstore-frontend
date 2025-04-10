@@ -20,6 +20,7 @@ const CheckoutPage = () => {
     let navigate = useNavigate();
 
     const [isCheck, setIsCheck] = useState(false);
+    let phoneExp = new RegExp("^[6-9]\\d{9}$"); 
 
     function handleChange(e)
     {
@@ -27,11 +28,11 @@ const CheckoutPage = () => {
 
         let newValues = {...formValues};
 
-        if(name == "number" || name == "pinCode")
+        if(name == "number")
         {
             newValues[name] = {
-                value : parseInt(value) || "",
-                error : !value ? "Required" : ""
+                value : value && value >= 6 ? parseInt(value) || "" :"",
+                error : !value ? "Required" : (value >=0 && value <=5) ? "Mobile Number must start between 6-9 & must be 10 digits":"",
             }
         }
 
@@ -42,7 +43,13 @@ const CheckoutPage = () => {
                 error : !value ? "Required" : ""
             }
         }
-    
+
+        if(name == "pinCode"){
+            newValues[name] = {
+                value : parseInt(value) || "",
+                 error : !value ? "Required" : ""
+            }
+        }    
         setFormValues(newValues)
     }
 
@@ -73,25 +80,21 @@ const CheckoutPage = () => {
             products : product
         };
 
-        console.log(data);
-
-        // try {
-        //     let res = await axios.post(BASE_URL + "/order/book", data, {withCredentials:true});
-        //     console.log("res.data.data", res.data.data);
-            
-        //     if(res.data.success)
-        //     {
-        //         toast.success(res.data.message, {duration:2000});
-        //         dispatch(addOrderDetails(res.data.data));
-        //         dispatch(clearCart());
-        //         setTimeout(()=>{
-        //             navigate("/order/details")                    
-        //         },2000)
+        try {
+            let res = await axios.post(BASE_URL + "/order/book", data, {withCredentials:true});
+            if(res.data.success)
+            {
+                toast.success(res.data.message, {duration:2000});
+                dispatch(addOrderDetails(res.data.data));
+                dispatch(clearCart());
+                setTimeout(()=>{
+                    navigate("/order/details")                    
+                },2000)
                 
-        //     }
-        // } catch (error) {
-        //     toast.error(error?.response?.data?.message || error?.message, {duration:2000})
-        // }
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message || error?.message, {duration:2000})
+        }
     }
 
     return (

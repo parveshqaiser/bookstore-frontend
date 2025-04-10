@@ -22,7 +22,6 @@ const cartSlice = createSlice({
         },
         increaseQuantity : (state, action)=>{
             const book = state.cartItems.find((b) => b._id === action.payload);
-            // console.log(book.perUnit, "****************")
             if (book) {
                 book.qty += 1;
                 book.newPrice = book.perUnit * book.qty;

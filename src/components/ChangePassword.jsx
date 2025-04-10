@@ -6,9 +6,8 @@ const ChangePassword = () => {
 	return (
 		<div>
 			ChangePassword
-			ChangePassword
 		</div>
 	)
 }
 
-export default ChangePassword
+export default ChangePassword;

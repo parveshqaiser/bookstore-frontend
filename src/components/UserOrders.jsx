@@ -15,10 +15,18 @@ const UserOrders = () => {
 	let dispatch = useDispatch();
 
 	useEffect(()=>{
-		console.log("api call")
-		dispatch(getAllUserPendingOrders());
-		dispatch(getAllUserDeliveredOrders());
+		if(!userPendingOrder || userPendingOrder.length == 0)
+		{console.log("api call 1")
+			dispatch(getAllUserPendingOrders());
+		}		
 	},[dispatch]);
+
+	useEffect(()=>{
+		if(userDeliveredOrder.length == 0)
+		{console.log("api call 2")
+			dispatch(getAllUserDeliveredOrders());
+		}
+	},[dispatch])
 
 	const getEstimatedDeliveryDate = () => {
 		const today = new Date();
@@ -31,10 +39,10 @@ const UserOrders = () => {
 	const showPendingOrders = () => (
 		userPendingOrder.length ==0 ? <div className='text-center'>
 			<img src={noPending} alt="" className='w-52 mx-auto' />
-		</div> : userPendingOrder.map(book =>(
-		<main className="rounded-lg shadow-sm overflow-hidden" key={book?._id}>
+		</div> 
+		: userPendingOrder.map(book =>(
+		<main className="rounded-lg shadow-sm overflow-hidden my-5 p-2" key={book?._id}>
 			<header className="flex flex-wrap justify-around items-center bg-gray-100 px-2 py-3">
-				
 				<div className="flex flex-col items-center">
 					<p className="text-gray-500 text-xs font-mono uppercase">Order Placed</p>
 					<span className="text-sm font-medium">{book?.createdAt.split("T")[0]}</span>
@@ -59,7 +67,7 @@ const UserOrders = () => {
 
 				<div className="flex flex-col items-center">
 					<p className="text-gray-500 text-xs font-mono uppercase">Order ID</p>
-					<span className="text-sm font-medium"># {book?._id}</span>
+					<span className="text-sm font-medium">#{book?._id}</span>
 				</div>
 			</header>
 
@@ -94,22 +102,23 @@ const UserOrders = () => {
 	const showDeliveredOrders = () => (
 		userDeliveredOrder.length ==0 ? <div className='text-center'>
 			<img src={noPending} alt="" className='w-52 mx-auto' />
-		</div> : userDeliveredOrder.map(book =>(
-		<main className="rounded-lg shadow-sm overflow-hidden" key={book?._id}>
+		</div> 
+		: userDeliveredOrder.map((book, index) =>(
+		<main className="rounded-lg shadow-sm overflow-hidden my-5 p-2" key={book?._id}>
 			<header className="flex flex-wrap justify-around items-center bg-gray-100 px-2 py-3">
-				
+			<p>#{index + 1}</p>
 				<div className="flex flex-col items-center">
-					<p className="text-gray-500 text-xs font-mono uppercase">Order Placed</p>
+					<p className="text-gray-500 text-[14px] font-mono uppercase">Order Placed</p>
 					<span className="text-sm font-medium">{book?.createdAt.split("T")[0]}</span>
 				</div>
 
 				<div className="flex flex-col items-center">
-					<p className="text-gray-500 text-xs font-mono uppercase">Total</p>
+					<p className="text-gray-500 text-[14px] font-mono uppercase">Total</p>
 					<span className="text-sm font-medium">$ {book?.totalPrice}</span>
 				</div>
 
 				<div className="relative group flex flex-col items-center">
-					<p className="text-gray-500 text-xs font-mono uppercase">Shipped To</p>
+					<p className="text-gray-500 text-[14px] font-mono uppercase">Shipped To</p>
 					<span className="text-sm font-medium cursor-pointer">{book?.name}</span>
 
 					<div className="text-sm absolute left-1/2 transform -translate-x-1/2 mt-2 w-80 p-2 bg-white text-gray-700 border rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
@@ -121,13 +130,13 @@ const UserOrders = () => {
 				</div>
 
 				<div className="flex flex-col items-center">
-					<p className="text-gray-500 text-xs font-mono uppercase">Order ID</p>
-					<span className="text-sm font-medium"># {book?._id}</span>
+					<p className="text-gray-500 text-[14px] font-mono uppercase">Order ID</p>
+					<span className="text-sm font-medium">#{book?._id}</span>
 				</div>
 			</header>
 
-			<nav className="bg-gray-50 p-2 text-sm text-gray-600 font-medium">
-				Delivered On {book?.updatedAt?.split("T")}
+			<nav className="bg-gray-50 p-2 text-[14px] text-gray-600 font-medium">
+				Delivered On {book?.updatedAt.split("T")[0]}
 			</nav>
 
 			<nav className="p-2">
@@ -156,7 +165,7 @@ const UserOrders = () => {
 
 	return(
 		<>
-		<div className="flex justify-center space-x-6 my-4">
+		<div className="flex justify-center space-x-6">
 			<NavLink
 				onClick={() => setActiveTab("pending")}
 				className={`px-4 py-2 rounded-full font-medium transition duration-300 
@@ -178,7 +187,7 @@ const UserOrders = () => {
 			</NavLink>
 		</div>
 
-		<section className='my-5'>
+		<section className='mt-5'>
 			{activeTab == "pending" && showPendingOrders()}
 			{activeTab == "delivered" && showDeliveredOrders()}
 		</section>

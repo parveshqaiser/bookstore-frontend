@@ -1,8 +1,8 @@
 
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import NavBar from './NavBar'
 import { useSelector } from 'react-redux'
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 // import { BsBoxFill } from "react-icons/bs";
 // import { MdLocationOn } from "react-icons/md";
 import order from "../assets/order.jpg";
@@ -11,21 +11,40 @@ import address from "../assets/address.jpg";
 import profile from "../assets/user.svg";
 
 
-const UserProfile = () => {
+const UserProfileLayout = () => {
 
     let {user} = useSelector(store => store?.user);
-  
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+    const [showSidebar, setShowSidebar] = useState(true);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth <= 767;
+            setIsMobile(mobile);
+      
+            if (!mobile) {
+                setShowSidebar(true);
+            }
+        };
+      
+        window.addEventListener("resize", handleResize);
+        handleResize();
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     return (
         <>
         <NavBar user={user}/>
-        <main className="max-w-6xl mx-auto my-20">
-            <div className="flex gap-4">
-                <aside className="lg:w-64 p-2 rounded shadow-sm h-fit sticky top-20 self-start">
+        <main className="max-w-6xl lg:mx-auto mx-4 my-20">
+            <div className="flex flex-col md:flex-row gap-4">
+            {showSidebar && (
+                <aside className={`md:w-64 w-full p-2 rounded shadow-sm h-fit sticky top-20 self-start`}>
                     <div className="mb-4 font-semibold text-lg">Profile</div>
-
                     <NavLink 
-                        to="/user/profile"
+                        to="/user/profile/view"
                         end 
+                        onClick={()=> isMobile && setShowSidebar(false)}
                         className={({ isActive }) =>
                             `mb-2 block w-full p-2 cursor-pointer rounded transition-all duration-300 ${
                             isActive
@@ -39,6 +58,7 @@ const UserProfile = () => {
 
                     <NavLink
                         to="/user/profile/orders"
+                        onClick={()=> isMobile && setShowSidebar(false)}
                         className={({ isActive }) =>
                             `mb-2 block w-full p-2 cursor-pointer rounded transition-all duration-300 ${
                             isActive
@@ -53,6 +73,7 @@ const UserProfile = () => {
 
                     <NavLink
                         to="/user/profile/address"
+                        onClick={()=> isMobile && setShowSidebar(false)}
                         className={({ isActive }) =>
                             `mb-2 block w-full p-2 cursor-pointer rounded transition-all duration-300 ${
                             isActive
@@ -67,6 +88,7 @@ const UserProfile = () => {
 
                     <NavLink
                         to="/user/profile/change-password"
+                        onClick={()=> isMobile && setShowSidebar(false)}
                         className={({ isActive }) =>
                             `mb-2 block w-full p-2 cursor-pointer rounded transition-all duration-300 ${
                             isActive
@@ -75,21 +97,33 @@ const UserProfile = () => {
                             }`
                         }
                         >
-                             <img src={pwd} className='w-8 inline-block' />
+                            <img src={pwd} className='w-8 inline-block' />
                             <span className="text-lg mx-2">Change Password</span>
                     </NavLink>
 
                     <div className="mt-6 text-red-500 cursor-pointer hover:underline">Sign Out</div>
-                </aside>
-
+                </aside>)}
                 
-                <section className="lg:flex-1 p-4 rounded shadow-sm">
+                {(!isMobile || !showSidebar) &&(
+                <section className="md:flex-1 p-2 rounded shadow-sm">
                     <Outlet />
                 </section>
+                )}
             </div>
+
+            <section className="p-2 rounded w-full">
+                {isMobile &&  !showSidebar &&(
+                    <button
+                        onClick={() => setShowSidebar(true)}
+                        className="mb-4 text-purple-600 hover:underline"
+                    >
+                        ← Back to Profile Menu
+                    </button>
+                )}
+            </section>
         </main>
         </>
     )
 }
 
-export default UserProfile
+export default UserProfileLayout;

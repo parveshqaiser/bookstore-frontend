@@ -1,6 +1,5 @@
 
-import React, { useState } from 'react'
-import {res} from "../utils/constants";
+import React, { useEffect, useState } from 'react'
 import NavBar from './NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";

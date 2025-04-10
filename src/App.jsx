@@ -15,11 +15,12 @@ import OtpVerification from './components/OtpVerification';
 import SingleBookView from './components/SingleBookView';
 import CartItems from './components/CartItems';
 import CheckoutPage from './components/CheckoutPage';
-import UserProfile from './components/UserProfile';
 import OrderPlacedPage from './components/OrderPlacedPage';
 import UserOrders from './components/UserOrders';
 import UserAddress from './components/UserAddress';
 import ChangePassword from './components/ChangePassword';
+import UserProfileLayout from './components/UserProfileLayout';
+import UserProfileView from './components/UserProfileView';
 
 function App() {
 
@@ -82,8 +83,12 @@ function App() {
         },
         {
             path : "/user/profile",
-            element : <UserProfile/>,
+            element : <UserProfileLayout/>,
             children : [
+                {
+                    path : "view",
+                    element : <UserProfileView />
+                }, 
                 {
                     path : "orders",
                     element : <UserOrders />

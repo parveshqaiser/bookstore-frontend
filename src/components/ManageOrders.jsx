@@ -27,6 +27,10 @@ const ManageOrders = () => {
             if(res.data.success)
             {
                 toast.success(`${res.data.message}`,{duration:2500})
+                setTimeout(()=>{
+                    dispatch(getAllPendingOrders());
+                },1200)
+               
             }
         } catch (error) {
             console.log("some error in placing order");
