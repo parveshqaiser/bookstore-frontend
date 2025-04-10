@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider , Outlet} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 import AdminLogin from './components/AdminLogin'
 import AdminDashboard from './components/AdminDashboard';
@@ -21,41 +21,56 @@ import UserAddress from './components/UserAddress';
 import ChangePassword from './components/ChangePassword';
 import UserProfileLayout from './components/UserProfileLayout';
 import UserProfileView from './components/UserProfileView';
+import Body from './components/Body';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
     let appRoutes = createBrowserRouter([
         {
             path : "/",
-            element : <AdminLogin />
+            element : <Body />,
+            children : 
+            [
+                {index: true, element: <HomePage /> },
+                {path : "book/view/:id",element : <SingleBookView />},
+                {path : "cart/items",element : <CartItems />},
+                {
+                    path: "cart/checkout",
+                    element: <PrivateRoute>
+                        <CheckoutPage />
+                    </PrivateRoute>,
+                },
+                {
+                    path : "user/profile",
+                    element :
+                        <PrivateRoute>
+                            <UserProfileLayout/>
+                        </PrivateRoute>,
+                    children : [
+                        {
+                            path : "view",
+                            element : <UserProfileView />
+                        }, 
+                        {
+                            path : "orders",
+                            element : <UserOrders />
+                        }, 
+                        {
+                            path : "address",
+                            element : <UserAddress />
+                        },
+                        {
+                            path : "change-password",
+                            element : <ChangePassword />
+                        }
+                    ]
+                },
+            ]
         },
         {
-            path : "/admin/login",
-            element : <AdminLogin />
-        },
-        {
-            path : "/admin/dashboard",
-            element : <AdminDashboard />
-        },
-		{
-            path : "/admin/manage/books",
-            element : <ManageBooks />
-        },
-        {
-            path : "/admin/manage/orders",
-            element : <ManageOrders />
-        },
-        {
-            path : "/admin/manage/orders/delivered",
-            element : <AdminDeliveredOrders />
-        },
-		{
-            path : "/admin/test",
-            element : <TestComponent />
-        },
-        {
-            path : "/home",
-            element : <HomePage />
+            path : "order/details",
+            element : <OrderPlacedPage/>
         },
         {
             path : "/user/signin",
@@ -66,56 +81,45 @@ function App() {
             element : <OtpVerification />
         },
         {
-            path : "/book/view/:id",
-            element : <SingleBookView />
-        },
-        {
-            path : "/cart/items",
-            element : <CartItems />
-        },
-        {
-            path : "/cart/checkout",
-            element : < CheckoutPage/>
-        },
-        {
-            path : "/order/details",
-            element : <OrderPlacedPage/>
-        },
-        {
-            path : "/user/profile",
-            element : <UserProfileLayout/>,
-            children : [
-                {
-                    path : "view",
-                    element : <UserProfileView />
-                }, 
-                {
-                    path : "orders",
-                    element : <UserOrders />
-                }, 
-                {
-                    path : "address",
-                    element : <UserAddress />
-                },
-                {
-                    path : "change-password",
-                    element : <ChangePassword />
-                }
-            ]
-        },
-        {
             path : "*",
             element : <h2 style={{fontSize:"1.2rem", color:"red", fontFamily:"monospace", textAlign:"center", margin:"1rem 0"}}>Opps: The Page you are looking for doesn't exist!!!</h2>
         }
     ])
 
     return(
-        
-        <RouterProvider router={appRoutes}>
-            <Toaster />
-			<Outlet />
-        </RouterProvider>
+        <>
+            <Toaster position="top-center" reverseOrder={false} />
+            <RouterProvider router={appRoutes} />
+        </>
     )
 }
 
 export default App;
+
+/*
+{
+    path : "/admin/login",
+    element : <AdminLogin />
+},
+{
+    path : "/admin/dashboard",
+    element : <AdminDashboard />
+},
+{
+    path : "/admin/manage/books",
+    element : <ManageBooks />
+},
+{
+    path : "/admin/manage/orders",
+    element : <ManageOrders />
+},
+{
+    path : "/admin/manage/orders/delivered",
+    element : <AdminDeliveredOrders />
+},
+{
+    path : "/admin/test",
+    element : <TestComponent />
+},
+
+*/

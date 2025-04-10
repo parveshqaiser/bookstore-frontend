@@ -1,16 +1,19 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from '../utils/api';
 import toast from 'react-hot-toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { getUserDetails } from '../redux/userSlice';
 
 const UserProfileView = () => {
 
     let {user} = useSelector(store => store?.user);
     const [isDisabled, setIsDisabled] = useState(false);
     let phoneExp = new RegExp("^[6-9]\\d{9}$"); 
+
+    let dispatch = useDispatch();
 
     const [formValues, setFormValues] = useState({
         name : {
@@ -59,7 +62,6 @@ const UserProfileView = () => {
     }
 
     const handleUpdate =async ()=>{
-
         if(formValues.name.value?.trim() ==""){
             setFormValues({...formValues,
                 name :{
@@ -91,6 +93,7 @@ const UserProfileView = () => {
             let res = await axios.patch(BASE_URL + "/update/profile", data, {withCredentials : true});
             if(res.data.success){
                 toast.success(res.data?.message, {duration:2000});
+                dispatch(getUserDetails());
                 setIsDisabled(false);
             }
         } catch (error) {

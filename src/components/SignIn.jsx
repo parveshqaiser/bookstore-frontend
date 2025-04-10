@@ -13,6 +13,7 @@ import validator from "validator";
 import { addTempUserData, getUserDetails } from '../redux/userSlice';
 import { getAllBooksList } from '../redux/bookSlice';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { FaArrowRightLong } from 'react-icons/fa6';
 
 const SignIn = () => {
 
@@ -87,7 +88,7 @@ const SignIn = () => {
                     toast.success(res.data.message, {duration:2000});
                     setTimeout(()=>{
                         setIsDisabled(false);
-                        navigate("/home")
+                        navigate("/")
                     },1800)
                 }
             } catch (error) {
@@ -99,7 +100,6 @@ const SignIn = () => {
 
     return (
         <div className='max-w-6xl md:mx-auto my-10 mx-4 shadow-sm pb-4'>
-            <Toaster />
             <img src={logo1} alt='Book logo' className='w-40 mx-auto rounded-full'/>
             <h2 className='text-center font-mono text-xl text-purple-700 my-1'>The Book Story Shop</h2>
             <div className='w-80 mx-auto my-2'> 
@@ -169,6 +169,12 @@ const SignIn = () => {
                 <p className='text-center'>
                     <span className='text-sm'>{!newUser ?"Don't have an Account ?" : "Existing User ?" } &nbsp;</span>
                     <Link onClick={()=>{setNewUser(!newUser), setInputValues({name :"", email:"", password :""})}} className='text-blue-400 underline'>{!newUser ? "Sign Up Here" : "Sign In"}</Link>
+                </p>
+
+               <p className='text-sm text-center'>
+                    <Link to="/" className='text-gray-600 hover:text-gray-800 transition' >
+                    Go to Home <FaArrowRightLong className='inline ml-1' />
+                    </Link>
                 </p>
             </div>
         </div>

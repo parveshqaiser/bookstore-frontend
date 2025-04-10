@@ -1,7 +1,6 @@
 
 
 import React, { useState } from 'react'
-import NavBar from './NavBar'
 import { useDispatch, useSelector } from 'react-redux';
 import { useBillingDetails } from '../shared/useBillingDeatils';
 import axios from 'axios';
@@ -99,7 +98,6 @@ const CheckoutPage = () => {
 
     return (
         <>
-            <NavBar user={user} />
             <main className="max-w-5xl mx-auto px-4 py-8 my-20 space-y-8 bg-white rounded-lg shadow-sm">
                 <section className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <p className="text-lg text-gray-700 font-medium">🧾 Total Items: <span className="font-semibold">{cart.reduce((sum,book)=> sum + book?.qty,0)}</span></p>

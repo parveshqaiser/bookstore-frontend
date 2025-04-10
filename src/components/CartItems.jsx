@@ -32,7 +32,6 @@ const CartItems = () => {
 
     return (
     <>
-    <NavBar user={user}/>
     <main className="h-auto max-w-6xl my-20 mx-4 lg:mx-auto space-y-6">
 
         {cart && cart.length > 0 && (
@@ -52,7 +51,7 @@ const CartItems = () => {
                 <h1 className='font-bold text-2xl mb-2'>Your Cart is Empty</h1>
                 <p className='text-gray-500 text-lg mb-4'>Look's like you haven't made your choice yet.</p>
                 <button className='px-4 py-2 rounded-md bg-violet-500 text-white'>
-                    <Link to="/home" >Back To Home Page</Link>
+                    <Link to="/" >Back To Home Page</Link>
                 </button>
                     
             </div> 

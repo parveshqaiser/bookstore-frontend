@@ -10,7 +10,6 @@ const OrderPlacedPage = () => {
     let {storeOrderDetails} = useSelector(store => store?.order);
 
     let dispatch = useDispatch();
-    // console.log(storeOrderDetails);
 
     useEffect(() => {
         console.log("use effect renderd");
@@ -19,8 +18,6 @@ const OrderPlacedPage = () => {
             dispatch(removeOrderDetails());
         };
     }, []);
-
-    console.log("body rendered");
 
     return (
     <main className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">

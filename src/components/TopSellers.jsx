@@ -38,7 +38,7 @@ const TopSellers = ({allBooks, isLoading}) => {
     }
 
     return (
-       <>
+       <main className='max-w-6xl my-20 lg:mx-auto mx-4'>
        <h1 className='text-lg text-gray-800'>Top Sellers</h1>
         <div className='my-2'>
             <select onChange={handleChange} className='border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none'>
@@ -80,8 +80,7 @@ const TopSellers = ({allBooks, isLoading}) => {
                 </div>
             ))}
         </div>
-      
-       </>
+       </main>
     )
 }
 

@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSingleBook } from '../redux/bookSlice';
 import { useParams } from 'react-router-dom';
-import NavBar from './NavBar';
-import Footer from './Footer';
 import { addToCart } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
 
@@ -13,7 +11,6 @@ const SingleBookView = () => {
 
     let {id} = useParams();
     let book = useSelector(store => store?.book?.singleBook);
-    let user = useSelector(store => store?.user?.user);
 
     let [quantity , setQuantity] = useState(1);
 
@@ -38,7 +35,6 @@ const SingleBookView = () => {
 
     return (
         <>
-        <NavBar user={user}/>
         <main className='h-auto max-w-6xl my-20 lg:mx-auto mx-4'>
             <section className='grid grid-cols-1 md:grid-cols-3 gap-6 border-b-rounded-lg shadow-lg p-6'>
                 <div className="w-48 Wmx-auto">
@@ -113,10 +109,6 @@ const SingleBookView = () => {
                 <p className="text-gray-700 text-justify leading-relaxed">{book?.description}</p>
             </div>
         </main>
-
-        <footer className='max-w-6xl lg:mx-auto mx-4 bg-purple-200 text-black p-6 mb-1 rounded-sm'>
-            <Footer />
-        </footer>
         </>
     )
 }

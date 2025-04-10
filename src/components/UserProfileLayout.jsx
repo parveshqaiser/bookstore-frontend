@@ -1,19 +1,12 @@
 
 import React,{useEffect, useState} from 'react'
-import NavBar from './NavBar'
-import { useSelector } from 'react-redux'
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-// import { BsBoxFill } from "react-icons/bs";
-// import { MdLocationOn } from "react-icons/md";
 import order from "../assets/order.jpg";
 import pwd from "../assets/pwd.jpg";
 import address from "../assets/address.jpg";
 import profile from "../assets/user.svg";
 
-
 const UserProfileLayout = () => {
-
-    let {user} = useSelector(store => store?.user);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
     const [showSidebar, setShowSidebar] = useState(true);
@@ -35,7 +28,6 @@ const UserProfileLayout = () => {
 
     return (
         <>
-        <NavBar user={user}/>
         <main className="max-w-6xl lg:mx-auto mx-4 my-20">
             <div className="flex flex-col md:flex-row gap-4">
             {showSidebar && (
@@ -105,9 +97,10 @@ const UserProfileLayout = () => {
                 </aside>)}
                 
                 {(!isMobile || !showSidebar) &&(
-                <section className="md:flex-1 p-2 rounded shadow-sm">
-                    <Outlet />
-                </section>
+
+                    <section className="md:flex-1 p-2 rounded shadow-sm">
+                        <Outlet />
+                    </section>
                 )}
             </div>
 

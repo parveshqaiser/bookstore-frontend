@@ -41,11 +41,10 @@ const NavBar = ({user}) => {
     }
 
     return (
-        <header className="max-w-6xl mx-auto flex md:flex-row items-center justify-between fixed top-0 left-0 right-0 bg-white shadow-md p-3">      
-        <Toaster />     
+        <header className="max-w-6xl mx-auto flex md:flex-row items-center justify-between fixed top-0 left-0 right-0 bg-white shadow-md p-3 z-10">      
             <div className="flex items-center gap-3">
-                <Link to="/home">
-                <HiMiniBars4 size={26} className="text-purple-500 cursor-pointer hover:text-purple-600 transition duration-200" />
+                <Link to="/">
+                    <HiMiniBars4 size={26} className="text-purple-500 cursor-pointer hover:text-purple-600 transition duration-200" />
                 </Link>
                 <div className="">
                     <input
@@ -75,9 +74,9 @@ const NavBar = ({user}) => {
                             {!user && (<li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' to="/user/signin">User Login</Link>
                             </li>)}
-                            <li className='hover:bg-gray-200 p-2 text-sm'>
+                            {user &&(<li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' to="/user/profile">User Profile</Link>
-                            </li>
+                            </li>)}
                             {cartItems && cartItems.length >0 &&(<li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' to="/cart/checkout">Checkout</Link>
                             </li>)}

@@ -57,7 +57,7 @@ const UserOrders = () => {
 					<p className="text-gray-500 text-xs font-mono uppercase">Shipped To</p>
 					<span className="text-sm font-medium cursor-pointer">{book?.name}</span>
 
-					<div className="text-sm absolute left-1/2 transform -translate-x-1/2 mt-2 w-80 p-2 bg-white text-gray-700 border rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+					<div className="text-sm absolute left-1/2 transform -translate-x-1/2 mt-2 w-80 p-2 bg-white text-gray-700 border rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0">
 						<p>{book?.number} || {book?.email}</p>
 						<p>{book?.address?.doorNo}</p>
 						<p>{book?.address?.city} ,{book?.address?.state}</p>

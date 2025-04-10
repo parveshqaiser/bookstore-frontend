@@ -57,12 +57,10 @@ const OtpVerification = ()=>{
         let email = user?.email;
         try {
             let res = await axios.post(BASE_URL + "/resend/otp",{email},{withCredentials:true});
-            if(res.data.success)
-            {
+            if(res.data.success){
                 toast.success(res.data.message , {duration:2000})
             }
         } catch (error) {
-            // console.log("err ", error);
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
         }
     }
