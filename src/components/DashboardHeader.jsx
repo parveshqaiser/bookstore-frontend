@@ -1,47 +1,32 @@
 
 
 import React from 'react'
-import { IoMdAdd } from "react-icons/io";
-import { IoSettings , IoExpandOutline} from "react-icons/io5";
+import { IoSettings } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const DashboardHeader = () => {
-    
+
     return ( 
-    <React.Fragment>
-        <nav className=''>
+    <nav className='max-w-7xl mx-auto px-4 py-2 flex md:flex-row flex-col justify-between bg-gray-50'>
 
-            {/* <div className='w-16 min-h-[88vh] bg-blue-50 inline-block'>
-                <div className='my-4 mx-3'>
-                    <IoMdAdd className=' cursor-pointer' size={24} />
-                </div>
-                <div className='my-3 mx-3'>
-                    <IoExpandOutline size={24}  className='cursor-pointer'/>
-                </div>               
-            </div> */}
+        <div className='space-y-2'>
+            <h1 className='font-semibold text-2xl m-0 p-0 text-gray-600'>Dashboard</h1>
+            <p className='text-[13px] font-primary text-gray-500 md:mb-0 mb-2' >Book Store Inventory</p>
+        </div>
 
-            {/* right side container */}
-            <div className='flex justify-between py-2 bg-gray-50'>
-                <div className='ml-3'>
-                    <span className='block font-semibold text-2xl m-0 p-0 text-gray-600'>Dashboard</span>
-                    <span className='text-xs font-primary'>Book Store Inventory</span>
-                </div>
-                <div className='flex gap-4 items-center mr-3'>
-                    <Link to="/admin/manage/orders" className="flex items-center px-3 py-2 border border-blue-800 rounded hover:text-blue-700 transition duration-200 text-sm whitespace-nowrap">
-                        <IoSettings className="mr-1" />
-                        <span>Manage Orders</span>
-                    </Link>
-
-                    <Link to="/admin/manage/books" className="flex items-center px-3 py-2 border border-purple-800 rounded hover:text-purple-700 transition duration-200 text-sm whitespace-nowrap">
-                        <ImBooks className="mr-1" />
-                        <span>Manage Books</span>
-                    </Link>
-                    
-                </div>
-            </div>
-        </nav>
-    </React.Fragment>
+        <div className='flex flex-wrap justify-between items-center md:gap-4 gap-1'>
+            <aside className='border flex items-center p-2  border-blue-800 rounded hover:text-blue-700 transition duration-200 text-sm'>
+                <IoSettings className="mr-1" />
+                <Link to="/admin/manage/orders">Manage Orders</Link>
+            </aside>
+            <aside className='border flex items-center p-2 border-purple-800 rounded hover:text-purple-700 transition duration-200 text-sm'>
+                <ImBooks className="mr-1" />
+                <Link to="/admin/manage/books"> Manage Books</Link>
+            </aside>
+        </div>
+    </nav>
     )
 }
 

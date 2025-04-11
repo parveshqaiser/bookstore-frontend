@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import logo from "../assets/logo.png";
 import { BASE_URL } from '../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { FaEyeSlash } from "react-icons/fa";
@@ -45,7 +45,6 @@ const AdminLogin = () => {
 
     return (
     <div className='flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-300 to-purple-600'>
-        <Toaster />
         <div className='w-96 p-4 rounded-lg shadow-2xl'>
             <img src={logo} className='w-12 h-12 mx-auto'/>
             <h2 className='font-mono my-2 text-center text-white font-bold text-lg'>Admin Login</h2>
@@ -81,7 +80,6 @@ const AdminLogin = () => {
                     </button>
                 </div>             
             </div>
-
             <div>
                 <button 
                     disabled={isDisable}
@@ -90,6 +88,9 @@ const AdminLogin = () => {
                 >
                     {isDisable ? "Wait Login In..." : "Login"}
                 </button>
+            </div>
+            <div className='mt-2 text-center'>
+                <Link to="/" className='text-sm underline' >Home</Link>
             </div>
         </div>
     </div>

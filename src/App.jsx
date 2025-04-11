@@ -80,6 +80,27 @@ function App() {
             path : "/user/otp/verify",
             element : <OtpVerification />
         },
+        // admin starts
+        {
+            path : "/admin/login",
+            element : <AdminLogin />
+        },
+        {
+            path : "/admin/dashboard",
+            element : <AdminDashboard />
+        },
+        {
+            path : "/admin/manage/books",
+            element : <ManageBooks />
+        },
+        {
+            path : "/admin/manage/orders",
+            element : <ManageOrders />
+        },
+        {
+            path : "/admin/manage/orders/delivered",
+            element : <AdminDeliveredOrders />
+        },
         {
             path : "*",
             element : <h2 style={{fontSize:"1.2rem", color:"red", fontFamily:"monospace", textAlign:"center", margin:"1rem 0"}}>Opps: The Page you are looking for doesn't exist!!!</h2>
@@ -97,26 +118,7 @@ function App() {
 export default App;
 
 /*
-{
-    path : "/admin/login",
-    element : <AdminLogin />
-},
-{
-    path : "/admin/dashboard",
-    element : <AdminDashboard />
-},
-{
-    path : "/admin/manage/books",
-    element : <ManageBooks />
-},
-{
-    path : "/admin/manage/orders",
-    element : <ManageOrders />
-},
-{
-    path : "/admin/manage/orders/delivered",
-    element : <AdminDeliveredOrders />
-},
+
 {
     path : "/admin/test",
     element : <TestComponent />

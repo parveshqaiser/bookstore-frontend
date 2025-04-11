@@ -30,6 +30,7 @@ const AdminNavbar = () => {
     }
 
     return (
+    <main className='max-w-7xl mx-auto'>
         <nav className='flex justify-between py-2 px-6 bg-gradient-to-r from-blue-200 via-purple-300 to-violet-400 shadow-sm'>
             <div className='w-10 h-10'>
                 <img src={logo} className='rounded-lg' alt="book-logo" />
@@ -42,6 +43,7 @@ const AdminNavbar = () => {
                 </span>
             </div>
         </nav>
+    </main>
     )
 }
 

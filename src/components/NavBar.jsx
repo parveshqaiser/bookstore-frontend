@@ -30,10 +30,10 @@ const NavBar = ({user}) => {
             if(res.data.success)
             {
                 toast.success(res?.data?.message, {duration:2000});
+                dispatch(logoutUser());
                 setTimeout(()=>{
                     navigate("/user/signin");
-                    dispatch(logoutUser());
-                },1400)                
+                },1000)                
             }
         } catch (error) {
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
@@ -69,7 +69,7 @@ const NavBar = ({user}) => {
                     <div className='absolute right-0 top-[50px] w-48 bg-gray-100 shadow-lg rounded-md'>
                         <ul className='py-2'>                    
                             <li className='hover:bg-gray-200 p-2 text-sm'>
-                                <Link className='block' to="/">Admin Login</Link>
+                                <Link className='block' to="/admin/login">Admin Login</Link>
                             </li>
                             {!user && (<li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' to="/user/signin">User Login</Link>
