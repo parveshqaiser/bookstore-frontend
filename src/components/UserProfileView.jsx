@@ -47,7 +47,7 @@ const UserProfileView = () => {
         if (name == "name")
         {
             newValues[name] = {
-                value : value && value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
+                value : value && value.charAt(0).toUpperCase() + value.slice(1),
                 error : !value ? "Required" : ""
             }
         }

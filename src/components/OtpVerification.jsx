@@ -41,7 +41,7 @@ const OtpVerification = ()=>{
                 dispatch(getUserDetails());
                 toast.success(res.data.message || "User Verified", {duration:2000});
                 setTimeout(()=>{
-                    navigate("/home")
+                    navigate("/")
                 },2000)
             }
         } catch (error) {

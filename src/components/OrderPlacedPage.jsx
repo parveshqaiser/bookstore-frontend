@@ -52,7 +52,7 @@ const OrderPlacedPage = () => {
             📦 Estimated delivery by <span className="font-medium">4 to 6 days</span>.
         </div>
         <p className='text-sm text-center'>
-            <Link to="/home" className='text-gray-600 hover:text-gray-800 transition' >
+            <Link to="/" className='text-gray-600 hover:text-gray-800 transition' >
             Go to Home <FaArrowRightLong className='inline ml-1' />
             </Link>
         </p>

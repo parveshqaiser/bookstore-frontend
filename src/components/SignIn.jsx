@@ -110,7 +110,7 @@ const SignIn = () => {
                         onChange={(e)=> {
                             let val = e.target.value;
                             if(val){
-                                let up = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+                                let up = val.charAt(0).toUpperCase() + val.slice(1);
                                 setInputValues({...inputValues , name : up})
                             }else{
                                 setInputValues({...inputValues , name : ""})

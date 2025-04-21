@@ -16,14 +16,16 @@ const UserOrders = () => {
 
 	useEffect(()=>{
 		if(!userPendingOrder || userPendingOrder.length == 0)
-		{console.log("api call 1")
+		{
+			console.log("api call 1")
 			dispatch(getAllUserPendingOrders());
 		}		
 	},[dispatch]);
 
 	useEffect(()=>{
-		if(userDeliveredOrder.length == 0)
-		{console.log("api call 2")
+		if(!userDeliveredOrder || userDeliveredOrder.length == 0)
+		{
+			console.log("api call 2")
 			dispatch(getAllUserDeliveredOrders());
 		}
 	},[dispatch])

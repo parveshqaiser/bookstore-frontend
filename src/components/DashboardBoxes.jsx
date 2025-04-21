@@ -7,10 +7,6 @@ import { useSelector } from 'react-redux';
 
 const DashboardBoxes = () => {
     let {totalBooks, totalQtySold,totalSales} = useSelector(store => store?.dashboard);
-
-    console.log("totalQtySold ", totalQtySold);
-    console.log("totalSales", totalSales);
-
     
     return (
     <main className='max-w-7xl mx-auto px-4 py-1 grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1  gap-4'>
@@ -32,7 +28,7 @@ const DashboardBoxes = () => {
                 </svg>
             </div>
             <div className=''>
-                <span className="block text-lg font-semibold">$ {totalSales[0]?.totalSales || "NA"}</span>
+                {totalSales && <span className="block text-lg font-semibold">$ {totalSales[0]?.totalSales || "NA"}</span>}
                 <span className="block text-gray-500 text-sm">Total Sales</span>
             </div>
         </nav>
@@ -50,7 +46,7 @@ const DashboardBoxes = () => {
                 <MdIncompleteCircle className='size-6'/>
             </div>
             <div>
-                <span className="block text-lg font-semibold">{totalQtySold[0]?.totalQtySold || "NA"}</span>
+                {!!totalQtySold &&<span className="block text-lg font-semibold">{totalQtySold[0]?.totalQtySold || "NA"}</span>}
                 <span className="block text-sm text-gray-500">Total Items Sold</span>
             </div>
         </nav>
