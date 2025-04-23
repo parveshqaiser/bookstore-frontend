@@ -109,7 +109,7 @@ const ManageBooks = () => {
                 <button className='px-2 py-2 border text-sm border-blue-600 text-violet-600 rounded-md cursor-pointer'>⬅️ Go Back</button>
             </Link> 
             <div className="my-3 flex flex-col md:flex-row md:justify-between gap-2 items-center">
-                <div className="w-full md:w-1/3 lg:w-1/4">
+                <div className="md:w-1/3 lg:w-1/3 w-full">
                     <input 
                         type="text"
                         onChange={handleSearch}

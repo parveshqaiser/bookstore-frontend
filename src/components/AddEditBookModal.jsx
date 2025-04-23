@@ -8,6 +8,7 @@ import { BASE_URL } from '../utils/api';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { getAllBooksList } from '../redux/bookSlice';
+import { Tooltip } from 'primereact/tooltip';
 
 const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
@@ -68,7 +69,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
         let newValues = {...formValues};
 
-        if(name == "title" || name == "author" || "description" || "publisher" || "language")
+        if(name == "title" || name == "author" || name =="description" || name =="publisher" || name=="language")
         {
             newValues[name]={
                 value : value.charAt(0).toUpperCase() + value.slice(1),
@@ -178,7 +179,6 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
     return (
     <>
-    <Toaster />
         <div className='grid md:grid-cols-3 gap-4 mb-3'>
             <div>
                 <label htmlFor="title">Title</label>
@@ -186,6 +186,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
                     <input 
                         type="text"
                         name='title'
+                        data-pr-tooltip='Enter name'
                         onChange={handleChange}
                         value={formValues.title.value}
                         className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
@@ -213,7 +214,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>    
 
             <div>
-                <label htmlFor="title">Category</label>
+                <label htmlFor="category">Category</label>
                 <select 
                     name='category' 
                     className='block p-2 w-full border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent' 
@@ -232,7 +233,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
         </div>
 
         <div className='grid md:grid-cols-1 mb-2'>
-            <label htmlFor="">Description</label>
+            <label htmlFor="description">Description</label>
             <div>
                 <textarea
                     rows={isEdit ? 3 : 2}
@@ -265,7 +266,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>
 
             <div>
-                <label htmlFor="title">Language</label>
+                <label htmlFor="language">Language</label>
                 <div>
                     <input 
                         type="text"
@@ -281,7 +282,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>    
 
             <div>
-                <label htmlFor="title">Pages</label>
+                <label htmlFor="pages">Pages</label>
                 <div>
                     <input 
                         type="text"
@@ -299,7 +300,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
         <div className='grid md:grid-cols-3 gap-4 mb-3'>
             <div>
-                <label htmlFor="title">Quantity</label>
+                <label htmlFor="quantity">Quantity</label>
                 <div>
                     <input 
                         type="text"
@@ -315,7 +316,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>
 
             <div>
-                <label htmlFor="title">New Price ($)</label>
+                <label htmlFor="newPrice">New Price ($)</label>
                 <div>
                     <input 
                         type="text"
@@ -331,7 +332,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>    
 
                 <div>
-                <label htmlFor="title">Old Price ($)</label>
+                <label htmlFor="oldPrice">Old Price ($)</label>
                 <div>
                     <input 
                         type="text"
@@ -369,7 +370,6 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
                 {file && <span title='Remove Pic' onClick={()=> setFile(null)} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
             </div>
         )}
-                
 
         <div className='text-center'>
             <button 

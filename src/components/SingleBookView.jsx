@@ -63,10 +63,11 @@ const SingleBookView = () => {
 
                         <div><span className="">Category:</span> {book?.category}</div>
                         <div><span className="">Pages:</span> {book?.pages}</div>
-                        <div>
+                        <div className='space-x-1'>
                             <span className={`font-semibold ${book?.isAvailable ? "text-green-500" : "text-red-500"}`}>
-                            {book?.isAvailable ? "Available" : "Out of Stock"}
+                            {book?.isAvailable ? "Available" : "Out of Stock"} 
                             </span>
+                            {book?.quantity && book.quantity < 4 && <span className='text-sm text-red-500'>Only {book.quantity} left</span>}
                         </div>
 
                         <div className="text-sm text-gray-600">
@@ -78,14 +79,14 @@ const SingleBookView = () => {
 
                 <div className="space-y-3 mt-2 md:mt-0 md:space-x-0 space-x-2">
                     <label className="block text-sm font-medium text-gray-700">Quantity:</label>
-                    <select 
+                    {book?.quantity > 4 && <select 
                         className="w-48  focus:outline-none p-2 border border-gray-400 rounded-md" 
                         onChange={(e)=> setQuantity(e.target.value)}
                     >
                         {[1, 2, 3].map(qty => (
                             <option key={qty} value={qty}>{qty}</option>
                         ))}
-                    </select>
+                    </select>}
 
                     <button
                         onClick={handleAddToCart}

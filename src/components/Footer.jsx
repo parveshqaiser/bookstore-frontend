@@ -10,7 +10,7 @@ const Footer = () => {
             <div className="md:w-1/2 w-full">
                 <img src={footerLogo} alt="Logo" className="mb-3 w-16" />
                 <ul className="flex flex-col md:flex-row md:gap-4 gap-2">
-                    <li><Link to="/home" className="hover:text-primary">Home</Link></li>
+                    <li><Link to="/" className="hover:text-primary">Home</Link></li>
                     <li><a href="#services" className="hover:text-primary">Services</a></li>
                     <li><a href="#about" className="hover:text-primary">About Us</a></li>
                     <li><a href="#contact" className="hover:text-primary">Contact</a></li>

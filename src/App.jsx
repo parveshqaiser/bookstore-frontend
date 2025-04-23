@@ -37,7 +37,8 @@ function App() {
                 {path : "cart/items",element : <CartItems />},
                 {
                     path: "cart/checkout",
-                    element: <PrivateRoute>
+                    element: 
+                    <PrivateRoute>
                         <CheckoutPage />
                     </PrivateRoute>,
                 },
