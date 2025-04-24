@@ -97,7 +97,6 @@ const UserProfileLayout = () => {
                 </aside>)}
                 
                 {(!isMobile || !showSidebar) &&(
-
                     <section className="md:flex-1 p-2 rounded shadow-sm">
                         <Outlet />
                     </section>

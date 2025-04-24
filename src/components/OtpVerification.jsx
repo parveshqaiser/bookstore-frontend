@@ -67,7 +67,6 @@ const OtpVerification = ()=>{
 
     return(
         <main className="max-w-lg md:max-w-2xl mx-auto my-5 p-6 bg-white shadow-lg rounded-md">
-            <Toaster />
             <img src={logo1} alt='Book logo' className='w-28 mx-auto rounded-full'/>
             <nav className="text-center">
                 <h1 className="font-bold text-2xl text-purple-500 mb-4">User Verification</h1>
