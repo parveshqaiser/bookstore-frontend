@@ -1,7 +1,7 @@
 
 
 
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { categoryList } from '../utils/constants';
 import { Link } from 'react-router-dom';
 
@@ -51,6 +51,11 @@ const NewArrivals = ({allBooks, isLoading}) => {
                 </div>
             ))}
             </div>
+
+            <div className='mt-10 text-center'>
+                <Link to="/all/books" className='px-4 py-2 rounded-md bg-violet-500 text-white'>View All</Link>
+            </div>
+           
         </main>
     )
 }

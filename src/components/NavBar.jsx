@@ -68,9 +68,9 @@ const NavBar = ({user}) => {
                     {toggle &&(
                     <div className='absolute right-0 top-[50px] w-48 bg-gray-100 shadow-lg rounded-md'>
                         <ul className='py-2'>                    
-                            <li className='hover:bg-gray-200 p-2 text-sm'>
+                            {!user &&<li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' to="/admin/login">Admin Login</Link>
-                            </li>
+                            </li>}
                             {!user && (<li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' to="/user/signin">User Login</Link>
                             </li>)}

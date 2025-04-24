@@ -15,19 +15,19 @@ const UserOrders = () => {
 	let dispatch = useDispatch();
 
 	useEffect(()=>{
-		if(!userPendingOrder || userPendingOrder.length == 0)
-		{
+		// if(!userPendingOrder || userPendingOrder.length == 0)
+		// {
 			console.log("api call 1")
 			dispatch(getAllUserPendingOrders());
-		}		
+		// }		
 	},[dispatch]);
 
 	useEffect(()=>{
-		if(!userDeliveredOrder || userDeliveredOrder.length == 0)
-		{
+		// if(!userDeliveredOrder || userDeliveredOrder.length == 0)
+		// {
 			console.log("api call 2")
 			dispatch(getAllUserDeliveredOrders());
-		}
+		// }
 	},[dispatch])
 
 	const getEstimatedDeliveryDate = () => {

@@ -77,10 +77,16 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             }
         }
 
-        if(name == "pages" || name == "quantity" || name == "newPrice" || name == "oldPrice")
+        else if(name == "pages" || name == "quantity" || name == "newPrice" || name == "oldPrice")
         {
             newValues[name]={
                 value : parseInt(value) || "",
+                error : !value ? "Required*" : ''
+            }
+        }
+        else {
+            newValues[name]={
+                value : value || "",
                 error : !value ? "Required*" : ''
             }
         }
@@ -94,6 +100,8 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
         let isAllValuesExist = Object.values(formValues).every(val => 
             typeof val.value === "string" ? val.value.trim() !== "" : val.value !== undefined && val.value !== null
         );
+
+        console.log(isAllValuesExist)
 
         if(!isAllValuesExist)
         {
@@ -118,6 +126,9 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
         formData.append("newPrice", formValues.newPrice.value);
         formData.append("oldPrice", formValues.oldPrice.value);
 
+        formData.forEach((key, val)=>{
+            console.log(`key ${key} : ${val}`)
+        })
         if(file?.name){
             formData.append("coverPic", file || "");
         }
@@ -181,7 +192,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
     <>
         <div className='grid md:grid-cols-3 gap-4 mb-3'>
             <div>
-                <label htmlFor="title">Title</label>
+                <label>Title</label>
                 <div>
                     <input 
                         type="text"
@@ -198,7 +209,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>
 
             <div>
-                <label htmlFor="title">Author</label>
+                <label>Author</label>
                 <div>
                     <input 
                         type="text"
@@ -214,7 +225,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>    
 
             <div>
-                <label htmlFor="category">Category</label>
+                <label>Category</label>
                 <select 
                     name='category' 
                     className='block p-2 w-full border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent' 
@@ -233,7 +244,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
         </div>
 
         <div className='grid md:grid-cols-1 mb-2'>
-            <label htmlFor="description">Description</label>
+            <label >Description</label>
             <div>
                 <textarea
                     rows={isEdit ? 3 : 2}
@@ -250,7 +261,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
         <div className='grid md:grid-cols-3 gap-4 mb-3'>
             <div>
-                <label htmlFor="publisher">Publisher</label>
+                <label >Publisher</label>
                 <div>
                     <input 
                         type="text"
@@ -266,7 +277,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>
 
             <div>
-                <label htmlFor="language">Language</label>
+                <label>Language</label>
                 <div>
                     <input 
                         type="text"
@@ -282,7 +293,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>    
 
             <div>
-                <label htmlFor="pages">Pages</label>
+                <label>Pages</label>
                 <div>
                     <input 
                         type="text"
@@ -300,7 +311,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
         <div className='grid md:grid-cols-3 gap-4 mb-3'>
             <div>
-                <label htmlFor="quantity">Quantity</label>
+                <label >Quantity</label>
                 <div>
                     <input 
                         type="text"
@@ -316,7 +327,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>
 
             <div>
-                <label htmlFor="newPrice">New Price ($)</label>
+                <label>New Price ($)</label>
                 <div>
                     <input 
                         type="text"
@@ -332,7 +343,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>    
 
                 <div>
-                <label htmlFor="oldPrice">Old Price ($)</label>
+                <label >Old Price ($)</label>
                 <div>
                     <input 
                         type="text"

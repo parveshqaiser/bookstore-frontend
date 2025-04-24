@@ -23,6 +23,7 @@ import UserProfileLayout from './components/UserProfileLayout';
 import UserProfileView from './components/UserProfileView';
 import Body from './components/Body';
 import PrivateRoute from './components/PrivateRoute';
+import AllBooks from './components/AllBooks';
 
 function App() {
 
@@ -35,19 +36,9 @@ function App() {
                 {index: true, element: <HomePage /> },
                 {path : "book/view/:id",element : <SingleBookView />},
                 {path : "cart/items",element : <CartItems />},
-                {
-                    path: "cart/checkout",
-                    element: 
-                    <PrivateRoute>
-                        <CheckoutPage />
-                    </PrivateRoute>,
-                },
-                {
-                    path : "user/profile",
-                    element :
-                        <PrivateRoute>
-                            <UserProfileLayout/>
-                        </PrivateRoute>,
+                {path : "all/books", element :<AllBooks />},
+                {path: "cart/checkout",element: <PrivateRoute><CheckoutPage /></PrivateRoute>},
+                {path : "user/profile",element :<PrivateRoute><UserProfileLayout/></PrivateRoute>,
                     children : [
                         {
                             path : "view",

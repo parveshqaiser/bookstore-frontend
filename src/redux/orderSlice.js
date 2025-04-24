@@ -54,7 +54,7 @@ export const getAllUserDeliveredOrders = createAsyncThunk(
     "allUserDeliveredOrders/get", async(_,{rejectWithValue})=>{
         try {
             let res = await axios.get(BASE_URL + "/user/orders/delivered",{withCredentials: true});
-            console.log(res.data.data, "******************** slice");
+            // console.log(res.data.data, "******************** slice");
             return res?.data?.data;
         } catch (error) {
             return rejectWithValue({
@@ -154,7 +154,7 @@ let orderSlice = createSlice({
 
         builder.addCase(getAllUserDeliveredOrders.fulfilled, (state, action)=>{
             state.isUserDeliveredOrderLoading = false;
-            console.log("************* ", action.payload);
+            // console.log("************* ", action.payload);
             state.userDeliveredOrder = action.payload;
             state.deliveredOrderError = null;
         });
