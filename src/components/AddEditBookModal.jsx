@@ -5,7 +5,7 @@ import useAddBook from '../shared/useAddBook';
 import { categoryList } from '../utils/constants';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { getAllBooksList } from '../redux/bookSlice';
 import { Tooltip } from 'primereact/tooltip';

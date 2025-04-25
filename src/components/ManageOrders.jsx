@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import bookLoading from "../assets/bookLoading.gif";
-import toast , { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const ManageOrders = () => {
 
@@ -48,8 +48,7 @@ const ManageOrders = () => {
     };
 
     return (
-        <>
-        <Toaster />
+    <>
         <AdminNavbar />
         <main className="max-w-6xl mx-auto p-4">
             <div className='flex sm:flex-row flex-col sm:gap-0 gap-2 justify-between'>
@@ -128,13 +127,13 @@ const ManageOrders = () => {
                         onClick={()=>handlePlaceItems(order._id)} 
                         className="px-4 py-2 text-sm rounded-md text-purple-900 border border-purple-800 hover:text-white hover:bg-purple-500 cursor-pointer"
                     >
-                        Place Items
+                        Deliver Order
                     </button>
                 </div>
             </div>
             ))}
         </main>
-        </>
+    </>
     )
 }
 

@@ -10,7 +10,7 @@ import avatar from "../assets/avatar.png";
 import cart1 from "../assets/cart-logo3.jpg";
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
-import toast, { Toaster } from 'react-hot-toast';
+import toast  from 'react-hot-toast';
 import {useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../redux/userSlice';

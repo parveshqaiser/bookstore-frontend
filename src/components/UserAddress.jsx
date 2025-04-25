@@ -180,10 +180,11 @@ const UserAddress = () => {
 				let res = await axios.put(BASE_URL + `/update/address/${activeIndex}`,data,{withCredentials:true});
 				if(res.data.success){
 					toast.success(res.data.message, {duration:2500});
-					setFormValues(initialFormValues);
 					setVisible(false);
+					setFormValues(initialFormValues);
 					dispatch(getUserDetails());
-					setIsDisable(false)
+					setIsDisable(false);
+					
 				}
 			} catch (error) {
 				setIsDisable(false)
