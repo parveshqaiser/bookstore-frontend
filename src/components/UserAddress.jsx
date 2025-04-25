@@ -111,28 +111,39 @@ const UserAddress = () => {
 		setIsEdit(true);
 	}
 
+	const handleDelete = async(id)=>{
+		try {
+			let res = await axios.delete(BASE_URL + `/delete/address/${id}`,{withCredentials:true});
+
+			if(res.data.success)
+			{
+				toast.success(res.data.message , {duration:2500});
+				dispatch(getUserDetails());
+			}
+		} catch (error) {
+			toast.error(error?.response?.data?.message || error?.message, {duration:2000})
+		}
+	}
+
+
 	const handleSubmit = async()=>{
 
-		if(formValues.doorNo.value.trim()=="")
-		{
+		if(formValues.doorNo.value.trim()==""){
 			setFormValues({...formValues, doorNo : {...formValues.doorNo, error :"required*"}})
 			return;
 		}
 
-		if(formValues.city.value.trim()=="")
-		{
+		if(formValues.city.value.trim()==""){
 			setFormValues({...formValues, city : {...formValues.city, error :"required*"}})
 			return;
 		}
 
-		if(formValues.state.value.trim()=="")
-		{
+		if(formValues.state.value.trim()==""){
 			setFormValues({...formValues, state : {...formValues.state, error :"required*"}})
 			return;
 		}
 
-		if(formValues.pinCode.value =="")
-		{
+		if(formValues.pinCode.value ==""){
 			setFormValues({...formValues, pinCode : {...formValues.pinCode, error :"required*"}})
 			return;
 		}
@@ -178,16 +189,15 @@ const UserAddress = () => {
 				setIsDisable(false)
 				toast.error(error?.response?.data?.message || error?.message, {duration:2000})
 			}
-		}
-		
+		}		
 	}
 
 	return (
 	<>
-		<div className='flex flex-wrap gap-4'>
+		<main className='flex flex-wrap gap-4'>
 			<div 
 				onClick={()=> setVisible(true)}
-				className='border border-dashed rounded-md p-6 w-[350px] cursor-pointer flex flex-col justify-center items-center'
+				className='border border-dashed rounded-md p-6 w-[350px] h-auto cursor-pointer flex flex-col justify-center items-center'
 			>
 				<FiPlus size={48} className='text-gray-400' />
 				<p className='text-center font-semibold text-gray-500'>Add New Address</p>
@@ -206,13 +216,13 @@ const UserAddress = () => {
 						<p className='text-sm'>Phone number: {user?.number}</p>
 					</div>
 					<div className='flex justify-around mt-2'>
-						<button onClick={()=>handleEdit(val, index)} className='text-sm font-light text-blue-700'>Edit</button>
+						<button onClick={()=>handleEdit(val, index)} className='text-sm font-light text-blue-700 cursor-pointer'>Edit</button>
 						<span>|</span>
-						<button className='text-sm font-light text-blue-700'>Remove</button>
+						<button onClick={()=>handleDelete(index)} className='text-sm font-light text-blue-700 cursor-pointer'>Remove</button>
 					</div>
 				</div>
 			))}
-		</div>
+		</main>
 
 		<Dialog   
 			header={isEdit ? "Update Address" : "Add Address"} 
