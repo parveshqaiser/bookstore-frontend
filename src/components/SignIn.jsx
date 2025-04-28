@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import logo from "../assets/book-logo.png";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
@@ -8,7 +8,7 @@ import logo1 from "../assets/login-logo.png";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import validator from "validator";
 import { addTempUserData, getUserDetails } from '../redux/userSlice';
 import { getAllBooksList } from '../redux/bookSlice';
@@ -21,8 +21,17 @@ const SignIn = () => {
     const [inputValues, setInputValues] = useState({name : "", email:"",  password:""});
     const [isDisabled, setIsDisabled] = useState(false);
 
+    let user = useSelector(store => store?.user?.user);
+
     let navigate = useNavigate();
     let dispatch = useDispatch();
+
+    useEffect(()=>{
+        if(user && user.role == "user")
+        {
+            navigate("/")
+        }
+    },[])
 
     const[newUser , setNewUser] = useState(false);
     
@@ -78,6 +87,7 @@ const SignIn = () => {
                 toast.error(error?.response?.data?.message || error?.message, {duration:2000})
             }
         }else{
+            // login time
             try {
                 setIsDisabled(true);
                 let res = await axios.post(BASE_URL + "/user/login",loginData, {withCredentials: true});

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 
 const DashboardBoxes = () => {
-    let {totalBooks, totalQtySold,totalSales} = useSelector(store => store?.dashboard);
+    let {totalBooks, totalQtySold,totalSales, totalOrders} = useSelector(store => store?.dashboard);
     
     return (
     <main className='max-w-7xl mx-auto px-4 py-1 grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1  gap-4'>
@@ -37,7 +37,7 @@ const DashboardBoxes = () => {
                 <MdOutlineProductionQuantityLimits className='size-6'/>
             </div>
             <div className=''>
-                <span className="block text-lg font-semibold">10</span>
+                <span className="block text-lg font-semibold">{totalOrders || "NA"}</span>
                 <span className="block text-gray-500 text-sm">Orders Received</span>
             </div>
         </nav>

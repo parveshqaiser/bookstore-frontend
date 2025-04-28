@@ -13,8 +13,6 @@ import { clearCart } from '../redux/cartSlice';
 const CheckoutPage = () => {
     let user = useSelector(store => store?.user?.user);
     let cart = useSelector(store => store?.cart?.cartItems);
-
-    const {formValues, setFormValues} = useBillingDetails();
     
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [isCheck, setIsCheck] = useState(false)
@@ -22,7 +20,6 @@ const CheckoutPage = () => {
 
     let dispatch = useDispatch();
     let navigate = useNavigate();
-
 
     function handleChange(idx)
     {

@@ -1,12 +1,14 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from "../assets/logo.png";
 import { BASE_URL } from '../utils/api';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { addAdminData } from '../redux/adminSlice';
 
 const AdminLogin = () => {
 
@@ -14,7 +16,19 @@ const AdminLogin = () => {
     const [isDisable , setIsDisable] = useState(false);
     const [toggleIcons , setToggleIcons] = useState(false);
 
+    let user = useSelector(store => store?.user?.user);
+    let dispatch = useDispatch();
+
     const navigate = useNavigate();
+
+     useEffect(()=>{
+        if(user && user.role == "user")
+        {
+            navigate("/")
+        }else {
+            navigate("/admin/login")
+        }
+    },[])
 
     const handleSubmit = async()=>{
 
@@ -28,11 +42,13 @@ const AdminLogin = () => {
         try {
             setIsDisable(true)
             let res = await axios.post(`${BASE_URL}/admin/login`, inputValues, {withCredentials:true});
+            console.log(res.data);
             if(res.data.success)
             {
                 toast.success(res.data.message, {duration:2000,position:"top-center"});
                 setTimeout(() => {
                     navigate("/admin/dashboard");
+                    dispatch(addAdminData(res.data.data));
                     setIsDisable(false)
                 }, 1500);                
             }
@@ -41,7 +57,6 @@ const AdminLogin = () => {
             setIsDisable(false)
         }
     }
-
 
     return (
     <div className='flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-300 to-purple-600'>

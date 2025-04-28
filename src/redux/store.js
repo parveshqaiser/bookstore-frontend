@@ -8,6 +8,7 @@ import bookSlice from "../redux/bookSlice.js";
 import orderSlice from "../redux/orderSlice.js";
 import cartSlice from "../redux/cartSlice.js";
 import dashboardSlice from "../redux/dashboardSlice.js";
+import adminSlice from "../redux/adminSlice.js";
 
 let rootReducer = combineReducers({
     user : userSlice,
@@ -15,12 +16,13 @@ let rootReducer = combineReducers({
     order : orderSlice,
     cart : cartSlice,
     dashboard : dashboardSlice,
+    admin : adminSlice
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user', 'cart', "book","dashboard"], // only these slices will be persisted
+    whitelist: ['user', 'cart', "book","dashboard","admin"], // only these slices will be persisted
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

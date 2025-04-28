@@ -24,6 +24,8 @@ import UserProfileView from './components/UserProfileView';
 import Body from './components/Body';
 import PrivateRoute from './components/PrivateRoute';
 import AllBooks from './components/AllBooks';
+import NotFoundPage from './components/NotFoundPage';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 
 function App() {
 
@@ -79,23 +81,23 @@ function App() {
         },
         {
             path : "/admin/dashboard",
-            element : <AdminDashboard />
+            element :<AdminProtectedRoute> <AdminDashboard /> </AdminProtectedRoute>
         },
         {
             path : "/admin/manage/books",
-            element : <ManageBooks />
+            element : <AdminProtectedRoute><ManageBooks /></AdminProtectedRoute>
         },
         {
             path : "/admin/manage/orders",
-            element : <ManageOrders />
+            element : <AdminProtectedRoute><ManageOrders /></AdminProtectedRoute>
         },
         {
             path : "/admin/manage/orders/delivered",
-            element : <AdminDeliveredOrders />
+            element : <AdminProtectedRoute><AdminDeliveredOrders /></AdminProtectedRoute>
         },
         {
             path : "*",
-            element : <h2 style={{fontSize:"1.2rem", color:"red", fontFamily:"monospace", textAlign:"center", margin:"1rem 0"}}>Opps: The Page you are looking for doesn't exist!!!</h2>
+            element : <NotFoundPage />
         }
     ])
 

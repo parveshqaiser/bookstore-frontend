@@ -62,6 +62,21 @@ export const getMonthlyWiseRevenue = createAsyncThunk("monthlyWiseRevenue/get",
     }
 );
 
+//  total orders
+export const getTotalOrders = createAsyncThunk("getTotalOrders",
+    async(_,{rejectWithValue})=>{
+        try {
+            let res = await axios.get(BASE_URL + "/get/total/orders",{withCredentials: true});
+            return res?.data?.data;
+        } catch (error) {
+            return rejectWithValue({
+                message : error.response?.data?.message || "Get Total Orders Failed",
+                error : error?.response?.status
+            });
+        }
+    }
+);
+
 
 const dashboardSlice = createSlice({
     name: "dashboard",
@@ -70,6 +85,7 @@ const dashboardSlice = createSlice({
         totalSales : null,
         totalQtySold : null,
         monthlySales : [],
+        totalOrders : null,
     },
     reducers : {},
     extraReducers : (builder)=>{
@@ -87,6 +103,10 @@ const dashboardSlice = createSlice({
 
         builder.addCase(getMonthlyWiseRevenue.fulfilled,(state, action)=>{
             state.monthlySales = action.payload
+        });
+
+        builder.addCase(getTotalOrders.fulfilled,(state,action)=>{
+            state.totalOrders = action.payload
         });
     }
 });

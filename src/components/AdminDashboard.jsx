@@ -4,7 +4,7 @@ import DashboardHeader from './DashboardHeader.jsx';
 import DashboardBoxes from './DashboardBoxes.jsx';
 import DashboardGraphs from './DashboardGraphs.jsx';
 import { useDispatch } from 'react-redux';
-import { getMonthlyWiseRevenue, getTotalBooks, getTotalQuantitySold, getTotalSales } from '../redux/dashboardSlice.js';
+import { getMonthlyWiseRevenue, getTotalBooks, getTotalOrders, getTotalQuantitySold, getTotalSales } from '../redux/dashboardSlice.js';
 
 const AdminDashboard = () => {
 
@@ -15,6 +15,7 @@ const AdminDashboard = () => {
         dispatch(getTotalBooks());
         dispatch(getTotalQuantitySold());
         dispatch(getTotalSales());
+        dispatch(getTotalOrders());
     },[])
     
     return (

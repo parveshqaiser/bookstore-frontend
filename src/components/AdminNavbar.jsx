@@ -7,10 +7,13 @@ import axios from 'axios';
 import { BASE_URL } from '../utils/api.js';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { removeAdminData } from '../redux/adminSlice.js';
 
 const AdminNavbar = () => {
 
     let navigate = useNavigate();
+    let dispatch = useDispatch()
 
     async function handleLogout()
     {
@@ -19,13 +22,13 @@ const AdminNavbar = () => {
             if(res.data.success);
             {
                 toast.success("Log out success",{duration: 2000,position: 'top-center'});
+                dispatch(removeAdminData());
                 setTimeout(()=>{
-                    navigate("/");
+                    navigate("/admin/login");
                 },2000); 
             }    
         } catch (error) {
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
-            console.log("** ", error);
         }
     }
 
