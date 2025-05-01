@@ -12,7 +12,6 @@ const OrderPlacedPage = () => {
     let dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("use effect renderd");
         return () => {
             console.log("clean up done");
             dispatch(removeOrderDetails());

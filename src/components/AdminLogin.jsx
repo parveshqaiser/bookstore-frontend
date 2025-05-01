@@ -42,7 +42,6 @@ const AdminLogin = () => {
         try {
             setIsDisable(true)
             let res = await axios.post(`${BASE_URL}/admin/login`, inputValues, {withCredentials:true});
-            console.log(res.data);
             if(res.data.success)
             {
                 toast.success(res.data.message, {duration:2000,position:"top-center"});

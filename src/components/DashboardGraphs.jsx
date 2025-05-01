@@ -7,22 +7,7 @@ Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcEleme
 
 const DashboardGraphs = () => {
 
-    let {monthlySales} = useSelector(store => store?.dashboard);
-    const barChartRef = useRef(null);
-    // const pieChartRef = useRef(null);
-
-    const salesData = [
-        { totalSales: 100, qty: 10, yearDetails: { year: 2025, month: 1 }},
-        { totalSales: 120, qty: 20, yearDetails: { year: 2025, month: 2 }},
-        { totalSales: 140, qty: 30, yearDetails: { year: 2025, month: 3 }},
-        { totalSales: 150, qty: 40, yearDetails: { year: 2025, month: 4 }},
-        { totalSales: 160, qty: 50, yearDetails: { year: 2025, month: 5 }},
-        { totalSales: 170, qty: 60, yearDetails: { year: 2025, month: 6 }},
-    ];
-
-    useEffect(() => {
-        if (barChartRef.current) barChartRef.current.destroy();
-    }, [salesData]);
+    let {monthlySales , categoryWiseSales} = useSelector(store => store?.dashboard);
 
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -46,12 +31,11 @@ const DashboardGraphs = () => {
         ],
     };
 
-
     const options = {
         responsive: true,
         plugins: {
             legend: {
-            position: 'top',
+            position: 'bottom',
         },
             tooltip: {
                 callbacks: {
@@ -66,13 +50,60 @@ const DashboardGraphs = () => {
         }
     };
 
+    const pieData = {
+        labels: !!categoryWiseSales && categoryWiseSales.map(val => val?.genre),
+        datasets: [
+            {
+                label: 'Total Items',
+                data: !!categoryWiseSales && categoryWiseSales.map(val => val?.totalItemSold),
+                backgroundColor: [
+                    '#FF6384', // Pinkish Red
+                    '#36A2EB', // Light Blue
+                    '#FFCE56', // Yellow
+                    '#4BC0C0', // Teal
+                    '#9966FF', // Purple
+                    '#FF9F40', // Orange
+                    '#C9CBCF', // Light Gray
+                    '#8BC34A', // Lime Green
+                    '#00ACC1', // Cyan
+                    '#F44336', // Red
+                    '#3F51B5', // Indigo
+                    '#009688', // Teal Darker
+                    '#CDDC39', // Lime
+                    '#9C27B0', // Dark Purple
+                    '#795548', // Brown
+                    '#607D8B', // Blue Gray
+                    '#E91E63', // Pink
+                    '#2196F3'  // Blue
+                ],
+                borderWidth: 0,
+            },
+            ],
+        };
+      
+    const pieOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+            },
+        },
+    };
+
     return (
         <main className='max-w-7xl mx-auto px-2 overflow-x-auto'>
-            <div className='my-5 lg:w-2xl mx-auto'>
-                <h2 className="text-center lg:text-xl md:text-lg text-base font-bold mb-4">Monthly Sales Report - 2025</h2>
-                {monthlySales.length >0 ? <Bar data={barLegend} options={options} />
-                : <p className='text-center'>No Record Found</p>}
-            </div>     
+            <div className='flex flex-wrap mt-10'>
+                <div className='lg:w-2xl mx-auto'>
+                    <h2 className="text-center lg:text-xl md:text-lg text-base font-bold mb-4">Monthly Sales Report - 2025</h2>
+                    {monthlySales.length >0 ? <Bar data={barLegend} options={options} />
+                    : <p className='text-center'>No Record Found</p>}
+                </div>
+
+                <div className='w-full max-w-md mx-auto'>
+                    <h2 className="text-center lg:text-xl md:text-lg text-base font-bold mb-4">Book Sales By Category</h2>
+                    <Pie data={pieData} options={pieOptions} />
+                </div>
+            </div>
         </main>
     )
 }

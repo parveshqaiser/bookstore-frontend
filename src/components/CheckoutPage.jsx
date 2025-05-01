@@ -36,7 +36,7 @@ const CheckoutPage = () => {
             }
         });
 
-        let add = user.address.find((_,index)=> index == selectedIndex);
+        let address = user.address.find((_,index)=> index == selectedIndex);
 
         let data = {
             name : user?.name,
@@ -44,7 +44,7 @@ const CheckoutPage = () => {
             number : user?.number,
             orderedQuantity : cart.reduce((sum,book)=> sum + book?.qty,0),
             totalPrice : cart.reduce((sum, book)=> sum + book?.newPrice,0),
-            address: add,
+            address: address,
             products : product
         };
 
@@ -91,9 +91,10 @@ const CheckoutPage = () => {
                         <p className='text-sm'>Phone number : {user?.number}</p>
                     </div>
                 </section>
-            )): <p className='text-center font-extrabold text-lg'>No Address Found. Please Go to Profile to add Address</p>}
+            )): <p className='text-center font-extrabold text-lg text-gray-500'>No Address Found. Please Go to Profile to add Address</p>}
 
-        {selectedIndex !==null && <>
+        {selectedIndex !==null && 
+        <>
             <div className="flex items-center gap-2">
                 <input type="checkbox" onChange={(e)=> setIsCheck(e.target.checked)} className="accent-purple-500 w-4 h-4" />
                 <span className="text-sm text-gray-600">I agree to the <span className="underline cursor-pointer">terms & conditions</span></span>
@@ -107,8 +108,7 @@ const CheckoutPage = () => {
                 🛍️ Place Order
                 </button>
             </div>      
-        </>}
-                 
+        </>}                 
         </main>
     </>
     )

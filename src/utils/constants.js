@@ -1,11 +1,10 @@
 
 export let categoryList = [
     "Choose a Genre",
-    "Mystery",
+    "Mystery / Thriller",
     "Romance",
     "Science Fiction",
     "Fantasy",
-    "Thriller",
     "Horror",
     "Non Fiction",
     "Historical Fiction",
@@ -19,8 +18,6 @@ export let categoryList = [
     "True Crime",
     "History",
     "Science & Technology",
-    "Graphic Novels",
-    "SiPoetry",
     "Drama",
 ];
 

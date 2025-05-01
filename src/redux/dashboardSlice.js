@@ -77,6 +77,20 @@ export const getTotalOrders = createAsyncThunk("getTotalOrders",
     }
 );
 
+export const getCategoryWiseSales = createAsyncThunk("categoryWiseSales",
+    async(_,{rejectWithValue})=>{
+        try {
+            let res = await axios.get(BASE_URL + "/sales/category/wise",{withCredentials: true});
+            return res?.data?.data;
+        } catch (error) {
+            return rejectWithValue({
+                message : error.response?.data?.message || "Get Category Wise sales failed",
+                error : error?.response?.status
+            });
+        }
+    }
+);
+
 
 const dashboardSlice = createSlice({
     name: "dashboard",
@@ -86,6 +100,7 @@ const dashboardSlice = createSlice({
         totalQtySold : null,
         monthlySales : [],
         totalOrders : null,
+        categoryWiseSales : [],
     },
     reducers : {},
     extraReducers : (builder)=>{
@@ -108,6 +123,10 @@ const dashboardSlice = createSlice({
         builder.addCase(getTotalOrders.fulfilled,(state,action)=>{
             state.totalOrders = action.payload
         });
+
+        builder.addCase(getCategoryWiseSales.fulfilled,(state, action)=>{
+            state.categoryWiseSales = action.payload
+        })
     }
 });
  

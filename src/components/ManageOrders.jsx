@@ -67,7 +67,7 @@ const ManageOrders = () => {
             >
                 <p className=''>  Order No : {order?._id}</p>
                 <div className="flex justify-between items-center mb-3">
-                    <span className="text-sm text-gray-500"> Order Date : {order.createdAt.split("T")[0]}</span>
+                    <span className="text-sm text-yellow-500"> Order Date : {order.createdAt.split("T")[0]}</span>
                     <span className="px-3 py-1 text-xs font-semibold uppercase rounded-md bg-amber-200 text-yellow-700">
                         {order.orderStatus}
                     </span>
