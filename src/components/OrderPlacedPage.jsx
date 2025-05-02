@@ -11,12 +11,12 @@ const OrderPlacedPage = () => {
 
     let dispatch = useDispatch();
 
-    useEffect(() => {
-        return () => {
-            console.log("clean up done");
-            dispatch(removeOrderDetails());
-        };
-    }, []);
+    // useEffect(() => {
+    //     return () => {
+    //         console.log("clean up done");
+    //         dispatch(removeOrderDetails());
+    //     };
+    // }, []);
 
     return (
     <main className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">

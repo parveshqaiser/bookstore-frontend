@@ -1,16 +1,20 @@
 
 import React, { useEffect } from 'react'
-import NavBar from './NavBar';
-import { Outlet } from 'react-router-dom';
 import Banner from './Banner';
 import TopSellers from './TopSellers';
-import Footer from './Footer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import NewArrivals from './NewArrivals';
+import { removeOrderDetails } from '../redux/orderSlice';
 
 const HomePage = () => {
 
     let {allBooks,isLoading} = useSelector(store => store?.book);
+    let dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log("clean up done")
+        dispatch(removeOrderDetails());
+    }, []);
 
     return (
         <>
