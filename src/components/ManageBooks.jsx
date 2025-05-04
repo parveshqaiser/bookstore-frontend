@@ -1,10 +1,10 @@
+
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import AdminNavbar from "./AdminNavbar";
 import { IoPencil } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
 import { HiDotsHorizontal } from "react-icons/hi";
-
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import AddEditBookModal from "./AddEditBookModal";
@@ -14,7 +14,7 @@ import { Dialog } from 'primereact/dialog';
 import AdminBookView from "./AdminBookView";
 import axios from "axios";
 import { BASE_URL } from "../utils/api";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { getAllBooksList } from "../redux/bookSlice";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -75,21 +75,19 @@ const ManageBooks = () => {
                 toast.success(`${res.data?.message}`, {position: "top-center", duration : 2500})
             }
         } catch (error) {
-            console.log("error ", error);
             toast.error(`${error?.message}`, {position: "top-center", duration : 2500})
         }       
     }
 
     const quantityTemplate = (rowData) => {
         let color ;
-       if(rowData.quantity > 3 && rowData.quantity <7)
-       {
+        if(rowData.quantity > 3 && rowData.quantity <7){
             color = "bg-yellow-200"
-       }else if(rowData.quantity <3){
+        }else if(rowData.quantity <3){
             color = "bg-red-300"
-       }else {
-        color = ""
-       }
+        }else {
+            color = ""
+        }
 
         return (
             <span

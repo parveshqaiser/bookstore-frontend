@@ -11,7 +11,6 @@ export const getAllPendingOrders = createAsyncThunk(
             let res = await axios.get(BASE_URL + "/admin/orders/pending",{withCredentials: true});
             return res?.data?.data;
         } catch (error) {
-            console.log("err ", error);
             return rejectWithValue({
                 message : error.response?.data?.message || "Get All Pending Orders failed",
                 error : error?.response?.status
@@ -27,7 +26,7 @@ export const getAllDeliveredOrders = createAsyncThunk(
             let res = await axios.get(BASE_URL + "/admin/orders/delivered",{withCredentials: true});
             return res?.data?.data;
         } catch (error) {
-            console.log("err ", error);
+            // console.log("err ", error);
             return rejectWithValue({
                 message : error.response?.data?.message || "Get All Pending Orders failed",
                 error : error?.response?.status
@@ -54,7 +53,6 @@ export const getAllUserDeliveredOrders = createAsyncThunk(
     "allUserDeliveredOrders/get", async(_,{rejectWithValue})=>{
         try {
             let res = await axios.get(BASE_URL + "/user/orders/delivered",{withCredentials: true});
-            // console.log(res.data.data, "******************** slice");
             return res?.data?.data;
         } catch (error) {
             return rejectWithValue({

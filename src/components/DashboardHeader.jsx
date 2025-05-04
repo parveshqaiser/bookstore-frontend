@@ -4,7 +4,6 @@ import React from 'react'
 import { IoSettings } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 const DashboardHeader = () => {
 

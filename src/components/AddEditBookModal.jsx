@@ -8,7 +8,6 @@ import { BASE_URL } from '../utils/api';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { getAllBooksList } from '../redux/bookSlice';
-import { Tooltip } from 'primereact/tooltip';
 
 const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
@@ -101,8 +100,6 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             typeof val.value === "string" ? val.value.trim() !== "" : val.value !== undefined && val.value !== null
         );
 
-        console.log(isAllValuesExist)
-
         if(!isAllValuesExist)
         {
             toast.error("All Fields are required", {duration : 2500});
@@ -126,9 +123,6 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
         formData.append("newPrice", formValues.newPrice.value);
         formData.append("oldPrice", formValues.oldPrice.value);
 
-        formData.forEach((key, val)=>{
-            console.log(`key ${key} : ${val}`)
-        })
         if(file?.name){
             formData.append("coverPic", file || "");
         }

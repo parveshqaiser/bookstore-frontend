@@ -6,7 +6,7 @@ import logo1 from "../assets/login-logo.png";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { getUserDetails } from '../redux/userSlice';
 
@@ -45,7 +45,6 @@ const OtpVerification = ()=>{
                 },2000)
             }
         } catch (error) {
-            // console.log("err ", error);
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
         }
     

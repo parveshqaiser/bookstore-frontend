@@ -9,15 +9,6 @@ const OrderPlacedPage = () => {
 
     let {storeOrderDetails} = useSelector(store => store?.order);
 
-    let dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     return () => {
-    //         console.log("clean up done");
-    //         dispatch(removeOrderDetails());
-    //     };
-    // }, []);
-
     return (
     <main className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold text-green-600 mb-4">✅ Your Order Has Been Successfully Placed!</h1>
@@ -52,7 +43,7 @@ const OrderPlacedPage = () => {
         </div>
         <p className='text-sm text-center'>
             <Link to="/" className='text-gray-600 hover:text-gray-800 transition' >
-            Go to Home <FaArrowRightLong className='inline ml-1' />
+                Go to Home <FaArrowRightLong className='inline ml-1' />
             </Link>
         </p>
     </main>

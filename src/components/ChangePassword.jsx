@@ -1,8 +1,7 @@
 
-
+import React, { useState } from 'react';
 import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { BASE_URL } from '../utils/api';
 
@@ -80,7 +79,7 @@ const ChangePassword = () => {
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-1">Your Current Password</label>
 					<input 
-						title='Space are not allowed'
+						title='Space not allowed'
 						name="currentPassword"
 						type="password"
 						value={formValues.currentPassword.value}

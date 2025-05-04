@@ -33,7 +33,6 @@ const ManageOrders = () => {
                
             }
         } catch (error) {
-            console.log("some error in placing order");
             toast.error(`${error?.response?.data?.message || "Failed to Deliver Order"}`,{duration:2500})
         }
     }

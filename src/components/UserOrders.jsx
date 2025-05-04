@@ -9,8 +9,8 @@ import noPending from "../assets/no-pending.jpg";
 
 const UserOrders = () => {
 
-	let   {userPendingOrder} = useSelector(store => store?.order);
-	let   {userDeliveredOrder} = useSelector(store => store?.order);
+	let {userPendingOrder} = useSelector(store => store?.order);
+	let {userDeliveredOrder} = useSelector(store => store?.order);
 
 	let dispatch = useDispatch();
 

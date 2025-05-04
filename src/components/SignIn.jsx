@@ -1,11 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
-// import logo from "../assets/book-logo.png";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
-import logo1 from "../assets/login-logo.png";
-import toast, { Toaster } from 'react-hot-toast';
+import loginLogo from "../assets/login-logo.png";
+import toast from 'react-hot-toast';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { useDispatch, useSelector } from 'react-redux';
@@ -110,7 +109,7 @@ const SignIn = () => {
 
     return (
         <div className='max-w-6xl md:mx-auto my-10 mx-4 shadow-sm pb-4'>
-            <img src={logo1} alt='Book logo' className='w-40 mx-auto rounded-full'/>
+            <img src={loginLogo} alt='Book logo' className='w-40 mx-auto rounded-full'/>
             <h2 className='text-center font-mono text-xl text-purple-700 my-1'>The Book Story Shop</h2>
             <div className='w-80 mx-auto my-2'> 
                 {newUser && (<div className='mb-4'>
