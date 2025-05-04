@@ -40,7 +40,7 @@ const SingleBookView = () => {
     return (
         <>
         <main className='h-auto max-w-6xl my-20 lg:mx-auto mx-4'>
-            <section className='grid grid-cols-1 md:grid-cols-3 gap-6 border-b-rounded-lg shadow-lg p-6'>
+            <section className='grid grid-cols-1 md:grid-cols-3 gap-3 border-b-rounded-lg shadow-lg p-4'>
                 <div className="w-48 Wmx-auto">
                     <img
                         className="w-full object-fill rounded-lg shadow-md"
@@ -65,8 +65,13 @@ const SingleBookView = () => {
                             </span>
                         </p>
 
-                        <div><span className="">Category:</span> {singleBook?.category}</div>
-                        <div><span className="">Pages:</span> {singleBook?.pages}</div>
+                        <div>
+                            <span className="text-base">Category:</span> {singleBook?.category}
+                        </div>
+                        <div>
+                            <span className="text-base">Pages:</span> {singleBook?.pages}
+                        </div>
+                        
                         <div className='space-x-1'>
                             <span className={`font-semibold ${singleBook?.isAvailable ? "text-green-500" : "text-red-500"}`}>
                             {singleBook?.isAvailable ? "Available" : "Out of Stock"} 

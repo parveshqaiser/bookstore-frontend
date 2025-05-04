@@ -108,7 +108,7 @@ const SignIn = () => {
     }
 
     return (
-        <div className='max-w-6xl md:mx-auto my-10 mx-4 shadow-sm pb-4'>
+        <div className='max-w-6xl md:mx-auto my-10 mx-4 shadow-sm pb-4 relative'>
             <img src={loginLogo} alt='Book logo' className='w-40 mx-auto rounded-full'/>
             <h2 className='text-center font-mono text-xl text-purple-700 my-1'>The Book Story Shop</h2>
             <div className='w-80 mx-auto my-2'> 
@@ -186,6 +186,12 @@ const SignIn = () => {
                     </Link>
                 </p>
             </div>
+
+            {/* <aside className='absolute bottom-44 right-0 border'>
+                <p>1. Password Should be min 6 chars </p>
+                <p>2. It should contain 1 Upper Case letter</p>
+                <p>3. It should contain  1 special char (@ or & or #)</p>
+            </aside> */}
         </div>
     )
 }

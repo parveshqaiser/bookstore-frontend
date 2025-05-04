@@ -62,7 +62,7 @@ const NavBar = ({user}) => {
     }
 
     return (
-    <div className='relative'>
+    <>
         <header className="max-w-6xl mx-auto flex md:flex-row items-center justify-between fixed top-0 left-0 right-0 bg-white shadow-md p-3 z-20">      
             <div className="flex items-center gap-3">
                 <Link to="/">
@@ -114,29 +114,31 @@ const NavBar = ({user}) => {
         </header>
 
         {keyText && results.length > 0 && (
-            <div className="absolute md:left-20 left-5 top-0 z-10 w-full max-w-md bg-white">
+        <div className='max-w-6xl mx-auto z-10 relative'>
+            <div className="absolute top-full md:w-[400px] w-[300px] left-0 bg-white">
                 <ul className="shadow-md rounded-md max-h-60 overflow-y-auto divide-y divide-gray-200">
-                {results.map((book, index) => (
-                <Link to={`/book/view/${book?._id}`} onClick={()=> setKeyText("")}>
-                    <li key={book?._id} className="px-4 py-2 hover:bg-purple-50 cursor-pointer flex justify-between">
-                        <div>
-                            <p className="font-medium text-gray-800">{book.title}</p>
-                            <p className="text-sm text-gray-500">{book.author}</p>
-                        </div>
-                        <div className='w-8 h-auto'>
-                            <img  
-                                src={book.coverPic} 
-                                alt={book.title} 
-                                className="w-full object-cover rounded-md"
-                            />
-                        </div>
-                    </li>
-                </Link>
-                ))}
+                    {results.map((book, index) => (
+                    <Link to={`/book/view/${book?._id}`} onClick={()=> setKeyText("")}>
+                        <li key={book?._id} className="px-4 py-2 hover:bg-purple-50 cursor-pointer flex justify-between">
+                            <div>
+                                <p className="font-medium text-gray-800">{book.title}</p>
+                                <p className="text-sm text-gray-500">{book.author}</p>
+                            </div>
+                            <div className='w-8 h-auto'>
+                                <img  
+                                    src={book.coverPic} 
+                                    alt={book.title} 
+                                    className="w-full object-cover rounded-md"
+                                />
+                            </div>
+                        </li>
+                    </Link>
+                    ))}
                 </ul>
            </div>
+        </div>
         )}
-    </div>
+    </>
     )
 }
 
