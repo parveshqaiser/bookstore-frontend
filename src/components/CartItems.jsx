@@ -1,6 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
-import NavBar from './NavBar';
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
@@ -10,10 +9,14 @@ import { clearCart, decreaseQuantity, increaseQuantity, removeFromCart } from '.
 
 
 const CartItems = () => {
-    let user = useSelector(store => store?.user?.user);
+
     let cart = useSelector(store => store?.cart?.cartItems);
 
     let dispatch = useDispatch();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     function handleRemoveItems(id)
     {
@@ -31,7 +34,6 @@ const CartItems = () => {
     }
 
     return (
-    <>
     <main className="h-auto max-w-6xl my-20 mx-4 lg:mx-auto space-y-6">
 
         {cart && cart.length > 0 && (
@@ -52,8 +54,7 @@ const CartItems = () => {
                 <p className='text-gray-500 text-lg mb-4'>Look's like you haven't made your choice yet.</p>
                 <button className='px-4 py-2 rounded-md bg-violet-500 text-white'>
                     <Link to="/" >Back To Home Page</Link>
-                </button>
-                    
+                </button>                    
             </div> 
                
         ) : cart.map((book, index) =>(
@@ -63,10 +64,8 @@ const CartItems = () => {
                     <img src={book?.coverPic} alt="Book" className="w-20 h-auto object-cover rounded-md shadow-md" />
                     <div className="flex flex-col justify-between w-full">
                         <div>
-                        <p className="text-lg font-semibold text-gray-800">{book?.title}</p>
-                        <p className="text-sm text-gray-600">
-                            By <span className="font-medium">{book?.author}</span>
-                        </p>
+                            <p className="text-lg font-semibold text-gray-800">{book?.title}</p>
+                            <p className="text-sm text-gray-600">By <span className="font-medium">{book?.author}</span></p>
                         </div>
                         <p className="text-sm text-gray-600">
                             Qty : &nbsp; 
@@ -108,16 +107,14 @@ const CartItems = () => {
             <section className='text-center space-y-2'>
                 <Link className='bg-purple-500 w-full block px-4 py-2 text-white rounded-md' to='/cart/checkout'>Checkout</Link>
                 <p className='inline-block text-sm'>
-                    <Link to="/home" className='text-gray-600 hover:text-gray-800 transition' >
+                    <Link to="/" className='text-gray-600 hover:text-gray-800 transition' >
                         Or Continue Shopping <FaArrowRightLong className='inline ml-2' />
                     </Link>
                 </p>
             </section>
         </>
         )}       
-
     </main>
-    </> 
     )
 }
 

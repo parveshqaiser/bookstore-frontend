@@ -62,7 +62,7 @@ let bookSlice = createSlice({
 
         builder.addCase(getSingleBook.pending, (state, action)=>{
             state.isBookLoading = true;
-            state.error = null;
+            state.errorBook = null;
         });
 
         builder.addCase(getSingleBook.fulfilled, (state, action)=>{
@@ -73,7 +73,7 @@ let bookSlice = createSlice({
         
         builder.addCase(getSingleBook.rejected, (state, action)=>{
             state.isBookLoading = false;
-            state.error = action.payload; 
+            state.errorBook = action.payload; 
         });
     }
 });

@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { HiMiniBars4 } from "react-icons/hi2";
 import { FaCartPlus } from "react-icons/fa";
 import { IoPersonCircle } from "react-icons/io5";
@@ -14,14 +14,26 @@ import toast  from 'react-hot-toast';
 import {useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../redux/userSlice';
+import Fuse from 'fuse.js';
 
 const NavBar = ({user}) => {
 
+    let {cartItems} = useSelector(store => store?.cart);
+    
+    let {allBooks} = useSelector(store => store?.book);
     let [toggle, setToggle] = useState(false);
     let navigate = useNavigate();
     let dispatch = useDispatch();
 
-    let {cartItems} = useSelector(store => store?.cart);
+    const [keyText, setKeyText] = useState("");
+    const [results, setResults] = useState([]);
+
+    const options = {
+        keys: ["title", "author"],
+        threshold: 0.3,
+    };
+
+    let fuse = new Fuse(allBooks, options);
 
     const handleLogout = async ()=>{
 
@@ -40,8 +52,21 @@ const NavBar = ({user}) => {
         }
     }
 
+    function handleChange(e)
+    {
+        let value = e.target.value;
+        setKeyText(value);
+        if(value?.trim() == ""){
+            setResults([])
+        }else {
+            const res = fuse.search(value).map((r) => r.item);
+            setResults(res);
+        }      
+    }
+
     return (
-        <header className="max-w-6xl mx-auto flex md:flex-row items-center justify-between fixed top-0 left-0 right-0 bg-white shadow-md p-3 z-10">      
+    <div className='relative'>
+        <header className="max-w-6xl mx-auto flex md:flex-row items-center justify-between fixed top-0 left-0 right-0 bg-white shadow-md p-3 z-20">      
             <div className="flex items-center gap-3">
                 <Link to="/">
                     <HiMiniBars4 size={26} className="text-purple-500 cursor-pointer hover:text-purple-600 transition duration-200" />
@@ -49,6 +74,8 @@ const NavBar = ({user}) => {
                 <div className="">
                     <input
                         type="text"
+                        value={keyText}
+                        onChange={handleChange}
                         placeholder="What are you looking for?"
                         className="w-auto px-2 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent bg-gray-50 text-gray-700 placeholder-gray-500"
                     />
@@ -88,6 +115,31 @@ const NavBar = ({user}) => {
                 </aside>
             </div>        
         </header>
+
+        {keyText && results.length > 0 && (
+            <div className="absolute md:left-20 left-5 top-0 z-10 w-full max-w-md bg-white">
+                <ul className="shadow-md rounded-md max-h-60 overflow-y-auto divide-y divide-gray-200">
+                {results.map((book, index) => (
+                <Link to={`/book/view/${book?._id}`} onClick={()=> setKeyText("")}>
+                    <li key={book?._id} className="px-4 py-2 hover:bg-purple-50 cursor-pointer flex justify-between">
+                        <div>
+                            <p className="font-medium text-gray-800">{book.title}</p>
+                            <p className="text-sm text-gray-500">{book.author}</p>
+                        </div>
+                        <div className='w-8 h-auto'>
+                            <img  
+                                src={book.coverPic} 
+                                alt={book.title} 
+                                className="w-full object-cover rounded-md"
+                            />
+                        </div>
+                    </li>
+                </Link>
+                ))}
+                </ul>
+           </div>
+        )}
+    </div>
     )
 }
 

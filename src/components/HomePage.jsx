@@ -12,7 +12,6 @@ const HomePage = () => {
     let dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("clean up done")
         dispatch(removeOrderDetails());
     }, []);
 

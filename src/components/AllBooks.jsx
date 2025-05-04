@@ -10,6 +10,10 @@ const AllBooks = () => {
     let dispatch = useDispatch();
     let {isLoading,allBooks} = useSelector(store=> store?.book);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    },[]);
+
     if(isLoading)
     {
         return <div className='text-center'>
