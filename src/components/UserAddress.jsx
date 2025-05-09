@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import { Dialog } from 'primereact/dialog';
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FiPlus } from "react-icons/fi";
 import { BASE_URL } from '../utils/api';
 import toast from 'react-hot-toast';
@@ -11,6 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../redux/userSlice';
 
 let initialFormValues = {
+	area: {
+		value :"",
+		error : "",
+	},
 	doorNo : {
 		value :"",
 		error : "",
@@ -19,14 +23,15 @@ let initialFormValues = {
 		value :"",
 		error : "",
 	},
-	state : {
+	district : {
 		value :"",
 		error : "",
 	},
-	pinCode : {
+	state : {
 		value :"",
 		error : "",
-	}};
+	}
+};
 
 const UserAddress = () => {
 
@@ -37,7 +42,17 @@ const UserAddress = () => {
 	const [isDisable, setIsDisable] = useState(false);
 	const [isEdit , setIsEdit] = useState(false);
 	const [activeIndex , setActiveIndex ] = useState(null);
+	const [apiData, setApiData] = useState([]);
+	const [pinText, setPinText] = useState("");
+	const [pinCode , setPinCode] = useState("");
+
+	const isManualClearRef = useRef(true);
+
 	const [formValues, setFormValues] = useState({
+		area: {
+			value :"",
+			error : "",
+		},
 		doorNo : {
 			value :"",
 			error : "",
@@ -46,21 +61,42 @@ const UserAddress = () => {
 			value :"",
 			error : "",
 		},
+		district : {
+			value :"",
+			error : "",
+		},
 		state : {
 			value :"",
 			error : "",
 		},
-		pinCode : {
-			value :"",
-			error : "",
-		}
 	});
 
 	const handleCLose =()=> {
 		setVisible(false),
 		setFormValues(initialFormValues),
-		setIsEdit(false)
+		setIsEdit(false);
+		setPinText("");
+		setPinCode("");
+		setApiData([]);
 	};
+
+	useEffect(()=>{
+		const getPostalCode = async ()=>{
+			if(pinText.length >5){
+				try {
+					let res = await axios.get(`https://api.postalpincode.in/pincode/${pinText}`)
+					setApiData(res.data)
+				} catch (error) {
+					console.log(error);
+				} 
+			}else if(pinText.length < 6 && isManualClearRef.current) {
+				setFormValues(initialFormValues);
+				setApiData([]);
+			}
+			isManualClearRef.current = true;
+		}	
+		getPostalCode();	
+	},[pinText]);
 
 	function handleChange(e)
 	{
@@ -68,20 +104,12 @@ const UserAddress = () => {
 
 		let newValues = {...formValues};
 
-		if(name == "doorNo" || name == "city" || name =="state")
+		if(name == "doorNo" || name == "city" || name =="district" || name =="state")
 		{
 			newValues[name]={
                 value : value.charAt(0).toUpperCase() + value.slice(1),
                 error : !value ? "Required*" : ''
             }
-		}
-
-		if(name == "pinCode")
-		{
-			newValues[name] = {
-				value : parseInt(value) || '',
-				error : !value ? "Required*" : ''
-			}
 		}
 		setFormValues(newValues);
 	}
@@ -89,7 +117,12 @@ const UserAddress = () => {
 	function handleEdit(val, idx)
 	{
 		setActiveIndex(idx);
+		setPinCode(val.pinCode);
 		setFormValues({
+			area : {
+				value : val?.area,
+				error : "",
+			},
 			doorNo : {
 				value : val?.doorNo,
 				error : "",
@@ -98,12 +131,12 @@ const UserAddress = () => {
 				value :val?.city,
 				error : "",
 			},
-			state : {
-				value :val?.state,
+			district : {
+				value :val?.district,
 				error : "",
 			},
-			pinCode : {
-				value :val?.pinCode,
+			state : {
+				value :val?.state,
 				error : "",
 			}
 		});
@@ -125,8 +158,12 @@ const UserAddress = () => {
 		}
 	}
 
-
 	const handleSubmit = async()=>{
+
+		if(pinCode == ""){
+			toast.error("Pin Required",{duration:2000})
+			return;
+		}
 
 		if(formValues.doorNo.value.trim()==""){
 			setFormValues({...formValues, doorNo : {...formValues.doorNo, error :"required*"}})
@@ -142,17 +179,14 @@ const UserAddress = () => {
 			setFormValues({...formValues, state : {...formValues.state, error :"required*"}})
 			return;
 		}
-
-		if(formValues.pinCode.value ==""){
-			setFormValues({...formValues, pinCode : {...formValues.pinCode, error :"required*"}})
-			return;
-		}
 		
 		let data = {
+			area : formValues.area.value,
 			doorNo : formValues.doorNo.value.trim(),
 			city : formValues.city.value.trim(),
+			district : formValues.district.value.trim(),
 			state : formValues.state.value.trim(),
-			pinCode : formValues.pinCode.value,
+			pinCode : pinCode,
 		}
 
 		if(isEdit == false) // add
@@ -231,71 +265,122 @@ const UserAddress = () => {
             style={{ width: '65vw' }} 
             onHide={handleCLose}
 		>
-			<main>
+			<div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+				<div className="mb-2 relative">
+					<label className="block font-medium">Enter 6 Digit Pin Code <span className="text-red-500"> *</span></label>
+						<input 
+							type="text"  
+							maxLength={6}
+							onChange={(e) =>{
+								isManualClearRef.current = true,
+								setPinCode(parseInt(e.target.value) || ""),
+								setPinText(e.target.value)
+							}}
+							value={pinCode}
+							className="w-full px-3 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
+						/>
+					{pinText && (
+					<div className="absolute z-10 w-full bg-white border border-gray-200 rounded-md shadow-md mt-1 max-h-40 overflow-y-auto">
+						{apiData.length > 0 ? (
+							apiData[0]?.PostOffice?.map((val, idx) => (
+							<div 
+								key={idx} 
+								className="p-2 hover:bg-purple-100 cursor-pointer text-sm" 
+								onClick={()=>{
+									isManualClearRef.current = false,
+									setPinText("");
+									setFormValues({
+										...formValues,
+										area :{value : val?.Name},
+										city : {value : val.Division},
+										district : {value : val.District},
+										state : {value : val.State},											
+									})
+								}}
+							>
+								{val?.Name}
+							</div>
+							))
+						) : (
+							<p className="p-1 text-red-400 text-sm">No Record Found</p>
+						)}
+					</div>)}
+				</div>
 				<div className='mb-2'>
-					<label className='block'> Your Door No/ Street No/ Apartment <span className='text-red-500'> *</span></label> 
-					<textarea
-						name='doorNo'
-						onChange={handleChange}
-						value={formValues.doorNo.value}
+					<label className='block'>Your Area <span className='text-red-500'>*</span></label>
+					<input 
+						type="text"
+						value={formValues.area.value}
+						readOnly
 						className="w-full px-2 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
 					/>
-					<span className='text-red-500 text-sm'>{formValues.doorNo.error}</span>
 				</div>
-				<div className='grid md:grid-cols-3 grid-cols-1 gap-4'>
-					<div className='mb-2'>
-						<label className='block'>Your City <span className='text-red-500'> *</span></label>
-						<input 
-							type="text"
-							name='city'
-							onChange={handleChange}
-							value={formValues.city.value}  
-							className="w-full px-2 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
-						/>
-						<span className='text-red-500 text-sm'>{formValues.city.error}</span>
-					</div>
-					<div className='mb-2'>
-						<label className='block'>Your State <span className='text-red-500'> *</span></label>
-						<input 
-							type="text"  
-							name='state'
-							onChange={handleChange}
-							value={formValues.state.value}  
-							className="w-full px-2 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
-						/>
-						<span className='text-red-500 text-sm'>{formValues.state.error}</span>
-					</div>
-					<div className='mb-2'>
-						<label className='block'>Your Pin Code <span className='text-red-500'> *</span></label>
-						<input 
-							type="text"  
-							name='pinCode'
-							maxLength={6}
-							onChange={handleChange}
-							value={formValues.pinCode.value}  
-							className="w-full px-2 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
-						/>
-						<span className='text-red-500 text-sm'>{formValues.pinCode.error}</span>
-					</div>
-				</div>
+			</div>
 
-				<div className='my-2'>
-				{isDisable ?  
-					<ProgressSpinner 
-					style={{width: '50px', height: '50px'}} 
-					strokeWidth="8" 
-					fill="var(--surface-ground)" 
-					animationDuration=".5s" 
+			<div className='mb-2'>
+				<label className='block'> Your Door No/ Street No/ Apartment <span className='text-red-500'> *</span></label> 
+				<textarea
+					name='doorNo'
+					onChange={handleChange}
+					value={formValues.doorNo.value}
+					className="w-full px-2 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
 				/>
-				:
-					<button 
-						onClick={handleSubmit}
-						className={`px-4 py-2 border border-purple-600 text-violet-500 rounded-md transition text-sm font-medium cursor-pointer`}
-					>
-						Submit
-					</button>}
+				<span className='text-red-500 text-sm'>{formValues.doorNo.error}</span>
+			</div>
+
+			<div className='grid md:grid-cols-3 grid-cols-1 gap-4'>
+				<div className='mb-2'>
+					<label className='block'>Your City <span className='text-red-500'> *</span></label>
+					<input 
+						type="text"
+						name='city'
+						onChange={handleChange}
+						value={formValues.city.value}  
+						className="w-full px-2 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
+					/>
+					<span className='text-red-500 text-sm'>{formValues.city.error}</span>
 				</div>
-			</main>
+				
+				<div className='mb-2'>
+					<label className='block'>Your District <span className='text-red-500'> *</span></label>
+					<input 
+						type="text"  
+						name='district'
+						onChange={handleChange}
+						value={formValues.district.value}
+						className="w-full px-2 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
+					/>
+					<span className='text-red-500 text-sm'>{formValues.district.error}</span>
+				</div>
+				<div className='mb-2'>
+					<label className='block'>Your State <span className='text-red-500'> *</span></label>
+					<input 
+						type="text"  
+						name='state'
+						onChange={handleChange}
+						value={formValues.state.value}  
+						className="w-full px-2 py-2 rounded-md bg-blue-50/60 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400" 
+					/>
+					<span className='text-red-500 text-sm'>{formValues.state.error}</span>
+				</div>
+			</div>
+
+			<div className='my-2'>
+			{isDisable ?  
+				<ProgressSpinner 
+				style={{width: '50px', height: '50px', textAlign:"center"}} 
+				strokeWidth="8" 
+				fill="var(--surface-ground)" 
+				animationDuration=".5s" 
+			/>
+			:
+				<button 
+					onClick={handleSubmit}
+					className={`px-4 py-2 border border-purple-600 text-violet-500 rounded-md transition text-sm font-medium cursor-pointer`}
+				>
+					Submit
+				</button>}
+			</div>
 		</Dialog>
 	</>
 	);
