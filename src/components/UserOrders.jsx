@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { getAllUserDeliveredOrders, getAllUserPendingOrders } from '../redux/orderSlice';
 import noPending from "../assets/no-pending.jpg";
 
@@ -10,14 +10,24 @@ import noPending from "../assets/no-pending.jpg";
 const UserOrders = () => {
 
 	let {userPendingOrder} = useSelector(store => store?.order);
-	let {userDeliveredOrder} = useSelector(store => store?.order);
+	let {userDeliveredOrder, deliveredOrderError} = useSelector(store => store?.order);
 
 	let dispatch = useDispatch();
+	let navigate = useNavigate();
+	
+	// console.log("deliveredOrderError", deliveredOrderError)
 
 	useEffect(() => {
 		dispatch(getAllUserPendingOrders());
 		dispatch(getAllUserDeliveredOrders());
 	}, []);
+
+	// useEffect(()=>{
+	// 	console.log("going inside");
+	// 	if(deliveredOrderError?.error == 500){
+	// 		navigate("/user/signin")
+	// 	}
+	// },[deliveredOrderError])
 
 	const getEstimatedDeliveryDate = () => {
 		const today = new Date();

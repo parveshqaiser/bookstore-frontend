@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from '../utils/api';
 import toast from 'react-hot-toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { getUserDetails } from '../redux/userSlice';
+import { getUserDetails, logoutUser } from '../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfileView = () => {
 
@@ -14,6 +15,7 @@ const UserProfileView = () => {
     let phoneExp = new RegExp("^[6-9]\\d{9}$"); 
 
     let dispatch = useDispatch();
+    let navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
         name : {
@@ -97,7 +99,12 @@ const UserProfileView = () => {
                 setIsDisabled(false);
             }
         } catch (error) {
+            console.log("error ", error);
             setIsDisabled(false);
+            if(error.status == 401 || error.status == 500){
+                dispatch(logoutUser());
+                navigate("/user/signin");                
+            }
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
         }
     }

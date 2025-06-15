@@ -39,7 +39,8 @@ function App() {
                 {path : "book/view/:id",element : <SingleBookView />},
                 {path : "cart/items",element : <CartItems />},
                 {path : "all/books", element :<AllBooks />},
-                {path: "cart/checkout",element: <PrivateRoute><CheckoutPage /></PrivateRoute>},
+                {path : "order/details",element : <PrivateRoute><OrderPlacedPage/></PrivateRoute>},  // after placing order
+                {path : "cart/checkout",element: <PrivateRoute><CheckoutPage /></PrivateRoute>},
                 {path : "user/profile",element :<PrivateRoute><UserProfileLayout/></PrivateRoute>,
                     children : [
                         {
@@ -61,10 +62,6 @@ function App() {
                     ]
                 },
             ]
-        },
-        {
-            path : "order/details",
-            element : <OrderPlacedPage/>
         },
         {
             path : "/user/signin",

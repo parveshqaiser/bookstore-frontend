@@ -103,7 +103,6 @@ let  orderedData =[
 	}
 ];
 
-
 export let topSellerData = [
 	{
 		"_id": 1,

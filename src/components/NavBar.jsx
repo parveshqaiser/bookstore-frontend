@@ -61,6 +61,11 @@ const NavBar = ({user}) => {
         }      
     }
 
+    // async function checkToken(){
+    //     let res = await axios.post(BASE_URL + "/verify-refresh-token", {}, {withCredentials:true});
+        
+    // }
+
     return (
     <>
         <header className="max-w-6xl mx-auto flex md:flex-row items-center justify-between fixed top-0 left-0 right-0 bg-white shadow-md p-3 z-20">      
@@ -91,7 +96,7 @@ const NavBar = ({user}) => {
                     <IoPersonCircle size={24} className={`${user?.name ? "text-green-500" : "text-red-600"}`} />
                     {toggle &&(
                     <div className='absolute right-0 top-[50px] w-48 bg-gray-100 shadow-lg rounded-md'>
-                        <ul className='py-2'>                    
+                        <ul className='py-2'>                  
                             {!user &&<li className='hover:bg-gray-200 p-2 text-sm'>
                                 <Link className='block' to="/admin/login">Admin Login</Link>
                             </li>}
