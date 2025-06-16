@@ -1,13 +1,13 @@
 
 
 import React, { useEffect, useState} from 'react';
-import useAddBook from '../shared/useAddBook';
+import useAddBook, { initialFormValues } from '../shared/useAddBook';
 import { categoryList } from '../utils/constants';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { getAllBooksList } from '../redux/bookSlice';
+import { getAllBooksList, resetBookFetchStatus } from '../redux/bookSlice';
 
 const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
@@ -61,7 +61,6 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             }
         })
     },[]);
-
 
     const handleChange = (e)=>{
         let {name, value} = e.target;
@@ -137,6 +136,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
                     toast.success(`${res.data.message}`, {position: "top-center", duration : 2500});
                     setTimeout(()=>{
                         dispatch(getAllBooksList());
+                        dispatch(resetBookFetchStatus());
                         setIsDisable(false);
                         setVisible(false);
                     },2500)
@@ -168,10 +168,11 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
                 if(res.data.success)
                 {
                     toast.success(`${res.data.message}`, {position: "top-center", duration : 2500});
+                    setIsEdit(false);
                     setTimeout(()=>{
                         dispatch(getAllBooksList());
+                        setFormValues(initialFormValues);
                         setIsDisable(false);
-                        setIsEdit(false);
                         setVisible(false);
                     },2500)
                 }

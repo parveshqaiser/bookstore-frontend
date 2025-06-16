@@ -38,11 +38,16 @@ let bookSlice = createSlice({
         isLoading : false,
         allBooks : [],
         error : null,
-        isBookLoading : false,
-        singleBook : null,
-        errorBook : null,      
+        isFetched : false,
+        isBookLoading : false, // for single book
+        singleBook : null, // for single book
+        errorBook : null,   // for single book
     },
-    reducers : {},
+    reducers : {
+        resetBookFetchStatus: (state) => {
+            state.isFetched = false;
+        }
+    },
     extraReducers : (builder)=>{
         builder.addCase(getAllBooksList.pending, (state, action)=>{
             state.isLoading = true;
@@ -53,6 +58,7 @@ let bookSlice = createSlice({
             state.isLoading = false;
             state.allBooks = action.payload;
             state.error = null;
+            state.isFetched = true;
         });
 
         builder.addCase(getAllBooksList.rejected, (state, action)=>{
@@ -70,12 +76,13 @@ let bookSlice = createSlice({
             state.singleBook = action.payload;
         });
 
-        
         builder.addCase(getSingleBook.rejected, (state, action)=>{
             state.isBookLoading = false;
             state.errorBook = action.payload; 
         });
     }
 });
+
+export let {resetBookFetchStatus} = bookSlice.actions;
 
 export default bookSlice.reducer;

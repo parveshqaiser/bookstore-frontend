@@ -15,7 +15,7 @@ const TopSellers = ({allBooks, isLoading}) => {
     function handleChange(e)
     {
         let cat = e.target.value;
-        const filteredBooks = cat == "Choose a Genre" ? allBooks : allBooks.filter(val => val.category.toLowerCase() == cat.toLowerCase());
+        const filteredBooks = cat == "Choose A Genre" ? allBooks : allBooks.filter(val => val.category.toLowerCase() == cat.toLowerCase());
         setTableData(filteredBooks);
     }
 
@@ -42,6 +42,7 @@ const TopSellers = ({allBooks, isLoading}) => {
             <h1 className='text-lg text-gray-800'>Top Sellers</h1>
             <div className='my-2'>
                 <select onChange={handleChange} className='border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none'>
+                  <option value="Choose A Genre">Choose A Genre</option>
                     {categoryList.map((val)=>(
                         <option key={val} label={val} value={val}>{val}</option>
                     ))}

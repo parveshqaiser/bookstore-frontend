@@ -1,6 +1,5 @@
 
 export let categoryList = [
-    "Choose a Genre",
     "Mystery / Thriller",
     "Romance",
     "Science Fiction",

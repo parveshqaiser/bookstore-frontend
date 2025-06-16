@@ -13,12 +13,24 @@ import { addTempUserData, getUserDetails } from '../redux/userSlice';
 import { getAllBooksList } from '../redux/bookSlice';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { FaArrowRightLong } from 'react-icons/fa6';
+import "../App.css";
 
 const SignIn = () => {
 
     const [toggleIcons , setToggleIcons] = useState(false);
     const [inputValues, setInputValues] = useState({name : "", email:"",  password:""});
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false); // onlick of disabling button
+    const [pwdDisabled , setPwdDisabled] = useState(true);
+    const [isPaswordFocus , setIsPasswordFocus] = useState(false);
+    const[newUser , setNewUser] = useState(false);
+
+    const [validations, setValidations] = useState({
+        length: false,
+        symbol: false,
+        number: false,
+        lowerCase: false,
+        upperCase: false,
+    });
 
     let user = useSelector(store => store?.user?.user);
 
@@ -32,7 +44,9 @@ const SignIn = () => {
         }
     },[])
 
-    const[newUser , setNewUser] = useState(false);
+    function handlePasswordValidation(){
+        Object.values(validations).every(val=> val == true) ?  setPwdDisabled(false) : setPwdDisabled(true)
+    }
     
     const handleClick = async()=>{
 
@@ -93,7 +107,7 @@ const SignIn = () => {
                 if(res?.data?.success)
                 {
                     dispatch(getUserDetails());
-                    dispatch(getAllBooksList());
+                    // dispatch(getAllBooksList());
                     toast.success(res.data.message, {duration:2000});
                     setTimeout(()=>{
                         setIsDisabled(false);
@@ -112,7 +126,8 @@ const SignIn = () => {
             <img src={loginLogo} alt='Book logo' className='w-40 mx-auto rounded-full'/>
             <h2 className='text-center font-mono text-xl text-purple-700 my-1'>The Book Story Shop</h2>
             <div className='w-80 mx-auto my-2'> 
-                {newUser && (<div className='mb-4'>
+                {newUser && 
+                (<div className='mb-4'>
                     <input 
                         type="text" 
                         value={inputValues.name}
@@ -142,9 +157,20 @@ const SignIn = () => {
                     <input 
                         type={toggleIcons ? "text" : "password"} 
                         placeholder='Enter Password'
-                        onChange={(e) =>
-                            setInputValues({ ...inputValues, password: e.target.value.trim() || "" })
-                        }
+                        onKeyUp={handlePasswordValidation}
+                        onFocus={()=> setIsPasswordFocus(true)}
+                        onChange={(e) =>{
+                           let {value} = e.target;
+                            value = value.trim() || "";
+                            setInputValues({ ...inputValues, password: value}),
+                            setValidations({
+                                length: value.length >= 8,
+                                symbol: /[\W_]/.test(value),
+                                number: /\d/.test(value),
+                                lowerCase: /[a-z]/.test(value),
+                                upperCase: /[A-Z]/.test(value),
+                            });
+                        }}
                         value={inputValues.password}
                         className="py-2 px-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400 bg-blue-50/60 text-gray-600"
                     />
@@ -169,7 +195,8 @@ const SignIn = () => {
                 </div> :
                     <button 
                         onClick={handleClick}
-                        className='px-4 py-2 rounded-md border border-purple-600 text-violet-900 w-full hover:ring-1 cursor-pointer'
+                        disabled={newUser && pwdDisabled}
+                        className={`px-4 py-2 rounded-md border border-purple-600 text-violet-900 w-full hover:ring-1 ${newUser && pwdDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
                     >
                         Submit
                     </button>}
@@ -177,7 +204,16 @@ const SignIn = () => {
 
                 <p className='text-center'>
                     <span className='text-sm'>{!newUser ?"Don't have an Account ?" : "Existing User ?" } &nbsp;</span>
-                    <Link onClick={()=>{setNewUser(!newUser), setInputValues({name :"", email:"", password :""})}} className='text-blue-400 underline'>{!newUser ? "Sign Up Here" : "Sign In"}</Link>
+                    <Link 
+                        onClick={()=>{
+                            setNewUser(!newUser), 
+                            setInputValues({name :"", email:"", password :""})
+                            setIsPasswordFocus(false)
+                            }
+                        }
+                        className='text-blue-400 underline'>
+                            {!newUser ? "Sign Up Here" : "Sign In"}
+                    </Link>
                 </p>
 
                <p className='text-sm text-center'>
@@ -187,11 +223,24 @@ const SignIn = () => {
                 </p>
             </div>
 
-            {/* <aside className='absolute bottom-44 right-0 border'>
-                <p>1. Password Should be min 6 chars </p>
-                <p>2. It should contain 1 Upper Case letter</p>
-                <p>3. It should contain  1 special char (@ or & or #)</p>
-            </aside> */}
+            {(newUser && isPaswordFocus) &&  
+            <aside className={`passwordValidationList absolute bg-white shadow-md text-sm w-64 z-10`}>
+                <div className={validations.length ? 'valid' : 'error'}>
+                    At least <b>8 characters</b>
+                </div>
+                <div className={validations.symbol ? 'valid' : 'error'}>
+                    At least <b>one symbol</b>
+                </div>
+                <div className={validations.number ? 'valid' : 'error'}>
+                    At least <b>one number</b>
+                </div>
+                <div className={validations.lowerCase ? 'valid' : 'error'}>
+                    At least <b>one lower case</b>
+                </div>
+                <div className={validations.upperCase ? 'valid' : 'error'}>
+                    At least <b>one upper case</b>
+                </div>
+            </aside>}
         </div>
     )
 }
