@@ -51,7 +51,7 @@ const TopSellers = ({allBooks, isLoading}) => {
             
             <div className="flex flex-wrap justify-between gap-4">
                 {tableData?.length == 0 ? <p className='text-center text-lg text-purple-400'>No Such Book Found</p> : 
-                tableData.slice(0,3).map((book, index) => (
+                tableData?.slice(0,3).map((book, index) => (
                     <div key={index} className="flex w-[350px] items-center p-3 shadow-lg hover:shadow-xl rounded-lg bg-white">
                         
                         <div className="w-[115px] h-44 flex-shrink-0 border border-gray-300 p-1 transition-transform transform hover:scale-[1.1] hover:cursor-pointer">
