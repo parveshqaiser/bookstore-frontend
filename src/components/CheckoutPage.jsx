@@ -62,7 +62,7 @@ const CheckoutPage = () => {
                 const options = {
                     key: keyId,
                     amount: amount, 
-                    currency: 'USD',
+                    currency: 'INR',
                     name: 'DevTinder',
                     description: 'Welcome to Razorpay',
                     order_id: orderId, 
