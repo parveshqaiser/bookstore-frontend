@@ -49,10 +49,10 @@ const TopSellers = ({allBooks, isLoading}) => {
                 </select>
             </div>
             
-            <div className="flex flex-wrap justify-between gap-4">
+            <section className="flex flex-wrap justify-between gap-4">
                 {tableData?.length == 0 ? <p className='text-center text-lg text-purple-400'>No Such Book Found</p> : 
                 tableData?.slice(0,3).map((book, index) => (
-                    <div key={index} className="flex w-[350px] items-center p-3 shadow-lg hover:shadow-xl rounded-lg bg-white">
+                    <nav key={index} className="flex w-[350px] items-center p-3 shadow-lg hover:shadow-xl rounded-lg bg-[#F9FBFC]">
                         
                         <div className="w-[115px] h-44 flex-shrink-0 border border-gray-300 p-1 transition-transform transform hover:scale-[1.1] hover:cursor-pointer">
                             <Link to={`/book/view/${book?._id}`}>
@@ -69,8 +69,8 @@ const TopSellers = ({allBooks, isLoading}) => {
                             <h2 className="text-base font-semibold text-gray-800 mb-2">{book.title}</h2>
                             <p className="text-sm text-gray-600 mb-2">{book?.description.length > 70 ? `${book.description.slice(0, 70)}...` : book?.description}</p>
                             <p className="text-md font-medium text-purple-500 mb-2">
-                                <span className="text-green-600 font-semibold mr-2">$ {book?.newPrice}</span>
-                                <span className="text-gray-500 line-through text-sm">$ {book?.oldPrice}</span>                           
+                                <span className="text-green-600 font-semibold mr-2">₹ {book?.newPrice}</span>
+                                <span className="text-gray-500 line-through text-sm">₹ {book?.oldPrice}</span>                           
                             </p>
                             <button
                                 onClick={()=>handleAddToCart(book)}
@@ -78,9 +78,9 @@ const TopSellers = ({allBooks, isLoading}) => {
                                 Add To Cart
                             </button>
                         </div>
-                    </div>
+                    </nav>
                 ))}
-            </div>
+            </section>
        </main>
     )
 }

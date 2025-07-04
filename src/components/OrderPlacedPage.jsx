@@ -10,7 +10,7 @@ const OrderPlacedPage = () => {
     let {storeOrderDetails} = useSelector(store => store?.order);
 
     return (
-    <main className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <main className="max-w-2xl mx-auto mt-10 p-6 bg-[#F9FBFC] shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold text-green-600 mb-4">✅ Your Order Has Been Successfully Placed!</h1>
         <p className="text-base text-gray-500 mt-4">Ordered on: {new Date(`${storeOrderDetails?.createdAt}`).toLocaleString()}</p>
         <div className="space-y-2">

@@ -62,7 +62,7 @@ const ManageOrders = () => {
             {allPendingOrders?.length ==0 ? <p className='text-center text-purple-600 bg-gray-100 p-2 rounded-md'>No New Orders. Please Refresh to check for new orders!!!</p> : allPendingOrders && allPendingOrders.map((order) => (
             <div 
                 key={order._id}
-                className="bg-white p-5 rounded-lg shadow-md mb-6 border border-gray-200"
+                className="p-5 rounded-lg shadow-md mb-6 border border-gray-200 bg-[#F9FBFC] transition-all duration-300 transform hover:-translate-y-0.5"
             >
                 <p className=''>  Order No : {order?._id}</p>
                 <div className="flex justify-between items-center mb-3">
@@ -106,7 +106,7 @@ const ManageOrders = () => {
                                 <td className="p-2">{book?.author}</td>
                                 <td className="p-2">{book?.publisher}</td>
                                 <td className="p-2 text-center">{order.product[index].quantity}</td>
-                                <td className="p-2 text-center">${order.product[index].price}</td>
+                                <td className="p-2 text-center"> ₹ {order.product[index].price * order.product[index].quantity}</td>
                             </tr>
                             ))}
                         </tbody>
@@ -116,10 +116,10 @@ const ManageOrders = () => {
                 <div className="mt-4 flex sm:flex-row flex-col justify-between sm:items-center">
                    <div className='flex sm:gap-2.5 justify-between sm:mb-0 mb-2'>
                         <span className="text-md font-medium text-gray-700">
-                            🛒 Total Price : <span className="font-bold text-green-600">${order.totalPrice}</span>
+                            🛒 Total Price : <span className="font-bold text-green-600"> ₹ {order.totalPrice}</span>
                         </span>
                         <span className="text-md font-medium text-gray-700">
-                            Total Items:{order.orderedQuantity}
+                            Total Items : {order.orderedQuantity}
                         </span>
                    </div>
                     <button 

@@ -34,10 +34,10 @@ const AllBooks = () => {
 
     return (
     <main className='max-w-6xl my-20 lg:mx-auto mx-4'>
-           <div className="flex flex-wrap justify-between gap-4">
+        <section className="flex flex-wrap justify-between gap-4">
             {allBooks?.length == 0 ? <p className='text-center text-lg text-purple-400'>No Such Book Found</p> : 
-            allBooks?.map((book, index) => (
-                <div key={index} className="flex w-[350px] items-center p-3 shadow-lg hover:shadow-xl rounded-lg bg-white">
+                allBooks?.map((book, index) => (
+                <asidev key={index} className="flex w-[350px] items-center p-3 shadow-md hover:shadow-xl rounded-lg bg-[#F9FBFC] transition-all duration-300 transform hover:-translate-y-0.5">
                     
                     <div className="w-[115px] h-44 flex-shrink-0 border border-gray-300 p-1 transition-transform transform hover:scale-[1.1] hover:cursor-pointer">
                         <Link to={`/book/view/${book?._id}`}>
@@ -54,8 +54,8 @@ const AllBooks = () => {
                         <h2 className="text-base font-semibold text-gray-800 mb-2">{book.title}</h2>
                         <p className="text-sm text-gray-600 mb-2">{book?.description.length > 70 ? `${book.description.slice(0, 70)}...` : book?.description}</p>
                         <p className="text-md font-medium text-purple-500 mb-2">
-                            <span className="text-green-600 font-semibold mr-2">$ {book?.newPrice}</span>
-                            <span className="text-gray-500 line-through text-sm">$ {book?.oldPrice}</span>                           
+                            <span className="text-green-600 font-semibold mr-2">₹ {book?.newPrice}</span>
+                            <span className="text-gray-500 line-through text-sm">₹ {book?.oldPrice}</span>                           
                         </p>
                         <button
                             onClick={()=>handleAddToCart(book)}
@@ -63,9 +63,9 @@ const AllBooks = () => {
                             Add To Cart
                         </button>
                     </div>
-                </div>
+                </asidev>
             ))}
-        </div>
+        </section>
     </main>
     )
 }

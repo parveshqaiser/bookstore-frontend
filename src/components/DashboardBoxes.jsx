@@ -28,7 +28,7 @@ const DashboardBoxes = () => {
                 </svg>
             </div>
             <div className=''>
-                {totalSales && <span className="block text-lg font-semibold">$ {totalSales[0]?.totalSales || "NA"}</span>}
+                {totalSales && <span className="block text-lg font-semibold">₹ {totalSales[0]?.totalSales || "NA"}</span>}
                 <span className="block text-gray-500 text-sm">Total Sales</span>
             </div>
         </nav>

@@ -48,8 +48,8 @@ const CartItems = () => {
         )}
 
         {cart && cart.length == 0 ? (
-            <div className='text-center'>
-                <img src={emptyCartLogo} className='w-60 mx-auto h-auto object-fill' alt="" />
+            <div className='text-center bg-[#F9FBFC] p-2'>
+                <img src={emptyCartLogo} className='w-60 mx-auto h-auto object-fill' alt="empty cart logo" />
                 <h1 className='font-bold text-2xl mb-2'>Your Cart is Empty</h1>
                 <p className='text-gray-500 text-lg mb-4'>Look's like you haven't made your choice yet.</p>
                 <button className='px-4 py-2 rounded-md bg-violet-500 text-white'>
@@ -59,7 +59,7 @@ const CartItems = () => {
                
         ) : cart.map((book, index) =>(
             <>
-            <section key={book?._id} className="flex flex-col md:flex-row justify-between p-4 border-b-gray-600 rounded-md shadow-sm bg-white">
+            <section key={book?._id} className="flex flex-col md:flex-row justify-between p-4 border-b-gray-600 rounded-md shadow-sm bg-[#F9FBFC]">
                 <aside className="flex gap-4 w-full md:w-3/4">
                     <img src={book?.coverPic} alt="Book" className="w-20 h-auto object-cover rounded-md shadow-md" />
                     <div className="flex flex-col justify-between w-full">
@@ -85,7 +85,7 @@ const CartItems = () => {
                 </aside>
 
                 <aside className='flex md:flex-col flex-row justify-between items-end p-2'>
-                    <p className='text-base text-gray-600 font-normal'>${book?.newPrice}</p>      
+                    <p className='text-base text-gray-600 font-normal'>&#8377; {book?.newPrice}</p>      
                     <div>
                         <MdDelete  onClick={()=> handleRemoveItems(book?._id)} size={24} className='text-red-600 cursor-pointer animate-bounce' />
                     </div>
@@ -96,12 +96,12 @@ const CartItems = () => {
 
         {cart && cart.length >0 && (
         <>
-            <section className="flex flex-col md:flex-row justify-between md:items-center p-4 rounded-lg shadow-sm bg-white">
+            <section className="flex flex-col md:flex-row justify-between md:items-center p-4 rounded-lg shadow-sm bg-[#F9FBFC]">
                 <div>
                     <p className="text-base text-gray-700">Total Items: <span className="font-semibold">{cart.reduce((sum,book)=> sum + book?.qty,0)}</span></p>
                     <p className="text-sm text-gray-500">Shipping and Taxes calculated at checkout</p>
                 </div>
-                <p className="text-base font-semibold text-gray-600">Gross Total: $ {cart.reduce((sum, book)=> sum + book?.newPrice,0)}</p>
+                <p className="text-base font-semibold text-gray-600">Gross Total: &#8377; {cart.reduce((sum, book)=> sum + book?.newPrice,0)}</p>
             </section>
 
             <section className='text-center space-y-2'>

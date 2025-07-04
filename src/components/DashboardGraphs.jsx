@@ -15,7 +15,7 @@ const DashboardGraphs = () => {
         labels: monthlySales.map(item => months[item.yearDetails.month - 1]),
         datasets: [
         {
-            label: 'Total Sales in $',
+            label: 'Total Sales in ₹',
             data: monthlySales.map(item => item.totalSales),
             backgroundColor: 'rgba(75, 192, 192, 0.6)',
             borderColor: 'rgba(75, 192, 192, 1)',

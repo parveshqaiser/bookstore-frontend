@@ -7,7 +7,7 @@ import error from "../assets/error.jpg";
 const NotFoundPage = () => {
   
     return(
-        <div className="flex flex-col lg:flex-row items-center justify-between p-3 md:p-0 shadow-lg  border-gray-300 bg-white rounded-lg max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-center justify-between p-3 md:p-0 shadow-lg  border-gray-300 bg-[#F9FBFC] rounded-lg max-w-6xl mx-auto">
             <div className="w-full lg:w-1/2 flex justify-center">
                 <img
                     className="max-w-full h-auto object-cover rounded-md"

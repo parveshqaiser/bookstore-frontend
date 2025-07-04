@@ -141,7 +141,7 @@ const ManageBooks = () => {
                     <Column field="author" header="Author"></Column>               
                     <Column field="publisher" header="Publisher"></Column>
                     <Column field="category" header="Genre"></Column>  
-                    <Column field="newPrice" header="Price ($)"></Column>
+                    <Column field="newPrice" header="Price (₹)"></Column>
                     <Column field="quantity" header="Qty" body={quantityTemplate}></Column>
                     <Column header="Action" className="" body={(rowData)=>(
                         <div className="flex gap-2 justify-center">

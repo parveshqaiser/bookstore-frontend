@@ -11,7 +11,6 @@ const Banner = () => {
 			</aside>
 
 			<aside className='md:w-1/2 w-full'>
-				{/* <h1 className='md:text-3xl text-xl font-medium mb-7'>New Releases This Week</h1> */}
 				<h1 className="md:text-3xl text-xl font-bold text-gray-900 leading-tight mb-7">
                 	New Releases &nbsp;
                 	<span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">

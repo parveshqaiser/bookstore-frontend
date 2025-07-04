@@ -70,7 +70,7 @@ const AdminDeliveredOrders = () => {
             : tableData?.map((order, index) => (
             <div 
                 key={order._id}
-                className="bg-white p-5 rounded-lg shadow-md my-6 border border-gray-200"
+                className="p-5 rounded-lg shadow-md my-6 border border-gray-200 bg-[#F9FBFC] transition-all duration-300 transform hover:-translate-y-0.5"
             >
                 <p># {index+1}</p>
                 <p className=''>  Order No : {order?._id}</p>
@@ -118,7 +118,7 @@ const AdminDeliveredOrders = () => {
                                 <td className="p-2">{book?.pages}</td>
                                 <td className="p-2">{book?.language}</td>
                                 <td className="p-2 text-center">{order.product[index].quantity}</td>
-                                <td className="p-2 text-center">${order.product[index].price}</td>
+                                <td className="p-2 text-center">₹ {order.product[index].price}</td>
                             </tr>
                             ))}
                         </tbody>
@@ -127,10 +127,10 @@ const AdminDeliveredOrders = () => {
 
                 <div className="mt-4 flex justify-between items-center">                   
                     <span className="text-md font-medium text-gray-700">
-                        🛒 Total Price : <span className="font-bold text-green-600">${order.totalPrice}</span>
+                        🛒 Total Price : <span className="font-bold text-green-600"> ₹ {order.totalPrice}</span>
                     </span>
                     <span className="text-md font-medium text-gray-700">
-                        Total Items:{order.orderedQuantity}
+                        Total Items : {order.orderedQuantity}
                     </span>
                 </div>
             </div>

@@ -322,7 +322,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>
 
             <div>
-                <label>New Price ($)</label>
+                <label>New Price (₹)</label>
                 <div>
                     <input 
                         type="text"
@@ -338,7 +338,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
             </div>    
 
                 <div>
-                <label >Old Price ($)</label>
+                <label >Old Price (₹)</label>
                 <div>
                     <input 
                         type="text"
