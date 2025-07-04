@@ -26,6 +26,8 @@ import PrivateRoute from './components/PrivateRoute';
 import AllBooks from './components/AllBooks';
 import NotFoundPage from './components/NotFoundPage';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
+import AboutUs from './pages/AboutUs';
+import Services from './pages/Services';
 
 function App() {
 
@@ -36,6 +38,8 @@ function App() {
             children : 
             [
                 {index: true, element: <HomePage /> },
+                {path : "about", element : <AboutUs />},
+                {path : "services", element : <Services />},
                 {path : "book/view/:id",element : <SingleBookView />},
                 {path : "cart/items",element : <CartItems />},
                 {path : "all/books", element :<AllBooks />},

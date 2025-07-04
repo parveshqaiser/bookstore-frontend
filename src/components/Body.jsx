@@ -25,7 +25,7 @@ const Body = () => {
     return (
         <>
             <NavBar user={user} />
-            <main className='min-h-screen'>
+            <main className='h-[100%]'>
                 <Outlet />
             </main>
             <Footer />

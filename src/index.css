@@ -5,6 +5,10 @@
 
 @import "primereact/resources/themes/lara-light-cyan/theme.css";
 
+html, body {
+    scroll-behavior: smooth;
+}
+
 /* Pagination */
 .custom-pagination {
     padding: 0.2rem;
@@ -17,6 +21,24 @@
 .custom-table .p-datatable-tbody > tr:hover{
     background-color: #e6e6fa;
     /* #e6e6fa */
+}
+
+/* services */
+
+@layer utilities {
+    @keyframes fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .animate-fade-up {
+        animation: fade-up 0.6s ease forwards;
+    }
 }
 
 
