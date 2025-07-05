@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import NavBar from './NavBar'
 import { useDispatch, useSelector } from 'react-redux';
-import Footer from './Footer';
+import Footer from '../pages/Footer';
 import { Outlet } from 'react-router-dom';
 import { getAllBooksList } from '../redux/bookSlice';
 

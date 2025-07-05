@@ -28,6 +28,7 @@ import NotFoundPage from './components/NotFoundPage';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
 import AboutUs from './pages/AboutUs';
 import Services from './pages/Services';
+import ContactUs from './pages/ContactUs';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
                 {index: true, element: <HomePage /> },
                 {path : "about", element : <AboutUs />},
                 {path : "services", element : <Services />},
+                {path : "contact", element : <ContactUs />},
                 {path : "book/view/:id",element : <SingleBookView />},
                 {path : "cart/items",element : <CartItems />},
                 {path : "all/books", element :<AllBooks />},

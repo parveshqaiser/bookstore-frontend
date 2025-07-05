@@ -12,6 +12,7 @@ import {useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../redux/userSlice';
 import Fuse from 'fuse.js';
+import cart from "../assets/cartsvg.svg";
 
 const NavBar = ({user}) => {
 
@@ -81,12 +82,14 @@ const NavBar = ({user}) => {
 
         <div className="flex justify-between items-center gap-x-4">
             <span className='text-[14px]'>{user?.name || ""}</span>
-            <aside className='flex gap-x-1'>
+            <aside className='flex gap-x-1 items-center'>
                 <Link to="/cart/items">                   
-                    <FaCartPlus size={24} className='hover:text-purple-700' title='Cart' />
+                    {/* <FaCartPlus size={24} className='hover:text-purple-700' title='Cart' /> */}
+                    <img src={cart} className='w-[26px] h-[26px]' />
                 </Link>
                 <span>{cartItems && cartItems.length || 0}</span>
             </aside>
+
             <aside  className='relative cursor-pointer' onClick={()=>setToggle(!toggle)}>
                 <IoPersonCircle size={24} className={`${user?.name ? "text-green-500" : "text-red-600"}`} />
                 {toggle &&(
@@ -110,6 +113,7 @@ const NavBar = ({user}) => {
                     </ul>
                 </div>)}                    
             </aside>
+            
         </div>        
     </header>
 

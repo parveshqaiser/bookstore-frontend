@@ -1,6 +1,6 @@
 
 
-import React from 'react'
+
 import footerLogo  from "../assets/footer-logo.png";
 import {Link} from "react-router-dom";
 import { FaEnvelope, FaFacebook, FaInstagram, FaMapMarkerAlt, FaPhone, FaTwitter } from "react-icons/fa"
@@ -16,7 +16,7 @@ const Footer = () => {
                     <li><Link to="/" className="">Home</Link></li>                   
                     <li><Link to="/about" className="">About Us</Link></li>
                     <li><Link to="/services" className="">Services</Link></li>
-                    <li><a href="#contact" className="">Contact</a></li>
+                    <li><Link to="/contact" className="">Contact</Link></li>
                 </ul>
             </div>
 
