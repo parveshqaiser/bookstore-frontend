@@ -28,7 +28,7 @@
 @media (max-width: 450px) {
     .passwordValidationList {
         right: 4rem;
-        bottom: -9rem;
+        bottom: -11rem;
         /* border: 2px solid yellow; */
     }
 }
