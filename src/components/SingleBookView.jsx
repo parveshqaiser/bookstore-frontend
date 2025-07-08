@@ -99,14 +99,14 @@ const SingleBookView = () => {
                 <button
                     onClick={handleAddToCart}
                     disabled={!singleBook?.isAvailable}
-                    className={`w-48  border border-purple-600 hover:text-white hover:bg-purple-500 text-purple-600 py-2 rounded-md font-semibold transition-all  ₹{singleBook?.isAvailable ? "cursor-pointer" : "line-through cursor-not-allowed"}`}
+                    className={`w-48  border border-purple-600 hover:text-white hover:bg-purple-500 text-purple-600 py-2 rounded-md font-semibold transition-all  ${singleBook?.isAvailable ? "cursor-pointer" : "line-through cursor-not-allowed"}`}
                 >
                     Add to Cart
                 </button>
 
                 <button
                     disabled={!singleBook?.isAvailable}
-                    className={`w-48 border border-green-800 text-green-700 hover:text-white hover:bg-green-600  py-2 rounded-md font-semibold transition-all  ₹{singleBook?.isAvailable ? "cursor-pointer" : "line-through cursor-not-allowed"}`}
+                    className={`w-48 border border-green-800 text-green-700 hover:text-white hover:bg-green-600  py-2 rounded-md font-semibold transition-all  ${singleBook?.isAvailable ? "cursor-pointer" : "line-through cursor-not-allowed"}`}
                 >
                     Buy Now
                 </button>
