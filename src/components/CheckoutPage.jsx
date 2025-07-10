@@ -63,7 +63,7 @@ const CheckoutPage = () => {
                     key: keyId,
                     amount: amount, 
                     currency: 'INR',
-                    name: 'DevTinder',
+                    name: 'The Book Story Shop',
                     description: 'Welcome to Razorpay',
                     order_id: orderId, 
                     prefill: {
