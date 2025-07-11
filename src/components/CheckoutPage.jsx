@@ -38,7 +38,7 @@ const CheckoutPage = () => {
 
         let address = user.address.find((_,index)=> index == selectedIndex);
 
-        let data = {
+        let orderData = {
             name : user?.name,
             email : user?.email,
             number : user?.number,
@@ -54,29 +54,55 @@ const CheckoutPage = () => {
             amount :  cart.reduce((sum, book)=> sum + book?.newPrice,0),
         };
 
-
         try {
             let res = await axios.post(BASE_URL + "/create/paymnent" ,createOrder, {withCredentials: true});
             let {userId , orderId , keyId , amount, currency} = res?.data?.data
 
-                const options = {
-                    key: keyId,
-                    amount: amount, 
-                    currency: 'INR',
-                    name: 'The Book Story Shop',
-                    description: 'Welcome to Razorpay',
-                    order_id: orderId, 
-                    prefill: {
-                        name: user?.name,
-                        email: user?.email,
-                        contact: user?.number
-                    },
-                    theme: {
-                        color: '#F37254'
-                    },
-                };
-                const rzp = new window.Razorpay(options);
-                rzp.open();
+            let options = {
+                key: keyId,
+                amount: amount, 
+                currency: 'INR',
+                name: 'The Book Story Shop',
+                description: 'Welcome to Razorpay',
+                order_id: orderId, 
+                prefill: {
+                    name: user?.name,
+                    email: user?.email,
+                    contact: user?.number
+                },
+                handler : async function(response){
+                    let verifyRes = await axios.post(BASE_URL + "/verify/payment", {
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_signature: response.razorpay_signature,
+                    }, { withCredentials: true });
+
+                    if(verifyRes.data.success){
+                        try {
+                            let res = await axios.post(BASE_URL + "/order/book", orderData, {withCredentials:true});
+                            if(res.data.success){
+                                toast.success(res.data.message, {duration:2000});
+                                dispatch(addOrderDetails(res.data.data));
+                                dispatch(clearCart());
+                                setTimeout(()=>{
+                                    navigate("/order/details")                    
+                                },1000)                
+                            }
+                        } catch (error) {
+                            toast.error(error?.response?.data?.message || error?.message, {duration:2000})
+                        }
+                    }
+                },
+                theme: {
+                    color: '#F37254'
+                },
+            };
+            const rzp = new window.Razorpay({...options,
+                modal: {
+                    ondismiss: function() {
+                    toast.error("Payment window closed", { duration: 2000 });
+                }}});
+            rzp.open();
 
         } catch (error) {
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
@@ -133,4 +159,4 @@ const CheckoutPage = () => {
     )
 }
 
-export default CheckoutPage
+export default CheckoutPage;

@@ -14,8 +14,6 @@ const UserOrders = () => {
 
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
-	
-	// console.log("deliveredOrderError", deliveredOrderError)
 
 	useEffect(() => {
 		dispatch(getAllUserPendingOrders());
@@ -51,7 +49,7 @@ const UserOrders = () => {
 
 				<div className="flex flex-col items-center">
 					<p className="text-gray-500 text-xs font-mono uppercase">Total</p>
-					<span className="text-sm font-medium">$ {book?.totalPrice}</span>
+					<span className="text-sm font-medium">₹ {book?.totalPrice}</span>
 				</div>
 
 				<div className="relative group flex flex-col items-center">
@@ -90,7 +88,7 @@ const UserOrders = () => {
 						</td>
 						<td className="p-2  text-sm font-medium">{item?.title}</td>
 						<td className="p-2 ">{book?.product[index]?.quantity || "NA"}</td>
-						<td className="p-2 ">$ {book?.product[index]?.price}</td>
+						<td className="p-2 ">₹ {book?.product[index]?.price}</td>
 					</tr>
 					))}					
 					</tbody>
@@ -115,7 +113,7 @@ const UserOrders = () => {
 
 				<div className="flex flex-col items-center">
 					<p className="text-gray-500 text-[14px] font-mono uppercase">Total</p>
-					<span className="text-sm font-medium">$ {book?.totalPrice}</span>
+					<span className="text-sm font-medium">₹ {book?.totalPrice}</span>
 				</div>
 
 				<div className="relative group flex flex-col items-center">
@@ -154,7 +152,7 @@ const UserOrders = () => {
 						</td>
 						<td className="p-2  text-sm font-medium">{item?.title}</td>
 						<td className="p-2 ">{book?.product[index]?.quantity || "NA"}</td>
-						<td className="p-2 ">$ {book?.product[index]?.price}</td>
+						<td className="p-2 ">₹ {book?.product[index]?.price}</td>
 					</tr>
 					))}					
 					</tbody>

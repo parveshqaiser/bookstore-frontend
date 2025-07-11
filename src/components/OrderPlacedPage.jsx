@@ -10,9 +10,9 @@ const OrderPlacedPage = () => {
     let {storeOrderDetails} = useSelector(store => store?.order);
 
     return (
-    <main className="max-w-2xl mx-auto mt-10 p-6 bg-[#F9FBFC] shadow-lg rounded-lg">
+    <main className="max-w-2xl mx-auto mt-15 p-6 bg-[#F9FBFC] shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold text-green-600 mb-4">✅ Your Order Has Been Successfully Placed!</h1>
-        <p className="text-base text-gray-500 mt-4">Ordered on: {new Date(`${storeOrderDetails?.createdAt}`).toLocaleString()}</p>
+        <p className="text-base text-yellow-700 mt-4">Ordered on: {new Date(`${storeOrderDetails?.createdAt}`).toLocaleString()}</p>
         <div className="space-y-2">
             <p><span className="font-semibold">Order ID:</span> {storeOrderDetails?._id}</p>
             <p><span className="font-semibold">Order Status:</span> Pending</p>
@@ -20,7 +20,7 @@ const OrderPlacedPage = () => {
             <p><span className="font-semibold">Email:</span> {storeOrderDetails?.email}</p>
             <p><span className="font-semibold">Phone:</span> {storeOrderDetails?.number}</p>
             <p><span className="font-semibold">Total Items:</span> {storeOrderDetails?.orderedQuantity}</p>
-            <p><span className="font-semibold">Total Amount:</span>  $ {storeOrderDetails?.totalPrice}</p>
+            <p><span className="font-semibold">Total Amount:</span>  &#8377; {storeOrderDetails?.totalPrice}</p>
         </div>
 
         <div className="mt-4">
