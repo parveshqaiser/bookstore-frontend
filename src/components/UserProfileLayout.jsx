@@ -20,7 +20,6 @@ const UserProfileLayout = () => {
                 setShowSidebar(true);
             }
         };
-      
         window.addEventListener("resize", handleResize);
         handleResize();
         return () => window.removeEventListener("resize", handleResize);
@@ -28,7 +27,7 @@ const UserProfileLayout = () => {
 
     return (
         <>
-        <main className="max-w-6xl lg:mx-auto mx-4 my-20">
+        <main className="max-w-6xl lg:mx-auto mx-4 mt-20 mb-40">
             <div className="flex flex-col md:flex-row gap-4">
             {showSidebar && (
                 <aside className={`md:w-64 w-full p-2 rounded shadow-sm h-fit sticky top-20 self-start`}>

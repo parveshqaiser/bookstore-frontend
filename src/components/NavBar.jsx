@@ -1,6 +1,6 @@
 
 
-import React, {useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState } from 'react';
 import { HiMiniBars4 } from "react-icons/hi2";
 import { FaCartPlus } from "react-icons/fa";
 import { IoPersonCircle } from "react-icons/io5";
@@ -22,9 +22,23 @@ const NavBar = ({user}) => {
     let [toggle, setToggle] = useState(false);
     let navigate = useNavigate();
     let dispatch = useDispatch();
+    const dropdownRef = useRef(null)
 
     const [keyText, setKeyText] = useState("");
     const [results, setResults] = useState([]);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+           if (e.key === 'Escape') {
+                setToggle(false);
+            }
+        };
+        document.addEventListener('keydown', handleClickOutside);
+        
+        return () => {
+            document.removeEventListener('keydown', handleClickOutside);
+        };
+    },[]);
 
     const options = {
         keys: ["title", "author"],

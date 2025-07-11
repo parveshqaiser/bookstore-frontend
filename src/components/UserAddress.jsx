@@ -8,7 +8,8 @@ import { BASE_URL } from '../utils/api';
 import toast from 'react-hot-toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserDetails } from '../redux/userSlice';
+import { getUserDetails, logoutUser } from '../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 let initialFormValues = {
 	area: {
@@ -36,6 +37,8 @@ let initialFormValues = {
 const UserAddress = () => {
 
 	let dispatch = useDispatch();
+	let navigate = useNavigate();
+
 	let {user} = useSelector(store => store?.user);
  	const [visible , setVisible] = useState(false); //modal
 
@@ -154,6 +157,10 @@ const UserAddress = () => {
 				dispatch(getUserDetails());
 			}
 		} catch (error) {
+			if(error.status == 401){
+                navigate("/user/signin");
+				dispatch(logoutUser());
+            }   
 			toast.error(error?.response?.data?.message || error?.message, {duration:2000})
 		}
 	}
@@ -202,6 +209,10 @@ const UserAddress = () => {
 					setIsDisable(false)
 				}
 			} catch (error) {
+				if(error.status == 401){
+                	navigate("/user/signin")
+					dispatch(logoutUser());
+            	}   
 				setIsDisable(false)
 				toast.error(error?.response?.data?.message || error?.message, {duration:2000})
 			}
@@ -221,6 +232,10 @@ const UserAddress = () => {
 					
 				}
 			} catch (error) {
+				if(error.status == 401){
+                	navigate("/user/signin");
+					dispatch(logoutUser());
+            	}   
 				setIsDisable(false)
 				toast.error(error?.response?.data?.message || error?.message, {duration:2000})
 			}

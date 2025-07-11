@@ -1,8 +1,7 @@
 
 
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useBillingDetails } from '../shared/useBillingDetails';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import toast from 'react-hot-toast';
@@ -84,11 +83,12 @@ const CheckoutPage = () => {
                                 toast.success(res.data.message, {duration:2000});
                                 dispatch(addOrderDetails(res.data.data));
                                 dispatch(clearCart());
-                                setTimeout(()=>{
-                                    navigate("/order/details")                    
-                                },1000)                
+                                navigate("/order/details")          
                             }
                         } catch (error) {
+                            if(error.status == 401){
+                                navigate("/user/signin");
+                            }
                             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
                         }
                     }

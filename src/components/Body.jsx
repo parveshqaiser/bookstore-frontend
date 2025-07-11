@@ -13,14 +13,11 @@ const Body = () => {
     let {user} = useSelector(store => store?.user);
     let {isFetched} = useSelector(store=> store?.book);
 
-
     useEffect(()=>{
         if(!isFetched){
-            console.log("use effect from body called")
             dispatch(getAllBooksList())
         }        
     },[isFetched]);
-
 
     return (
         <>

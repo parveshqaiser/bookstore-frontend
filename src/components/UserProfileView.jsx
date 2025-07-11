@@ -99,7 +99,6 @@ const UserProfileView = () => {
                 setIsDisabled(false);
             }
         } catch (error) {
-            console.log("error ", error);
             setIsDisabled(false);
             if(error.status == 401 || error.status == 500){
                 dispatch(logoutUser());
