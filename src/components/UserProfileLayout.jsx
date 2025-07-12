@@ -1,14 +1,9 @@
 
 import {useEffect, useState} from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import order from "../assets/order.jpg";
-import pwd from "../assets/pwd.jpg";
-import address from "../assets/address.jpg";
-import profile from "../assets/user.svg";
-
 import { useLocation } from 'react-router-dom';
-// import { User, ShoppingBag, MapPin, Lock, LogOut, Menu, ArrowLeft } from "lucide-react"
-import { FiUser, FiShoppingBag, FiMapPin, FiLock, FiLogOut, FiMenu, FiArrowLeft } from "react-icons/fi";
+import { FiUser, FiShoppingBag, FiMapPin, FiLock, FiLogOut, FiArrowLeft } from "react-icons/fi";
+import { MdFilterListAlt } from 'react-icons/md';
 
 const navigationItems = [
     {
@@ -62,7 +57,20 @@ const UserProfileLayout = () => {
 
     return (
     <main className="max-w-6xl lg:mx-auto mx-4 mt-20 mb-40">
+       
         <div className="rounded-xl shadow-sm border-gray-100 overflow-hidden">
+            {isMobile &&  !showSidebar &&(
+            <section className='p-2'>
+                <button
+                    onClick={() => setShowSidebar(true)}
+                    className="cursor-pointer flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-medium transition-colors"
+                >
+                    <MdFilterListAlt className="w-5 h-5" />
+                    <span>Profile Menu</span>
+                </button>
+            </section>
+            )}
+             
             <div className="flex flex-col md:flex-row min-h-[600px]">
             {showSidebar && (
                 <aside className="md:w-72 w-full bg-gradient-to-br from-gray-50 to-gray-100 border-r border-gray-100">
@@ -82,7 +90,7 @@ const UserProfileLayout = () => {
                                 onClick={() => setShowSidebar(false)}
                                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                             >
-                                <FiArrowLeft className="w-5 h-5 text-gray-600" />
+                                <FiArrowLeft className="w-5 h-5 text-gray-600 cursor-pointer" />
                             </button>
                         )}
                         </div>
@@ -121,21 +129,10 @@ const UserProfileLayout = () => {
             )}
 
             {(!isMobile || !showSidebar) &&(
-                <section className="md:flex-1 shadow-sm p-6 md:p-8">
+                <section className="md:flex-1 shadow-sm p-3 md:p-8">
                     <Outlet />
                 </section>
             )}
-            <section className="">
-                {isMobile &&  !showSidebar &&(
-                    <button
-                        onClick={() => setShowSidebar(true)}
-                       className="flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-medium transition-colors"
-                    >
-                        <FiMenu className="w-5 h-5" />
-                        <span>Profile Menu</span>
-                    </button>
-                )}
-            </section>
             </div>
         </div>
     </main>

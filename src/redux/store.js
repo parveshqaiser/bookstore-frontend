@@ -9,6 +9,7 @@ import orderSlice from "../redux/orderSlice.js";
 import cartSlice from "../redux/cartSlice.js";
 import dashboardSlice from "../redux/dashboardSlice.js";
 import adminSlice from "../redux/adminSlice.js";
+import userProfileSlice from "../redux/userProfileSlice.js";
 
 let rootReducer = combineReducers({
     user : userSlice,
@@ -16,7 +17,8 @@ let rootReducer = combineReducers({
     order : orderSlice,
     cart : cartSlice,
     dashboard : dashboardSlice,
-    admin : adminSlice
+    admin : adminSlice,
+    userProfile : userProfileSlice
 });
 
 const persistConfig = {

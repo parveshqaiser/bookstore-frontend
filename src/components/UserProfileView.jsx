@@ -9,6 +9,8 @@ import { getUserDetails, logoutUser } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import {FiShoppingBag, FiUser } from 'react-icons/fi';
 import { FaUserEdit } from "react-icons/fa";
+import { getLastOrderDate, getTotalAddress, getTotalAmountSpent, getTotalOrders } from '../redux/userProfileSlice';
+import { dateConverter } from '../utils/dateConverter';
 
 const UserProfileView = () => {
 
@@ -18,6 +20,15 @@ const UserProfileView = () => {
 
     let dispatch = useDispatch();
     let navigate = useNavigate();
+
+    let {totalOrders,totalAddress , totalAmountSpent , lastOrderDate} = useSelector(store => store?.userProfile);
+
+    useEffect(()=>{
+        dispatch(getTotalOrders());
+        dispatch(getTotalAddress());
+        dispatch(getTotalAmountSpent());
+        dispatch(getLastOrderDate());
+    },[])
 
     const [formValues, setFormValues] = useState({
         name : {
@@ -113,14 +124,15 @@ const UserProfileView = () => {
     return (
     <>
     <main className="space-y-6">
-        <aside className="border-b border-gray-200 pb-4">
+        <header className="border-b border-gray-200 pb-4">
             <h1 className="text-2xl font-bold text-gray-900">Account Overview</h1>
             <p className="text-gray-600 mt-1">Manage your personal information and preferences</p>
-        </aside>
+        </header>
 
-        <aside className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <nav className="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-xl border border-blue-100">
-                <article className="flex items-center space-x-3 mb-4">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* name block */}
+            <aside className="bg-gradient-to-br from-blue-50 to-indigo-100 lg:p-6 md:p-4 p-2 rounded-xl border border-blue-100">
+                <div className="flex items-center space-x-3 mb-4">
                     <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
                         <FiUser className="w-5 h-5 text-white" />
                     </div>
@@ -128,8 +140,8 @@ const UserProfileView = () => {
                         <h3 className="font-semibold text-gray-900">Personal Info</h3>
                         <p className="text-sm text-gray-600">Your basic information</p>
                     </div>
-                </article>
-                <article className="space-y-3">
+                </div>
+                <div className="space-y-3">
                     <div>
                         <label className="text-sm font-medium text-gray-700">Full Name</label>
                         <p className="text-gray-900">{user?.name}</p>
@@ -142,10 +154,11 @@ const UserProfileView = () => {
                         <label className="text-sm font-medium text-gray-700">Phone</label>
                         <p className="text-gray-900">+91-{user?.number || "9000000"}</p>
                     </div>
-                </article>
-            </nav>
+                </div>
+            </aside>
 
-            <nav className="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-xl border border-green-100">
+            {/* acc ino block  */}
+            <aside className="bg-gradient-to-br from-green-50 to-emerald-100 lg:p-6 md:p-4 p-2 rounded-xl border border-green-100">
                 <article className="flex items-center space-x-3 mb-4">
                     <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
                         <FiShoppingBag className="w-5 h-5 text-white" />
@@ -155,36 +168,37 @@ const UserProfileView = () => {
                         <p className="text-sm text-gray-600">Your activity summary</p>
                     </div>
                 </article>
+
                 <article className="grid grid-cols-2 gap-4">
                     <div className="text-center">
-                        <p className="text-2xl font-bold text-green-600">4</p>
+                        <p className="text-2xl font-bold text-green-600">{totalOrders || 0}</p>
                         <p className="text-sm text-gray-600">Total Orders</p>
                     </div>
                     <div className="text-center">
-                        <p className="text-2xl font-bold text-green-600">3</p>
+                        <p className="text-2xl font-bold text-green-600">{totalAddress || 0}</p>
                         <p className="text-sm text-gray-600">Addresses</p>
                     </div>
                      <div className="text-center">
-                        <p className="text-xl font-bold text-green-600">30-05-2025</p>
+                        <p className="text-xl font-bold text-green-600"> {lastOrderDate && dateConverter(lastOrderDate) || ""}</p>
                         <p className="text-sm text-gray-600">Last Order Placed</p>
                     </div>
                      <div className="text-center">
-                        <p className="text-2xl font-bold text-green-600">₹ 423</p>
+                        <p className="text-2xl font-bold text-green-600">₹ {totalAmountSpent || 0}</p>
                         <p className="text-sm text-gray-600">Total Spent</p>
                     </div>
                 </article>
-            </nav>
-        </aside>
+            </aside>
+        </section>
 
-        <aside className="bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-xl">
-            <article className="flex items-center space-x-3 mb-4">
+        <section className="bg-gradient-to-br from-yellow-50 to-orange-100 lg:p-6 md:p-4 p-2 rounded-xl">
+            <aside className="flex items-center space-x-3 mb-4">
                 <div className="w-10 h-10 bg-orange-400 rounded-lg flex items-center justify-center">
                     <FaUserEdit className="w-5 h-5 text-white" />
                 </div>                
                 <h3 className="font-semibold text-gray-900">Update Info</h3>
-            </article>
+            </aside>
 
-            <article className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <aside className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
                     <input 
@@ -222,8 +236,8 @@ const UserProfileView = () => {
                     </button>
                     }
                 </div>
-            </article>            
-        </aside>
+            </aside>            
+        </section>
     </main>
     </>
     )
