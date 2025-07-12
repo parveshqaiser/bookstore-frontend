@@ -230,6 +230,7 @@ const UserAddress = () => {
 				if(res.data.success){
 					toast.success(res.data.message, {duration:2500});
 					setFormValues(initialFormValues);
+					setPinCode("");
 					setVisible(false);
 					dispatch(getUserDetails());
 					setIsDisable(false)
@@ -252,6 +253,7 @@ const UserAddress = () => {
 				if(res.data.success){
 					toast.success(res.data.message, {duration:2500});
 					setVisible(false);
+					setPinCode("");
 					setFormValues(initialFormValues);
 					dispatch(getUserDetails());
 					setIsDisable(false);					
@@ -377,6 +379,7 @@ const UserAddress = () => {
 					Address Type<span className="text-red-500">*</span>
 				</label>
 				<select 
+					value={formValues?.addressType?.value}
 					name="addressType" 
 					className="w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
 					onChange={handleChange}
