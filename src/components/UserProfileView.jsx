@@ -110,10 +110,9 @@ const UserProfileView = () => {
         }
     }
 
-
     return (
     <>
-    <section className="space-y-6">
+    <main className="space-y-6">
         <aside className="border-b border-gray-200 pb-4">
             <h1 className="text-2xl font-bold text-gray-900">Account Overview</h1>
             <p className="text-gray-600 mt-1">Manage your personal information and preferences</p>
@@ -194,7 +193,7 @@ const UserProfileView = () => {
                         autoComplete='off'
                         value={formValues.name.value}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-orange-400"
+                        className="w-full px-3 py-2 border border-orange-400 rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-orange-600"
                     />
                     <span className='text-sm text-red-500'>{formValues.name.error}</span>
                 </div>
@@ -208,7 +207,7 @@ const UserProfileView = () => {
                         maxLength={10}
                         value={formValues.number.value}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-orange-400"
+                        className="w-full px-3 py-2 border border-orange-400 rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-orange-600"
                     />
                     <span className='text-sm text-red-500'>{formValues.number.error}</span>
                 </div>
@@ -217,16 +216,15 @@ const UserProfileView = () => {
                     {isDisabled ?  <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />:
                     <button 
                         onClick={handleUpdate}
-                        className={`px-4 py-2 border border-purple-600 text-violet-500 rounded-md transition text-sm font-medium cursor-pointer`}
+                        className={`px-4 py-2 border border-orange-600 text-yellow-500 rounded-md transition text-sm font-medium cursor-pointer hover:bg-white hover:text-orange-400`}
                     > 
                         Update Profile
                     </button>
                     }
                 </div>
-            </article>
-            
+            </article>            
         </aside>
-    </section>
+    </main>
     </>
     )
 }
