@@ -178,13 +178,16 @@ const UserProfileView = () => {
                         <p className="text-2xl font-bold text-green-600">{totalAddress || 0}</p>
                         <p className="text-sm text-gray-600">Addresses</p>
                     </div>
-                     <div className="text-center">
-                        <p className="text-xl font-bold text-green-600"> {lastOrderDate && dateConverter(lastOrderDate) || ""}</p>
+                    {lastOrderDate &&(
+                    <div className="text-center">
+                        <p className="text-xl font-bold text-green-600"> {dateConverter(lastOrderDate) || ""}</p>
                         <p className="text-sm text-gray-600">Last Order Placed</p>
                     </div>
+                    )}
+                    
                      <div className="text-center">
                         <p className="text-2xl font-bold text-green-600">₹ {totalAmountSpent || 0}</p>
-                        <p className="text-sm text-gray-600">Total Spent</p>
+                        <p className="text-sm text-gray-600">Total Amount </p>
                     </div>
                 </article>
             </aside>

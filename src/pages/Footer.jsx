@@ -74,10 +74,13 @@ const Footer = () => {
         </section>
 
         <section className="max-w-6xl mx-auto border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm mb-4 md:mb-0">
-                &copy; {new Date().getFullYear()} The BookStore. <span className="underline hover:text-blue-500"> Developed By Parvesh</span>
+            <p className="text-gray-500 text-sm mb-2 md:mb-0">
+                &copy; {new Date().getFullYear()} The BookStory Shop.
             </p>
-            <div className="flex space-x-6">
+            <div className="text-gray-500 text-sm">
+                Developed By <span className="underline hover:text-blue-500"> Parvesh Qaiser</span>
+            </div>
+            <div className="flex space-x-6 md:mt-0 mt-2">
                 <a href="#" className="text-gray-500 hover:text-white transition text-sm">Privacy Policy</a>
                 <a href="#" className="text-gray-500 hover:text-white transition text-sm">Terms of Service</a>
                 <a href="#" className="text-gray-500 hover:text-white transition text-sm">Cookies</a>

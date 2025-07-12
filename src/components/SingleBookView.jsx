@@ -28,7 +28,7 @@ const SingleBookView = () => {
             qty : parseInt(quantity) || 1,
         };
         dispatch(addToCart(addBook));
-        toast.success(`₹{singleBook?.title} added to cart`)
+        toast.success(`${singleBook?.title} added to cart`)
     }
 
     if(errorBook){

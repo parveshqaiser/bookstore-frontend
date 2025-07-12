@@ -83,7 +83,7 @@ const NavBar = ({user}) => {
             <Link to="/">
                 <HiMiniBars4 size={26} className="text-purple-500 cursor-pointer hover:text-purple-600 transition duration-200" />
             </Link>
-            <div className="">
+            <div className="md:block hidden">
                 <input
                     type="text"
                     value={keyText}
