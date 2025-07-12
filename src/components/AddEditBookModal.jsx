@@ -185,207 +185,207 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
     return (
     <>
-        <div className='grid md:grid-cols-3 gap-4 mb-3'>
+    <div className='grid md:grid-cols-3 gap-4 mb-3'>
+        <div>
+            <label>Title</label>
             <div>
-                <label>Title</label>
-                <div>
-                    <input 
-                        type="text"
-                        name='title'
-                        data-pr-tooltip='Enter name'
-                        onChange={handleChange}
-                        value={formValues.title.value}
-                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
-                    />
-                </div>
-                {!formValues.title.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.title?.error}</span>
-                )}
-            </div>
-
-            <div>
-                <label>Author</label>
-                <div>
-                    <input 
-                        type="text"
-                        name='author'
-                        onChange={handleChange}
-                        value={formValues.author.value}
-                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
-                    />
-                </div>
-                {!formValues.author.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.author?.error}</span>
-                )}
-            </div>    
-
-            <div>
-                <label>Category</label>
-                <select 
-                    name='category' 
-                    className='block p-2 w-full border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent' 
+                <input 
+                    type="text"
+                    name='title'
+                    data-pr-tooltip='Enter name'
                     onChange={handleChange}
-                    value={formValues.category.value}
-                >
-                    <option value="">Select A Genre</option>
-                    {categoryList.map((list, idx)=>(
-                        <option className='p-1' value={list} key={idx}>{list}</option>
-                    ))}
-                </select>
-                {!formValues.category.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.category?.error}</span>
-                )}                   
-            </div>           
-        </div>
-
-        <div className='grid md:grid-cols-1 mb-2'>
-            <label >Description</label>
-            <div>
-                <textarea
-                    rows={isEdit ? 3 : 2}
-                    name='description'
-                    onChange={handleChange}
-                    value={formValues.description.value} 
+                    value={formValues.title.value}
                     className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
                 />
             </div>
-            {!formValues.description.value && (
-                <span className='text-red-500 text-sm'>{formValues?.description?.error}</span>
-            )}   
+            {!formValues.title.value && (
+                <span className='text-red-500 text-sm'>{formValues?.title?.error}</span>
+            )}
         </div>
 
-        <div className='grid md:grid-cols-3 gap-4 mb-3'>
+        <div>
+            <label>Author</label>
             <div>
-                <label >Publisher</label>
-                <div>
-                    <input 
-                        type="text"
-                        name='publisher'
-                        onChange={handleChange}
-                        value={formValues.publisher.value}
-                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
-                    />
-                </div>
-                {!formValues.publisher.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.publisher?.error}</span>
-                )}  
+                <input 
+                    type="text"
+                    name='author'
+                    onChange={handleChange}
+                    value={formValues.author.value}
+                    className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                />
             </div>
+            {!formValues.author.value && (
+                <span className='text-red-500 text-sm'>{formValues?.author?.error}</span>
+            )}
+        </div>    
 
-            <div>
-                <label>Language</label>
-                <div>
-                    <input 
-                        type="text"
-                        name='language'
-                        onChange={handleChange}
-                        value={formValues.language.value}
-                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
-                    />
-                </div>
-                {!formValues.language.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.language?.error}</span>
-                )}  
-            </div>    
-
-            <div>
-                <label>Pages</label>
-                <div>
-                    <input 
-                        type="text"
-                        name='pages'
-                        onChange={handleChange}
-                        value={formValues.pages.value}
-                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
-                    />
-                </div>
-                {!formValues.pages.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.pages?.error}</span>
-                )}  
-            </div>           
-        </div>
-
-        <div className='grid md:grid-cols-3 gap-4 mb-3'>
-            <div>
-                <label >Quantity</label>
-                <div>
-                    <input 
-                        type="text"
-                        name='quantity'
-                        onChange={handleChange}
-                        value={formValues.quantity.value}
-                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
-                    />
-                </div>
-                {!formValues.quantity.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.quantity?.error}</span>
-                )}  
-            </div>
-
-            <div>
-                <label>New Price (₹)</label>
-                <div>
-                    <input 
-                        type="text"
-                        name='newPrice'
-                        onChange={handleChange}
-                        value={formValues.newPrice.value}
-                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
-                    />
-                </div>
-                {!formValues.newPrice.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.newPrice?.error}</span>
-                )}  
-            </div>    
-
-                <div>
-                <label >Old Price (₹)</label>
-                <div>
-                    <input 
-                        type="text"
-                        name='oldPrice'
-                        onChange={handleChange}
-                        value={formValues.oldPrice.value}
-                        className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
-                    />
-                </div>
-                {!formValues.oldPrice.value && (
-                    <span className='text-red-500 text-sm'>{formValues?.oldPrice?.error}</span>
-                )}  
-            </div>           
-        </div>
-
-        {!isEdit && (
-            <div className='my-4'>
-            {
-                !file && (
-                <>
-                    <label htmlFor="coverPic" className="p-2 border border-gray-800 cursor-pointer rounded-lg md:w-auto w-full">
-                        Upload Book Cover
-                    </label>
-                    <input 
-                        type="file" 
-                        id="coverPic" 
-                        accept="image/png, image/jpeg" 
-                        className="hidden" 
-                        onChange={(e)=> setFile(e.target.files[0] || "")}
-                    />
-                </>
-                )
-            }
-                <span className=''>{file?.name || ""}</span>  
-                {file && <span title='Remove Pic' onClick={()=> setFile(null)} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
-            </div>
-        )}
-
-        <div className='text-center'>
-            <button 
-                disabled={isDisable}
-                onClick={handleCLick}
-                className='px-4 py-2 border border-purple-800 hover:text-purple-700 rounded-md cursor-pointer md:w-1/4'
+        <div>
+            <label>Category</label>
+            <select 
+                name='category' 
+                className='block p-2 w-full border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent' 
+                onChange={handleChange}
+                value={formValues.category.value}
             >
-                {isDisable? "Submitting .Please wait.." : "Submit"}
-            </button>
+                <option value="">Select A Genre</option>
+                {categoryList.map((list, idx)=>(
+                    <option className='p-1' value={list} key={idx}>{list}</option>
+                ))}
+            </select>
+            {!formValues.category.value && (
+                <span className='text-red-500 text-sm'>{formValues?.category?.error}</span>
+            )}                   
+        </div>           
+    </div>
+
+    <div className='grid md:grid-cols-1 mb-2'>
+        <label >Description</label>
+        <div>
+            <textarea
+                rows={isEdit ? 3 : 2}
+                name='description'
+                onChange={handleChange}
+                value={formValues.description.value} 
+                className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+            />
         </div>
+        {!formValues.description.value && (
+            <span className='text-red-500 text-sm'>{formValues?.description?.error}</span>
+        )}   
+    </div>
+
+    <div className='grid md:grid-cols-3 gap-4 mb-3'>
+        <div>
+            <label >Publisher</label>
+            <div>
+                <input 
+                    type="text"
+                    name='publisher'
+                    onChange={handleChange}
+                    value={formValues.publisher.value}
+                    className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                />
+            </div>
+            {!formValues.publisher.value && (
+                <span className='text-red-500 text-sm'>{formValues?.publisher?.error}</span>
+            )}  
+        </div>
+
+        <div>
+            <label>Language</label>
+            <div>
+                <input 
+                    type="text"
+                    name='language'
+                    onChange={handleChange}
+                    value={formValues.language.value}
+                    className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                />
+            </div>
+            {!formValues.language.value && (
+                <span className='text-red-500 text-sm'>{formValues?.language?.error}</span>
+            )}  
+        </div>    
+
+        <div>
+            <label>Pages</label>
+            <div>
+                <input 
+                    type="text"
+                    name='pages'
+                    onChange={handleChange}
+                    value={formValues.pages.value}
+                    className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                />
+            </div>
+            {!formValues.pages.value && (
+                <span className='text-red-500 text-sm'>{formValues?.pages?.error}</span>
+            )}  
+        </div>           
+    </div>
+
+    <div className='grid md:grid-cols-3 gap-4 mb-3'>
+        <div>
+            <label >Quantity</label>
+            <div>
+                <input 
+                    type="text"
+                    name='quantity'
+                    onChange={handleChange}
+                    value={formValues.quantity.value}
+                    className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                />
+            </div>
+            {!formValues.quantity.value && (
+                <span className='text-red-500 text-sm'>{formValues?.quantity?.error}</span>
+            )}  
+        </div>
+
+        <div>
+            <label>New Price (₹)</label>
+            <div>
+                <input 
+                    type="text"
+                    name='newPrice'
+                    onChange={handleChange}
+                    value={formValues.newPrice.value}
+                    className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                />
+            </div>
+            {!formValues.newPrice.value && (
+                <span className='text-red-500 text-sm'>{formValues?.newPrice?.error}</span>
+            )}  
+        </div>    
+
+            <div>
+            <label >Old Price (₹)</label>
+            <div>
+                <input 
+                    type="text"
+                    name='oldPrice'
+                    onChange={handleChange}
+                    value={formValues.oldPrice.value}
+                    className="w-full px-3 py-2 border border-purple-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent" 
+                />
+            </div>
+            {!formValues.oldPrice.value && (
+                <span className='text-red-500 text-sm'>{formValues?.oldPrice?.error}</span>
+            )}  
+        </div>           
+    </div>
+
+    {!isEdit && (
+        <div className='my-4'>
+        {
+            !file && (
+            <>
+                <label htmlFor="coverPic" className="p-2 border border-gray-800 cursor-pointer rounded-lg md:w-auto w-full">
+                    Upload Book Cover
+                </label>
+                <input 
+                    type="file" 
+                    id="coverPic" 
+                    accept="image/png, image/jpeg" 
+                    className="hidden" 
+                    onChange={(e)=> setFile(e.target.files[0] || "")}
+                />
+            </>
+            )
+        }
+            <span className=''>{file?.name || ""}</span>  
+            {file && <span title='Remove Pic' onClick={()=> setFile(null)} className='sm:mx-3 cursor-pointer text-red-500'>X</span>}  
+        </div>
+    )}
+
+    <div className='text-center'>
+        <button 
+            disabled={isDisable}
+            onClick={handleCLick}
+            className='px-4 py-2 border border-purple-800 hover:text-purple-700 rounded-md cursor-pointer md:w-1/4'
+        >
+            {isDisable? "Submitting .Please wait.." : "Submit"}
+        </button>
+    </div>
     </>
   )
 }
