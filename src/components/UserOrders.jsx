@@ -11,8 +11,7 @@ import { HiCheck } from 'react-icons/hi';
 
 const UserOrders = () => {
 
-	let {userPendingOrder} = useSelector(store => store?.order);
-	let {userDeliveredOrder, deliveredOrderError} = useSelector(store => store?.order);
+	let {userPendingOrder, userDeliveredOrder, isUserPendingOrderLoading, isUserDeliveredOrderLoading} = useSelector(store => store?.order);
 
 	let dispatch = useDispatch();
 	let navigate = useNavigate();
@@ -21,13 +20,6 @@ const UserOrders = () => {
 		dispatch(getAllUserPendingOrders());
 		dispatch(getAllUserDeliveredOrders());
 	}, []);
-
-	// useEffect(()=>{
-	// 	console.log("going inside");
-	// 	if(deliveredOrderError?.error == 500){
-	// 		navigate("/user/signin")
-	// 	}
-	// },[deliveredOrderError])
 
 	const getEstimatedDeliveryDate = () => {
 		const today = new Date();
@@ -128,8 +120,7 @@ const UserOrders = () => {
 			</aside>
         </main>
       ))
-    )
-
+    );
 	
 	const showDeliveredOrders = () => (
 		userDeliveredOrder.length === 0 ? (
@@ -220,6 +211,43 @@ const UserOrders = () => {
         </main>
 		))
 	);
+
+	if(isUserPendingOrderLoading || isUserDeliveredOrderLoading){
+		return(
+			<aside className="bg-gradient-to-r from-purple-50 to-violet-50 lg:px-6 lg:py-4 p-2 border-b border-purple-100">
+				<nav className="flex flex-wrap justify-between items-center gap-4">
+					<div className="flex items-center gap-3">
+					<div className="w-8 h-8 bg-purple-200 rounded-full animate-pulse"></div>
+					<div className="space-y-2">
+						<div className="h-3 w-20 bg-purple-200 rounded animate-pulse"></div>
+						<div className="h-4 w-32 bg-gray-200 rounded animate-pulse"></div>
+					</div>
+					</div>
+
+					{/* Right side - Order details */}
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-1 max-w-2xl">
+					{/* Order Placed */}
+					<div className="text-center space-y-2">
+						<div className="h-3 w-24 mx-auto bg-gray-200 rounded animate-pulse"></div>
+						<div className="h-4 w-32 mx-auto bg-gray-200 rounded animate-pulse"></div>
+					</div>
+					
+					{/* Total Amount */}
+					<div className="text-center space-y-2">
+						<div className="h-3 w-24 mx-auto bg-gray-200 rounded animate-pulse"></div>
+						<div className="h-6 w-20 mx-auto bg-purple-200 rounded animate-pulse"></div>
+					</div>
+					
+					{/* Ship To */}
+					<div className="text-center space-y-2">
+						<div className="h-3 w-20 mx-auto bg-gray-200 rounded animate-pulse"></div>
+						<div className="h-4 w-24 mx-auto bg-gray-200 rounded animate-pulse"></div>
+					</div>
+					</div>
+				</nav>
+			</aside>
+		)
+	}
 
 	return(
 	<>

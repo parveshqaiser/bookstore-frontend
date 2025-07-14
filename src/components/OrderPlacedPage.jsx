@@ -1,13 +1,26 @@
 
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowRightLong } from "react-icons/fa6";
 import { removeOrderDetails } from '../redux/orderSlice';
+import { useEffect } from 'react';
 
 const OrderPlacedPage = () => {
 
+    let navigate = useNavigate();
     let {storeOrderDetails} = useSelector(store => store?.order);
+    
+    useEffect(() => {
+        if (!storeOrderDetails) {
+            navigate("/");
+        }
+    }, [storeOrderDetails, navigate]);
+
+    if(storeOrderDetails == null){
+        return;
+    }
+
 
     return (
     <main className="max-w-2xl mx-auto mt-15 p-6 bg-[#F9FBFC] shadow-lg rounded-lg">
