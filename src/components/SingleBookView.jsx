@@ -12,6 +12,10 @@ const SingleBookView = () => {
     let {id} = useParams();
     let dispatch = useDispatch();
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     useEffect(()=>{
         dispatch(getSingleBook(id))
     },[id])

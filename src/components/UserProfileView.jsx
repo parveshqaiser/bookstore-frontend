@@ -21,7 +21,7 @@ const UserProfileView = () => {
     let dispatch = useDispatch();
     let navigate = useNavigate();
 
-    let {totalOrders,totalAddress , totalAmountSpent , lastOrderDate} = useSelector(store => store?.userProfile);
+    let {totalOrders,totalAddress , totalAmountSpent , lastOrderDate, loadingTotalOrders} = useSelector(store => store?.userProfile);
 
     useEffect(()=>{
         dispatch(getTotalOrders());
@@ -119,6 +119,15 @@ const UserProfileView = () => {
             }
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
         }
+    }
+
+    if(loadingTotalOrders){
+        return (
+            <main className="animate-pulse">
+                <div className="h-7 w-48 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 w-64 bg-gray-200 rounded"></div>
+            </main>
+        )
     }
 
     return (

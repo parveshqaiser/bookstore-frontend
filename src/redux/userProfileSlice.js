@@ -69,13 +69,19 @@ const userProfileSlice = createSlice({
     name :"userProfile",
     initialState : {
         totalOrders : null,
+        loadingTotalOrders : false,
         totalAddress : null,
         totalAmountSpent : null,
         lastOrderDate : null,
     },
     extraReducers: (builder)=>{
+         builder.addCase(getTotalOrders.pending, (state, action)=>{
+            state.loadingTotalOrders = true;
+        });
+
         builder.addCase(getTotalOrders.fulfilled, (state, action)=>{
             state.totalOrders = action.payload;
+            state.loadingTotalOrders = false;
         });
 
         builder.addCase(getTotalAddress.fulfilled, (state, action)=>{

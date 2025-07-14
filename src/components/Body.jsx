@@ -19,6 +19,10 @@ const Body = () => {
         }        
     },[isFetched]);
 
+     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <>
             <NavBar user={user} />

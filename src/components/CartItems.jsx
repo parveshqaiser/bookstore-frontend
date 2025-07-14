@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { FaArrowRightLong } from "react-icons/fa6";
-import emptyCartLogo from "../assets/empty-cart.webp";
+import emptyCart from "../assets/empty.svg";
 import { clearCart, decreaseQuantity, increaseQuantity, removeFromCart } from '../redux/cartSlice';
 
 
@@ -48,8 +48,8 @@ const CartItems = () => {
         )}
 
         {cart && cart.length == 0 ? (
-            <div className='text-center bg-[#F9FBFC] p-2'>
-                <img src={emptyCartLogo} className='w-60 mx-auto h-auto object-fill' alt="empty cart logo" />
+            <div className='text-center bg-[#F9FBFC] py-6'>
+                <img src={emptyCart} className='w-60 mx-auto h-auto object-fill' alt="empty cart logo" />
                 <h1 className='font-bold text-2xl mb-2'>Your Cart is Empty</h1>
                 <p className='text-gray-500 text-lg mb-4'>Look's like you haven't made your choice yet.</p>
                 <button className='px-4 py-2 rounded-md bg-violet-500 text-white'>
