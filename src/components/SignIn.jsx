@@ -10,7 +10,6 @@ import { BASE_URL } from '../utils/api';
 import { useDispatch, useSelector } from 'react-redux';
 import validator from "validator";
 import { addTempUserData, getUserDetails } from '../redux/userSlice';
-import { getAllBooksList } from '../redux/bookSlice';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import "../App.css";
