@@ -216,7 +216,7 @@ const SignIn = () => {
 
             <div className="mt-6 text-center">
                 <p className="text-sm text-gray-600">
-                    {!newUser ? "Don't have an account?" : "Already have an account?"}{" "}
+                    {!newUser ? " Don't have an account? " : " Already have an account? "}
                     <button
                         onClick={() => {
                             setNewUser(!newUser)
@@ -232,9 +232,14 @@ const SignIn = () => {
 
             <p className='text-sm text-center'>
                 <Link to="/" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 transition-colors" >
-                Go to Home <FaArrowRightLong className='inline ml-1' />
+                    Go to Home <FaArrowRightLong className='inline ml-1' />
                 </Link>
             </p>
+            {!newUser && (
+            <p className='text-sm text-center text-blue-400'>
+                <Link to="/forgot/password" className='hover:underline'>Forgot Password ?</Link>
+            </p>)}
+           
         </section>
 
         {(newUser && isPaswordFocus) &&  

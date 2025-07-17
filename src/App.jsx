@@ -29,6 +29,7 @@ import AdminProtectedRoute from './components/AdminProtectedRoute';
 import AboutUs from './pages/AboutUs';
 import Services from './pages/Services';
 import ContactUs from './pages/ContactUs';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
 
@@ -97,6 +98,10 @@ function App() {
         {
             path : "/admin/manage/orders/delivered",
             element : <AdminProtectedRoute><AdminDeliveredOrders /></AdminProtectedRoute>
+        },
+        {
+            path : "/forgot/password",
+            element : <ForgotPassword />
         },
         {
             path : "*",
