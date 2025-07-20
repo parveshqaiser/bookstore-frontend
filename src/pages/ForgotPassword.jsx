@@ -53,7 +53,6 @@ const ForgotPassword =()=> {
 
     const handleSubmitOtp = async()=>{
         try {
-            console.log(token);
             setIsDisabled(true);
             let otp = token;
             let res = await axios.post(BASE_URL + "/verify/password/otp", {email,otp}, {withCredentials:true});
