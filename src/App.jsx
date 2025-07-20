@@ -4,8 +4,6 @@ import { createBrowserRouter, RouterProvider} from 'react-router-dom';
 import AdminLogin from './components/AdminLogin'
 import AdminDashboard from './components/AdminDashboard';
 import ManageBooks from './components/ManageBooks';
-import TestComponent from './components/TestComponent';
-
 import { Toaster } from 'react-hot-toast';
 import ManageOrders from './components/ManageOrders';
 import AdminDeliveredOrders from './components/AdminDeliveredOrders';
