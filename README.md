@@ -7,4 +7,4 @@ Technologies Used
 >Tailwind CSS <br>
 >Prime React <br>
 >Socket IO Client
->
+>Razorpay Payment Integration
