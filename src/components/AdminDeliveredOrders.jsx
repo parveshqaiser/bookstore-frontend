@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllDeliveredOrders } from '../redux/orderSlice';
 import bookLoading from "../assets/bookLoading.gif";
+import { dateConverter } from '../utils/dateConverter';
 
 const AdminDeliveredOrders = () => {
 
@@ -75,8 +76,8 @@ const AdminDeliveredOrders = () => {
             <p># {index+1}</p>
             <p className=''>  Order No : {order?._id}</p>
             <div className="flex justify-between items-center mb-3">
-                <span className="text-sm text-green-800"> Order Date : {order.createdAt.split("T")[0]}</span>
-                <span className="px-3 py-1 text-xs font-semibold uppercase rounded-md bg-green-300 text-green-700"> Delivered Date : {order.updatedAt.split("T")[0]}</span>
+                <span className="text-sm text-green-800"> Order Date : {dateConverter(order?.createdAt)}</span>
+                <span className="px-3 py-1 text-xs font-semibold uppercase rounded-md bg-green-300 text-green-700"> Delivered Date : {dateConverter(order?.updatedAt)}</span>
             </div>
 
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
