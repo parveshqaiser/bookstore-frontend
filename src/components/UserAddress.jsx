@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaMapPin } from 'react-icons/fa';
 import { FaBuilding} from 'react-icons/fa';
 import { HiHome, HiBriefcase} from 'react-icons/hi';
+import { domSanitizer } from '../utils/domSanitize';
 
 
 let initialFormValues = {
@@ -119,6 +120,8 @@ const UserAddress = () => {
 	function handleChange(e)
 	{
 		let {name, value} = e.target;
+		value = domSanitizer(value);
+		
 		let newValues = {...formValues};
 
 		if(name == "doorNo" || name == "city" || name =="district" || name =="state")

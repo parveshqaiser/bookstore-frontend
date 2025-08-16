@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../redux/userSlice';
 import Fuse from 'fuse.js';
 import cart from "../assets/cartsvg.svg";
+import { domSanitizer } from '../utils/domSanitize';
 
 const NavBar = ({user}) => {
 
@@ -67,6 +68,7 @@ const NavBar = ({user}) => {
     function handleChange(e)
     {
         let value = e.target.value;
+        value = domSanitizer(value);
         setKeyText(value);
         if(value?.trim() == ""){
             setResults([])

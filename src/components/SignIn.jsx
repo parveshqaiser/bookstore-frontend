@@ -13,6 +13,7 @@ import { addTempUserData, getUserDetails } from '../redux/userSlice';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import "../App.css";
+import { domSanitizer } from '../utils/domSanitize';
 
 const SignIn = () => {
 
@@ -137,6 +138,7 @@ const SignIn = () => {
                         value={inputValues.name}
                         onChange={(e)=> {
                             let val = e.target.value;
+                            val = domSanitizer(val);
                             if(val){
                                 let up = val.charAt(0).toUpperCase() + val.slice(1);
                                 setInputValues({...inputValues , name : up})
@@ -153,7 +155,11 @@ const SignIn = () => {
                     <input 
                         type="text"
                         value={inputValues.email}
-                        onChange={(e)=>setInputValues({...inputValues, email : e.target.value.trim() || ''})}
+                        onChange={(e)=>{
+                            let val = e.target.value;
+                            val = domSanitizer(val);
+                            setInputValues({...inputValues, email : val || ""})
+                        }}
                         placeholder='Enter Email' 
                         className="w-full px-3 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
                     />

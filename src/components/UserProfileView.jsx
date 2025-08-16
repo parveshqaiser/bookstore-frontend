@@ -11,6 +11,7 @@ import {FiShoppingBag, FiUser } from 'react-icons/fi';
 import { FaUserEdit } from "react-icons/fa";
 import { getLastOrderDate, getTotalAddress, getTotalAmountSpent, getTotalOrders } from '../redux/userProfileSlice';
 import { dateConverter } from '../utils/dateConverter';
+import { domSanitizer } from '../utils/domSanitize';
 
 const UserProfileView = () => {
 
@@ -57,7 +58,8 @@ const UserProfileView = () => {
     function handleChange(e)
     {
         let {name , value} = e.target;
-
+        value = domSanitizer(value);
+        
         let newValues = {...formValues};
         if (name == "name")
         {
