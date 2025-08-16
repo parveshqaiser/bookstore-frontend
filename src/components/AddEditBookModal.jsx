@@ -8,6 +8,7 @@ import { BASE_URL } from '../utils/api';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { getAllBooksList, resetBookFetchStatus } from '../redux/bookSlice';
+import { domSanitizer } from '../utils/domSanitize';
 
 const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
 
@@ -66,6 +67,7 @@ const AddEditBookModal = ({selectedBook, isEdit , setVisible, setIsEdit}) => {
         let {name, value} = e.target;
 
         let newValues = {...formValues};
+        value = domSanitizer(value);
 
         if(name == "title" || name == "author" || name =="description" || name =="publisher" || name=="language")
         {
