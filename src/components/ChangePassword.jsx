@@ -4,10 +4,15 @@ import axios from 'axios';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import toast from 'react-hot-toast';
 import { BASE_URL } from '../utils/api';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const ChangePassword = () => {
 
 	const [isDisabled, setIsDisabled] = useState(false);
+
+	const navigate = useNavigate();
+	let dispatch = useDispatch();
 
 	let initialFormValues = {
         currentPassword : {value : "", error : ""},
@@ -68,6 +73,11 @@ const ChangePassword = () => {
 		} catch (error) {
 			setIsDisabled(false);
 			toast.error(error?.response?.data?.message || error?.message, {duration:2000})
+			if(error.status == 401){
+				console.log("going inside")
+				navigate("/user/signin")
+				dispatch(logoutUser());
+			}  
 		}
 	}
 
