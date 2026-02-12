@@ -3,6 +3,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BASE_URL } from '../utils/api';
 import axios from 'axios';
+// import { useDispatch } from 'react-redux';
+// import { logoutUser } from '../redux/userSlice';
+
+// let dispatch = useDispatch();
 
 export const getTotalOrders = createAsyncThunk(
     "totalOrders/get",
@@ -11,6 +15,10 @@ export const getTotalOrders = createAsyncThunk(
             let res = await axios.get(BASE_URL + "/get/totaluser/orders",{withCredentials:true});
             return res?.data?.data;
         } catch (error) {
+            // if (error.response?.status === 401) {
+            //     dispatch(logoutUser());
+            //     window.location.href ="/user/signin";
+            // }
             return rejectWithValue({
                 message : error.response?.data?.message || "Get All User order failed",
                 error : error?.response?.status
