@@ -106,7 +106,15 @@ const UserAddress = () => {
 					let res = await axios.get(`https://api.postalpincode.in/pincode/${pinText}`)
 					setApiData(res.data)
 				} catch (error) {
-					console.log(error);
+					if (error.response) {
+						// Server responded with a status code
+						toast.error(`Server error (${error.response.status}). Please try again later.`);
+					} else if (error.request) {
+						// Request made but no response
+						toast.error("Network error. Please check your internet connection.");
+					} else {
+						toast.error(error.message || "Something went wrong");
+					}
 				} 
 			}else if(pinText.length < 6 && isManualClearRef.current) {
 				setFormValues(initialFormValues);

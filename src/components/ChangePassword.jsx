@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { BASE_URL } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { logoutUser } from '../redux/userSlice';
 
 const ChangePassword = () => {
 
@@ -74,7 +75,6 @@ const ChangePassword = () => {
 			setIsDisabled(false);
 			toast.error(error?.response?.data?.message || error?.message, {duration:2000})
 			if(error.status == 401){
-				console.log("going inside")
 				navigate("/user/signin")
 				dispatch(logoutUser());
 			}  
