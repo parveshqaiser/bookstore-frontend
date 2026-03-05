@@ -36,18 +36,16 @@ const OtpVerification = ()=>{
 
         try {
             let res = await axios.post(BASE_URL + "/verify/otp", data, {withCredentials:true});
-            if(res.data.success)
-            {
-                dispatch(getUserDetails());
-                toast.success(res.data.message || "User Verified", {duration:2000});
+            if(res.data.success){
+                toast.success(res.data.message || "User Verified", {duration:2500});
                 setTimeout(()=>{
-                    navigate("/")
-                },2000)
+                    navigate("/");
+                    dispatch(getUserDetails());
+                },2500)
             }
         } catch (error) {
             toast.error(error?.response?.data?.message || error?.message, {duration:2000})
-        }
-    
+        }    
     }
 
     const handleResendOtp = async()=>

@@ -247,7 +247,7 @@ const UserAddress = () => {
 					setIsDisable(false)
 				}
 			} catch (error) {
-				if(error.status == 401){
+				if(error.response.status == 401){
                 	navigate("/user/signin")
 					dispatch(logoutUser());
             	}   
