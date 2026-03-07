@@ -29,8 +29,7 @@ const ForgotPassword =()=> {
     const handleSubmitEmail = async()=>{
 
         if(!validator.isEmail(email)){
-            toast.error("Invalid Email")
-            return;
+            return toast.error("Invalid Email");
         }
 
         try {
@@ -52,6 +51,11 @@ const ForgotPassword =()=> {
 
 
     const handleSubmitOtp = async()=>{
+
+        if(!token || token.length<=5){
+            return toast.error("Enter the OTP");
+        }
+    
         try {
             setIsDisabled(true);
             let otp = token;
