@@ -5,7 +5,10 @@ import { BASE_URL } from "../utils/api";
 
 // let navigate = useNavigate();
 
-let api = axios.create({baseURL : BASE_URL, withCredentials:true});
+let api = axios.create({
+    baseURL : BASE_URL, 
+    withCredentials:true
+});
 
 
 api.interceptors.response.use(
