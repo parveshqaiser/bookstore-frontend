@@ -3,28 +3,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../utils/api";
-import api from "../shared/axiosInstance";
-
-// export const getAllPendingOrders = createAsyncThunk(
-//     "allPendingOrders/get",
-//     async (_, { rejectWithValue }) => {
-//         try {
-//             let res = await axios.get(BASE_URL + "/admin/orders/pending",{withCredentials: true});
-//             return res?.data?.data;
-//         } catch (error) {
-//             return rejectWithValue({
-//                 message : error.response?.data?.message || "Get All Pending Orders failed",
-//                 error : error?.response?.status
-//             });
-//         }
-//     }
-// );
 
 export const getAllPendingOrders = createAsyncThunk(
     "allPendingOrders/get",
     async (_, { rejectWithValue }) => {
         try {
-            let res = await api.get("/admin/orders/pending");
+            let res = await axios.get(BASE_URL + "/admin/orders/pending",{withCredentials: true});
             return res?.data?.data;
         } catch (error) {
             return rejectWithValue({
@@ -34,6 +18,21 @@ export const getAllPendingOrders = createAsyncThunk(
         }
     }
 );
+
+// export const getAllPendingOrders = createAsyncThunk(
+//     "allPendingOrders/get",
+//     async (_, { rejectWithValue }) => {
+//         try {
+//             let res = await api.get("/admin/orders/pending");
+//             return res?.data?.data;
+//         } catch (error) {
+//             return rejectWithValue({
+//                 message : error.response?.data?.message || "Get All Pending Orders failed",
+//                 error : error?.response?.status
+//             });
+//         }
+//     }
+// );
 
 
 export const getAllDeliveredOrders = createAsyncThunk(
