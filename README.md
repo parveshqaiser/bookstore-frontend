@@ -8,3 +8,5 @@ Technologies Used
 >Prime React <br>
 >Socket IO Client
 >Razorpay Payment Integration
+> Live URL : http://13.48.59.101/user/signin
+>Live URL present : https://bookstore-frontend-xja0.onrender.com
